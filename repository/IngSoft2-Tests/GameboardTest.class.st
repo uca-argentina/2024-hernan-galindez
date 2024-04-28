@@ -5,16 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
-
-	self
-		should: anErrorBlock
-		raise: exceptionClass
-		withExceptionDo: [ :error |
-		self assert: error messageText equals: anErrorMessage ]
-]
-
-{ #category : #tests }
 GameboardTest >> testCreateGameboard [
 
 | aGameBoard miTablero |
