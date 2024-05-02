@@ -1,11 +1,10 @@
 Class {
-	#name : 'GameboardTest',
-	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#name : #GameboardTest,
+	#superclass : #TestCase,
+	#category : #'IngSoft2-Tests'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -15,7 +14,7 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 GameboardTest >> testCreateGameboard [
 
 | aGameBoard miTablero |
@@ -23,10 +22,10 @@ GameboardTest >> testCreateGameboard [
 aGameBoard := Gameboard length: 10.
 miTablero := OrderedCollection new: 10 withAll: '-'. 
 
-self assert: (aGameBoard getGrid) equals: miTablero
+self assert: (aGameBoard board) equals: miTablero
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 GameboardTest >> testErrorWhenLengthIsNotGreaterThanZero [ 
 
 	self

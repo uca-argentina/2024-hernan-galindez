@@ -19,12 +19,12 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 	aLength > 0 ifFalse: [ Error signal: 'Length must be greater than zero' ]
 ]
 
-{ #category : #'as yet unclassified' }
-Gameboard >> getGrid [
+{ #category : #accessing }
+Gameboard >> board [
 	^ grid.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 Gameboard >> initializeWithLength: aLength [
 
 grid:= OrderedCollection new: aLength withAll: '-'
