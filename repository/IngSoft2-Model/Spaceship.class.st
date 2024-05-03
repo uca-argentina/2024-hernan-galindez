@@ -23,7 +23,7 @@ self verifyLengthGreaterThanZero: aName.
 { #category : #initialization }
 Spaceship >> initializeWithName: aName [
 
-name := aName
+name := aName.
 ]
 
 { #category : #initialization }

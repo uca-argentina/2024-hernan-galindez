@@ -25,27 +25,35 @@ SpaceshipGame >> gameboard [
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aSpaceship [
+SpaceshipGame >> initializeWithPlayers: aPlayer withGameboard: aGameboard withDie: aDie [
 
-players := aSpaceship 
- 
-]
-
-{ #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
-
-players := aSpaceship.
+players := aPlayer.
+aGameboard setPlayers: aPlayer.
 gameboard := aGameboard.
 die := aDie 
+
  
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 SpaceshipGame >> isOver [
 	^ false
+]
+
+{ #category : #accessing }
+SpaceshipGame >> playTurn [
+	|aNumber|
+	aNumber := die throw.
+	gameboard move: players with: aNumber .
 ]
 
 { #category : #testing }
 SpaceshipGame >> players [
 	^ players
+]
+
+{ #category : #accessing }
+SpaceshipGame >> positionOf: aSpaceship [
+
+^ gameboard indexOf: aSpaceship .
 ]

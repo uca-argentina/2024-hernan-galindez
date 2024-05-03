@@ -10,7 +10,7 @@ SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
 
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
-aGameboard :=  Gameboard withLength: 12.
+aGameboard :=  Gameboard numberOfSquares: 12.
 aDie := Die of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
 
@@ -25,4 +25,30 @@ SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 
 aGame := SpaceshipGame new.
 self deny: (aGame isOver)
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [ 
+| aSpaceship aGameboard aDie aGame |
+
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+aGameboard :=  Gameboard numberOfSquares: 12.
+aDie := LoadedDie of: 6.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
+
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 7 
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [ 
+|aGame aSpaceship aGameboard aDie |
+
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+aGameboard :=  Gameboard numberOfSquares: 12.
+aDie := LoadedDie of: 6.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
+
+self assert: (aGameboard at: 1) equals: aSpaceship.
 ]
