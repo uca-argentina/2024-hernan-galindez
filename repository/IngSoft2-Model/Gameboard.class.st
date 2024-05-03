@@ -1,18 +1,9 @@
 Class {
 	#name : #Gameboard,
-	#superclass : #Object,
-	#instVars : [
-		'grid'
-	],
+	#superclass : #OrderedCollection,
+	#type : #variable,
 	#category : #'IngSoft2-Model'
 }
-
-{ #category : #accessing }
-Gameboard class >> length: aLength [
-	self verifyGreaterThanZero: aLength.
-	
-	^(self new) initializeWithLength: 10.
-]
 
 { #category : #accessing }
 Gameboard class >> verifyGreaterThanZero: aLength [
@@ -20,8 +11,10 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 ]
 
 { #category : #accessing }
-Gameboard >> board [
-	^ grid.
+Gameboard class >> withLength: aNumberOfSquares [
+	self verifyGreaterThanZero: aNumberOfSquares.
+	
+	^self new: aNumberOfSquares
 ]
 
 { #category : #initialization }

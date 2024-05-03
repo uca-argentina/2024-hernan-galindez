@@ -17,19 +17,21 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 { #category : #tests }
 GameboardTest >> testCreateGameboard [
 
-| aGameBoard miTablero |
+| aGameboard miTablero |
 
-aGameBoard := Gameboard length: 10.
-miTablero := OrderedCollection new: 10 withAll: '-'. 
+aGameboard := Gameboard withLength:10.
+miTablero := OrderedCollection new: 10. 
 
-self assert: (aGameBoard board) equals: miTablero
+aGameboard withIndexDo: [ :aSquare :i | self assert: aSquare equals: (miTablero at:i)] 
+
+
 ]
 
 { #category : #tests }
 GameboardTest >> testErrorWhenLengthIsNotGreaterThanZero [ 
 
 	self
-	should: [ Gameboard length: -1 ]
+	should: [ Gameboard withLength: -1 ]
 	raise: Error 
 	withMessage: 'Length must be greater than zero'
 ]
