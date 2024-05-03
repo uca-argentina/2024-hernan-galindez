@@ -10,7 +10,7 @@ LoadedDieTest >> should: anErrorBlock raise: anErrorClass withMessage: anErrorMe
 ]
 
 { #category : #tests }
-LoadedDieTest >> testCannotBeLessThanTwoFaces [ 
+LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [ 
 
 self should: [ LoadedDie of: 2 ] raise: Error withMessage: 'Faces should be more than 2'.
 ]
@@ -26,7 +26,7 @@ self assert: aDie throw equals: 5.
 ]
 
 { #category : #tests }
-LoadedDieTest >> testFulanito [ 
+LoadedDieTest >> testWhenDieIsThrownThenValueIsNumberOfFaces [ 
 
 | aDie |
 
