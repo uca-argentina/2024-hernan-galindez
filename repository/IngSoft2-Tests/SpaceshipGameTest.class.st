@@ -5,14 +5,18 @@ Class {
 }
 
 { #category : #tests }
-SpaceshipGameTest >> testGameCanBeCreatedWithPlayers [
-|aGame aSpaceship|
+SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
+|aGame aSpaceship aGameboard aDie |
 
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
-aGame := SpaceshipGame withPlayers: aSpaceship. 
+aGameboard :=  Gameboard withLength: 12.
+aDie := Die of: 6.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
 
-self assert: aGame players equals: aSpaceship 
+self assert: aGame players equals: aSpaceship.
+self assert: aGame gameboard equals: aGameboard.
+self assert: aGame die equals: aDie.
 ]
 
 { #category : #tests }
