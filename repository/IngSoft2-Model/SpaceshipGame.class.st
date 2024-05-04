@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'players',
 		'gameboard',
-		'die'
+		'die',
+		'isOver'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -30,21 +31,23 @@ SpaceshipGame >> initializeWithPlayers: aPlayer withGameboard: aGameboard withDi
 players := aPlayer.
 aGameboard setPlayers: aPlayer.
 gameboard := aGameboard.
-die := aDie 
+die := aDie.
+isOver := false.
 
  
 ]
 
 { #category : #accessing }
 SpaceshipGame >> isOver [
-	^ false
+	^ isOver
 ]
 
 { #category : #accessing }
 SpaceshipGame >> playTurn [
 	|aNumber|
 	aNumber := die throw.
-	gameboard move: players with: aNumber .
+	gameboard move: players with: aNumber.
+	self verifyIfThePlayerReachedTheEnd: players.
 ]
 
 { #category : #testing }
@@ -56,4 +59,12 @@ SpaceshipGame >> players [
 SpaceshipGame >> positionOf: aSpaceship [
 
 ^ gameboard indexOf: aSpaceship .
+]
+
+{ #category : #accessing }
+SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
+	|currentPosition|
+	currentPosition := self positionOf: aSpaceship.
+	
+	(currentPosition  = gameboard size)  ifTrue:[ isOver := true ].
 ]

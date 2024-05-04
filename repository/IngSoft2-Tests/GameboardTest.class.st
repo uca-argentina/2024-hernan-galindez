@@ -22,6 +22,7 @@ GameboardTest >> testCreateGameboard [
 aGameboard := Gameboard numberOfSquares:10.
 miTablero := Array  new: 10. 
 
+self assert: aGameboard size equals: miTablero size. 
 aGameboard withIndexDo: [ :aSquare :i | self assert: aSquare equals: (miTablero at:i)] 
 
 

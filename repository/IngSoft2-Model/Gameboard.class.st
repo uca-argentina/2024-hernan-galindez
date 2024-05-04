@@ -19,12 +19,14 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 
 { #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [ 
-	|currentPosition target|
+	|currentPosition targetSquare sum|
 	currentPosition := self indexOf: aSpaceship.
-	target := currentPosition + aNumberOfSquares.
+	sum := currentPosition + aNumberOfSquares.
+	targetSquare := self verifySumNotOutOfBounds: sum.
 	
 	self at: currentPosition put: nil.
-	self at: target put: aSpaceship 
+	self at: targetSquare put: aSpaceship. 
+
 
 ]
 
@@ -34,4 +36,10 @@ Gameboard >> setPlayers: players [
 self at: 1 put: players
 
 
+]
+
+{ #category : #accessing }
+Gameboard >> verifySumNotOutOfBounds: sum [
+
+ ^ (sum < self size) ifFalse:[self size] ifTrue:[sum]
 ]
