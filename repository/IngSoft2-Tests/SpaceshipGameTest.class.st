@@ -5,6 +5,33 @@ Class {
 }
 
 { #category : #tests }
+SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
+
+	self
+		should: anErrorBlock
+		raise: exceptionClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: anErrorMessage ]
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [ 
+
+| aSpaceship aGameboard aDie aGame |
+aSpaceship :=  Spaceship withName: 'Hernan'. 
+aGameboard :=  Gameboard numberOfSquares: 5.
+aDie := LoadedDie of: 4.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
+
+aGame playTurn.
+
+self
+	should: [ aGame playTurn ]
+	raise: Error
+	withMessage: 'Game is over'
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
 |aGame aSpaceship aGameboard aDie |
 
@@ -17,6 +44,22 @@ aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie
 self assert: aGame players equals: aSpaceship.
 self assert: aGame gameboard equals: aGameboard.
 self assert: aGame die equals: aDie.
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testGameWinner [
+
+| aSpaceship aGameboard aDie aGame |
+aSpaceship :=  Spaceship withName: 'Galindez'. 
+aGameboard :=  Gameboard numberOfSquares: 5.
+aDie := LoadedDie of: 4.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
+
+self assert: aGame winner equals: 'There is no winner yet'.
+
+aGame playTurn.
+
+self assert: aGame winner equals: aSpaceship 
 ]
 
 { #category : #tests }

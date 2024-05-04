@@ -5,7 +5,8 @@ Class {
 		'players',
 		'gameboard',
 		'die',
-		'isOver'
+		'isOver',
+		'winner'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -33,18 +34,20 @@ aGameboard setPlayers: aPlayer.
 gameboard := aGameboard.
 die := aDie.
 isOver := false.
+winner := 'There is no winner yet'
 
  
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 SpaceshipGame >> isOver [
 	^ isOver
 ]
 
-{ #category : #accessing }
+{ #category : #'game controls' }
 SpaceshipGame >> playTurn [
 	|aNumber|
+	self verifyGameIsNotOver.
 	aNumber := die throw.
 	gameboard move: players with: aNumber.
 	self verifyIfThePlayerReachedTheEnd: players.
@@ -55,16 +58,29 @@ SpaceshipGame >> players [
 	^ players
 ]
 
-{ #category : #accessing }
+{ #category : #'game logic' }
 SpaceshipGame >> positionOf: aSpaceship [
 
 ^ gameboard indexOf: aSpaceship .
 ]
 
-{ #category : #accessing }
+{ #category : #'game logic' }
+SpaceshipGame >> verifyGameIsNotOver [
+	isOver ifTrue:[Error signal: 'Game is over']
+]
+
+{ #category : #'game logic' }
 SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
 	|currentPosition|
 	currentPosition := self positionOf: aSpaceship.
 	
-	(currentPosition  = gameboard size)  ifTrue:[ isOver := true ].
+	(currentPosition  = gameboard size) ifFalse:[^ self].
+	
+	isOver := true.
+	winner := aSpaceship.
+]
+
+{ #category : #'game logic' }
+SpaceshipGame >> winner [
+	^ winner
 ]
