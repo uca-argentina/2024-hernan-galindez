@@ -55,8 +55,6 @@ aGameboard :=  Gameboard numberOfSquares: 5.
 aDie := LoadedDie of: 4.
 aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
 
-self assert: aGame winner equals: 'There is no winner yet'.
-
 aGame playTurn.
 
 self assert: aGame winner equals: aSpaceship 
@@ -113,6 +111,18 @@ aDie := LoadedDie of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
 
 self assert: (aGameboard at: 1) equals: aSpaceship.
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerDontPlayAndAskForWinnerThenThereIsNoWinner [
+
+| aSpaceship aGameboard aDie aGame |
+aSpaceship :=  Spaceship withName: 'Galindez'. 
+aGameboard :=  Gameboard numberOfSquares: 5.
+aDie := LoadedDie of: 4.
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie . 
+
+self assert: aGame winner equals: 'There is no winner yet'.
 ]
 
 { #category : #tests }
