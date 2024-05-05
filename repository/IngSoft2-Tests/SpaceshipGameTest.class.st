@@ -1,10 +1,11 @@
 Class {
-	#name : #SpaceshipGameTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'SpaceshipGameTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -14,7 +15,7 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [ 
 
 | aSpaceship aGameboard aDie aGame |
@@ -31,7 +32,7 @@ self
 	withMessage: 'Game is over'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
 |aGame aSpaceship aGameboard aDie |
 
@@ -46,7 +47,7 @@ self assert: aGame gameboard equals: aGameboard.
 self assert: aGame die equals: aDie.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testGameWinner [
 
 | aSpaceship aGameboard aDie aGame |
@@ -62,7 +63,7 @@ aGame playTurn.
 self assert: aGame winner equals: aSpaceship 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 |aGame aSpaceship aGameboard aDie |
 
@@ -73,7 +74,7 @@ aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie
 self deny: (aGame isOver)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [ 
 | aSpaceship aGameboard aDie aGame |
 
@@ -89,7 +90,7 @@ self assert: aGame isOver.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [ 
 | aSpaceship aGameboard aDie aGame |
 
@@ -103,7 +104,7 @@ aGame playTurn.
 self assert: (aGame positionOf: aSpaceship) equals: 7 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [ 
 |aGame aSpaceship aGameboard aDie |
 
@@ -115,7 +116,7 @@ aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie
 self assert: (aGameboard at: 1) equals: aSpaceship.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenTargetIsOutOfBoundMoveToTheEnd [ 
 
 | aSpaceship aGameboard aDie aGame |

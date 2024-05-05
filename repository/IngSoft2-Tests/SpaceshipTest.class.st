@@ -1,10 +1,11 @@
 Class {
-	#name : #SpaceshipTest,
-	#superclass : #TestCase,
-	#category : 'IngSoft2-Tests'
+	#name : 'SpaceshipTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SpaceshipTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -14,7 +15,7 @@ SpaceshipTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipTest >> testCreateASpaceshipWithName [
 |aSpaceship|
 
@@ -23,7 +24,7 @@ aSpaceship := Spaceship withName: 'A'.
 self assert: (aSpaceship name) equals: 'A'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipTest >> testErrorWhenSpaceshipHasNoName [ 
 
 self

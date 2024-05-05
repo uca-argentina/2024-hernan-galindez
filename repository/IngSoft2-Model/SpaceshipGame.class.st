@@ -1,6 +1,6 @@
 Class {
-	#name : #SpaceshipGame,
-	#superclass : #Object,
+	#name : 'SpaceshipGame',
+	#superclass : 'Object',
 	#instVars : [
 		'players',
 		'gameboard',
@@ -8,25 +8,26 @@ Class {
 		'isOver',
 		'winner'
 	],
-	#category : #'IngSoft2-Model'
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
-{ #category : #'accesing - defaults' }
+{ #category : 'accesing - defaults' }
 SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
 	^ (self new) initializeWithPlayers: aSpaceship withGameboard: aGameboard withDie: aDie
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpaceshipGame >> die [
 	^ die
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpaceshipGame >> gameboard [
 	^ gameboard
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpaceshipGame >> initializeWithPlayers: aPlayer withGameboard: aGameboard withDie: aDie [
 
 players := aPlayer.
@@ -39,12 +40,12 @@ winner := 'There is no winner yet'
  
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpaceshipGame >> isOver [
 	^ isOver
 ]
 
-{ #category : #'game controls' }
+{ #category : 'game controls' }
 SpaceshipGame >> playTurn [
 	|aNumber|
 	self verifyGameIsNotOver.
@@ -53,23 +54,23 @@ SpaceshipGame >> playTurn [
 	self verifyIfThePlayerReachedTheEnd: players.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SpaceshipGame >> players [
 	^ players
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> positionOf: aSpaceship [
 
 ^ gameboard indexOf: aSpaceship .
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> verifyGameIsNotOver [
 	isOver ifTrue:[Error signal: 'Game is over']
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
 	|currentPosition|
 	currentPosition := self positionOf: aSpaceship.
@@ -80,7 +81,7 @@ SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
 	winner := aSpaceship.
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> winner [
 	^ winner
 ]
