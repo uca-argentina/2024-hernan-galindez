@@ -131,3 +131,17 @@ self assert: (aGame positionOf: aSpaceship) equals: 5.
 
 
 ]
+
+{ #category : 'tests' }
+SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
+| aSpaceship aGameboard aDice aGame |
+
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+aGameboard :=  Gameboard numberOfSquares: 12.
+aDice := Dice with:(LoadedDie of: 6) with: (LoadedDie of: 3).
+aGame := SpaceshipGame withPlayers: aSpaceship withGameboard: aGameboard withDie: aDice . 
+
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 10
+]
