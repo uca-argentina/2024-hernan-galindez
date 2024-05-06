@@ -7,9 +7,13 @@ Class {
 
 { #category : #accessing }
 Gameboard class >> numberOfSquares: aNumberOfSquares [
-	self verifyGreaterThanZero: aNumberOfSquares.
+	|anArray|
 	
-	^(self new: aNumberOfSquares)
+	self verifyGreaterThanZero: aNumberOfSquares.
+	anArray := self new: aNumberOfSquares.
+	
+	1 to: aNumberOfSquares do: [ :index | anArray at: index put: Square newSquare ].
+	^anArray.
 ]
 
 { #category : #accessing }
@@ -18,14 +22,25 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 ]
 
 { #category : #accessing }
+Gameboard >> find: aTarget [
+
+self withIndexDo: [ :aSquare :index | 
+	(aSquare includes: aTarget) ifTrue: [ ^ index ] 
+	 ]
+
+
+]
+
+{ #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [ 
-	|currentPosition targetSquare sum|
-	currentPosition := self indexOf: aSpaceship.
+	|currentPosition targetSquare sum |
+	currentPosition := self find: aSpaceship.
 	sum := currentPosition + aNumberOfSquares.
 	targetSquare := self verifySumNotOutOfBounds: sum.
+
 	
-	self at: currentPosition put: nil.
-	self at: targetSquare put: aSpaceship. 
+	(self at: currentPosition) remove: aSpaceship.
+	(self at: targetSquare) land: aSpaceship. 
 
 
 ]
@@ -33,7 +48,10 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 { #category : #initialization }
 Gameboard >> setPlayers: players [
 
-self at: 1 put: players
+| firstSquare |
+firstSquare := self at: 1.
+
+players do: [ :eachPlayer | firstSquare land: eachPlayer ]
 
 
 ]
