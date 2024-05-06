@@ -1,11 +1,12 @@
 Class {
-	#name : #Gameboard,
-	#superclass : #Array,
-	#type : #variable,
-	#category : #'IngSoft2-Model'
+	#name : 'Gameboard',
+	#superclass : 'Array',
+	#type : 'variable',
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Gameboard class >> numberOfSquares: aNumberOfSquares [
 	|anArray|
 	
@@ -16,12 +17,12 @@ Gameboard class >> numberOfSquares: aNumberOfSquares [
 	^anArray.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Gameboard class >> verifyGreaterThanZero: aLength [
 	aLength > 0 ifFalse: [ Error signal: 'Length must be greater than zero' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Gameboard >> find: aTarget [
 
 self withIndexDo: [ :aSquare :index | 
@@ -31,7 +32,7 @@ self withIndexDo: [ :aSquare :index |
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [ 
 	|currentPosition targetSquare sum |
 	currentPosition := self find: aSpaceship.
@@ -45,7 +46,7 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Gameboard >> setPlayers: players [
 
 | firstSquare |
@@ -56,7 +57,7 @@ players do: [ :eachPlayer | firstSquare land: eachPlayer ]
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Gameboard >> verifySumNotOutOfBounds: sum [
 
  ^ (sum < self size) ifFalse:[self size] ifTrue:[sum]

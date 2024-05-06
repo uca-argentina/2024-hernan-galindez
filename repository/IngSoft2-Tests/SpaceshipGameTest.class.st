@@ -1,10 +1,11 @@
 Class {
-	#name : #SpaceshipGameTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'SpaceshipGameTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -14,7 +15,7 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testCreateAGameWithMoreThanOnePlayer [
 
 | aSpaceship aGameboard aDie aGame aSpaceship2 aSpaceshipArray |
@@ -29,7 +30,7 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 self assert: aGame players equals: aSpaceshipArray. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [ 
 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -47,7 +48,7 @@ self
 	withMessage: 'Game is over'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
 |aGame aSpaceship aGameboard aDie aSpaceshipArray |
 
@@ -60,10 +61,10 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 
 self assert: aGame players equals: aSpaceshipArray.
 self assert: aGame gameboard equals: aGameboard.
-self assert: aGame die equals: aDie.
+self assert: aGame dice equals: aDie.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testGameWinner [
 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -78,7 +79,7 @@ aGame playTurn.
 self assert: aGame winner equals: aSpaceship 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 |aGame aSpaceship aGameboard aDie aSpaceshipArray |
 
@@ -90,7 +91,7 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 self deny: (aGame isOver)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [ 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 
@@ -107,7 +108,7 @@ self assert: aGame isOver.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [ 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 
@@ -122,7 +123,7 @@ aGame playTurn.
 self assert: (aGame positionOf: aSpaceship) equals: 7 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [ 
 |aGame aSpaceship aGameboard aDie aSpaceshipArray |
 
@@ -135,7 +136,7 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 self assert: (aGame positionOf: aSpaceship) equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenPlayerDontPlayAndAskForWinnerThenThereIsNoWinner [
 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -148,7 +149,7 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 self assert: aGame winner equals: 'There is no winner yet'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenTargetIsOutOfBoundMoveToTheEnd [ 
 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -161,6 +162,23 @@ aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard wi
 aGame playTurn.
 
 self assert: (aGame positionOf: aSpaceship) equals: 5.
+
+
+]
+
+{ #category : 'tests' }
+SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
+| aSpaceship aGameboard aDice aGame aSpaceshipArray |
+
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+aGameboard :=  Gameboard numberOfSquares: 12.
+aSpaceshipArray:= Array with: aSpaceship.
+aDice := Dice with:(LoadedDie of: 6) with: (LoadedDie of: 3).
+aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDice . 
+
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 10
 
 
 ]
