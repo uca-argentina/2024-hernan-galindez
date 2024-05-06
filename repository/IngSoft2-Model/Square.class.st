@@ -13,12 +13,12 @@ Square class >> newSquare [
 ^(self new) initialize
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 Square >> currentPlayers [
 	^occupiedBy.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Square >> includes: aSpaceship [
 
 ^ occupiedBy includes: aSpaceship.
@@ -26,7 +26,7 @@ Square >> includes: aSpaceship [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 Square >> initialize [ 
 
 occupiedBy := OrderedCollection new.
@@ -34,7 +34,7 @@ occupiedBy := OrderedCollection new.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'add/remove' }
 Square >> land: aSpaceship [
 
 occupiedBy add: aSpaceship.
@@ -42,7 +42,7 @@ occupiedBy add: aSpaceship.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'add/remove' }
 Square >> remove: aSpaceship [
 
 occupiedBy remove: aSpaceship.
