@@ -29,7 +29,7 @@ GameboardTest >> testErrorWhenWormholeAtLastSqaure [
 	self
 		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 10 ]
 		raise: Error
-		withMessage: 'Wormhole can not be at the last square'
+		withMessage: 'Wormholes must be between the first and the second to last square'
 ]
 
 { #category : #tests }
