@@ -1,14 +1,14 @@
 Class {
 	#name : #SquareTest,
 	#superclass : #TestCase,
-	#category : 'IngSoft2-Tests'
+	#category : #'IngSoft2-Tests'
 }
 
 { #category : #tests }
 SquareTest >> testCreationOfSquareWIthSpaceship [
 
 | aSquare aSpaceship |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSquare land: aSpaceship.
 
@@ -20,7 +20,7 @@ self assert: (aSquare currentPlayers includes: aSpaceship).
 SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 
 | aSquare aSpaceship aSpaceship2 |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSpaceship2 := Spaceship withName: 'Juan'.
 aSquare land: aSpaceship.
@@ -34,7 +34,7 @@ self assert: (aSquare currentPlayers includes: aSpaceship2).
 SquareTest >> testCreationOfSquareWithNoSpaceship [ 
 
 | aSquare |
-aSquare := Square newSquare.
+aSquare := Square create.
 
 self assert: (aSquare currentPlayers isEmpty).
 
@@ -44,7 +44,7 @@ self assert: (aSquare currentPlayers isEmpty).
 SquareTest >> testRemoveSpaceshipFromSquare [ 
 
 | aSquare aSpaceship |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSquare land: aSpaceship.
 aSquare remove: aSpaceship.

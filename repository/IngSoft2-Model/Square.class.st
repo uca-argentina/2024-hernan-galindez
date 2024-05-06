@@ -4,11 +4,11 @@ Class {
 	#instVars : [
 		'occupiedBy'
 	],
-	#category : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-Square class >> newSquare [
+Square class >> create [
 
 ^(self new) initialize
 ]
