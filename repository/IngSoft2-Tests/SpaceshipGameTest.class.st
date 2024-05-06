@@ -156,6 +156,26 @@ self assert: (aGame positionOf: aSpaceship) equals: 1.
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
+
+| aSpaceship aGameboard aDie aGame anotherSpaceship aSpaceshipArray |
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+anotherSpaceship :=  Spaceship withName: 'Seijas'. 
+aSpaceshipArray := Array with: aSpaceship with: anotherSpaceship.
+aGameboard :=  Gameboard numberOfSquares: 11 withWormholeAt: 2 and: 7.
+aDie := LoadedDie of: 5.
+aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
+
+aGame playTurn.
+aGame playTurn.
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 11.
+self assert: (aGame positionOf: anotherSpaceship) equals: 6.
+
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenPlayerDontPlayAndAskForWinnerThenThereIsNoWinner [
 
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
