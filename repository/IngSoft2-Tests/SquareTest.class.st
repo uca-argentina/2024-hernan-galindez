@@ -1,10 +1,11 @@
 Class {
-	#name : #SquareTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'SquareTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SquareTest >> testCreationOfSquareWIthSpaceship [
 
 | aSquare aSpaceship |
@@ -16,7 +17,7 @@ self assert: (aSquare currentPlayers includes: aSpaceship).
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 
 | aSquare aSpaceship aSpaceship2 |
@@ -30,7 +31,7 @@ self assert: (aSquare currentPlayers includes: aSpaceship).
 self assert: (aSquare currentPlayers includes: aSpaceship2).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SquareTest >> testCreationOfSquareWithNoSpaceship [ 
 
 | aSquare |
@@ -40,7 +41,7 @@ self assert: (aSquare currentPlayers isEmpty).
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SquareTest >> testRemoveSpaceshipFromSquare [ 
 
 | aSquare aSpaceship |
