@@ -1,11 +1,10 @@
 Class {
-	#name : 'GameboardTest',
-	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#name : #GameboardTest,
+	#superclass : #TestCase,
+	#category : 'IngSoft2-Tests'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -15,7 +14,7 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 GameboardTest >> testErrorWhenLengthIsNotGreaterThanZero [ 
 
 	self

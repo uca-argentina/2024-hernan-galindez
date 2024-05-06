@@ -1,6 +1,6 @@
 Class {
-	#name : 'SpaceshipGame',
-	#superclass : 'Object',
+	#name : #SpaceshipGame,
+	#superclass : #Object,
 	#instVars : [
 		'players',
 		'gameboard',
@@ -9,26 +9,25 @@ Class {
 		'winner',
 		'currentTurn'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model'
 }
 
-{ #category : 'accesing - defaults' }
+{ #category : #'accesing - defaults' }
 SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
 	^ (self new) initializeWithPlayers: aSpaceship withGameboard: aGameboard withDice: aDie
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 SpaceshipGame >> dice [
 	^ dice
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 SpaceshipGame >> gameboard [
 	^ gameboard
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
 
 players := somePlayers.
@@ -42,19 +41,19 @@ winner := 'There is no winner yet'
  
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 SpaceshipGame >> isOver [
 	^ isOver
 ]
 
-{ #category : 'game controls' }
+{ #category : #'game controls' }
 SpaceshipGame >> nextTurn [
 
 	currentTurn := (currentTurn = players size ) ifTrue: [ 1 ] ifFalse: [ currentTurn + 1 ].
 	^currentTurn.
 ]
 
-{ #category : 'game controls' }
+{ #category : #'game controls' }
 SpaceshipGame >> playTurn [
 	|aNumber currentPlayer |
 	self verifyGameIsNotOver.
@@ -66,23 +65,23 @@ SpaceshipGame >> playTurn [
 	
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 SpaceshipGame >> players [
 	^ players
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> positionOf: aSpaceship [
 
 ^ gameboard find: aSpaceship .
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> verifyGameIsNotOver [
 	isOver ifTrue:[Error signal: 'Game is over']
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
 	|currentPosition|
 	currentPosition := self positionOf: aSpaceship.
@@ -93,7 +92,7 @@ SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
 	winner := aSpaceship.
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> winner [
 	^ winner
 ]
