@@ -1,18 +1,17 @@
 Class {
-	#name : 'DiceTest',
-	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#name : #DiceTest,
+	#superclass : #TestCase,
+	#category : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 DiceTest >> testDiceWithMoreThanOneDie [
 |aDice|
 aDice:=Dice with:(LoadedDie of:6) with:(LoadedDie of:3).
 self assert: aDice size equals:2.
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 DiceTest >> testWhenDiceAreThrownThenReturnSumOfEachDie [ 
 |aDice|
 aDice:=Dice with:(LoadedDie of:6) with:(LoadedDie of:3).

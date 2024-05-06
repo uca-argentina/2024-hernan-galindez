@@ -1,15 +1,14 @@
 Class {
-	#name : 'SquareTest',
-	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#name : #SquareTest,
+	#superclass : #TestCase,
+	#category : #'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : #tests }
 SquareTest >> testCreationOfSquareWIthSpaceship [
 
 | aSquare aSpaceship |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSquare land: aSpaceship.
 
@@ -17,11 +16,11 @@ self assert: (aSquare currentPlayers includes: aSpaceship).
 
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 
 | aSquare aSpaceship aSpaceship2 |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSpaceship2 := Spaceship withName: 'Juan'.
 aSquare land: aSpaceship.
@@ -31,21 +30,21 @@ self assert: (aSquare currentPlayers includes: aSpaceship).
 self assert: (aSquare currentPlayers includes: aSpaceship2).
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SquareTest >> testCreationOfSquareWithNoSpaceship [ 
 
 | aSquare |
-aSquare := Square newSquare.
+aSquare := Square create.
 
 self assert: (aSquare currentPlayers isEmpty).
 
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 SquareTest >> testRemoveSpaceshipFromSquare [ 
 
 | aSquare aSpaceship |
-aSquare := Square newSquare.
+aSquare := Square create.
 aSpaceship := Spaceship withName: 'Delepa'.
 aSquare land: aSpaceship.
 aSquare remove: aSpaceship.

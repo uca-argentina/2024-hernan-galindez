@@ -1,28 +1,47 @@
 Class {
-	#name : 'Gameboard',
-	#superclass : 'Array',
-	#type : 'variable',
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#name : #Gameboard,
+	#superclass : #Array,
+	#type : #variable,
+	#category : #'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-Gameboard class >> numberOfSquares: aNumberOfSquares [
-	|anArray|
-	
+{ #category : #accessing }
+Gameboard class >> numberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
+
+	| anArray wormholePair aWormhole anotherWormhole |
 	self verifyGreaterThanZero: aNumberOfSquares.
+	self
+		verifyThereAreNoWormholesOutOfBounds: aNumberOfSquares
+		withPositions: firstWormholePosition
+		and: secondWormholePosition.
 	anArray := self new: aNumberOfSquares.
-	
-	1 to: aNumberOfSquares do: [ :index | anArray at: index put: Square newSquare ].
-	^anArray.
+	wormholePair := Wormhole newPair.
+	aWormhole := wormholePair at: 1.
+	anotherWormhole := wormholePair at: 2.
+
+	1 to: aNumberOfSquares do: [ :index |
+	anArray at: index put: Square create ].
+
+	anArray
+		at: firstWormholePosition put: aWormhole;
+		at: secondWormholePosition put: anotherWormhole.
+
+	^ anArray
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard class >> verifyGreaterThanZero: aLength [
 	aLength > 0 ifFalse: [ Error signal: 'Length must be greater than zero' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
+Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPositions: firstPosition and: secondPosition [
+
+	(firstPosition >= numberOfSquares or: secondPosition >= numberOfSquares)
+		ifTrue: [ Error signal: 'Wormholes must be between the first and the second to last square' ]
+]
+
+{ #category : #accessing }
 Gameboard >> find: aTarget [
 
 self withIndexDo: [ :aSquare :index | 
@@ -32,13 +51,12 @@ self withIndexDo: [ :aSquare :index |
 
 ]
 
-{ #category : 'accessing' }
-Gameboard >> move: aSpaceship with: aNumberOfSquares [ 
+{ #category : #accessing }
+Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	|currentPosition targetSquare sum |
 	currentPosition := self find: aSpaceship.
 	sum := currentPosition + aNumberOfSquares.
 	targetSquare := self verifySumNotOutOfBounds: sum.
-
 	
 	(self at: currentPosition) remove: aSpaceship.
 	(self at: targetSquare) land: aSpaceship. 
@@ -46,7 +64,7 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Gameboard >> setPlayers: players [
 
 | firstSquare |
@@ -57,7 +75,7 @@ players do: [ :eachPlayer | firstSquare land: eachPlayer ]
 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard >> verifySumNotOutOfBounds: sum [
 
  ^ (sum < self size) ifFalse:[self size] ifTrue:[sum]
