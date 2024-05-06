@@ -1,7 +1,7 @@
 Class {
 	#name : #SpaceshipGameTest,
 	#superclass : #TestCase,
-	#category : 'IngSoft2-Tests'
+	#category : #'IngSoft2-Tests'
 }
 
 { #category : #tests }
@@ -21,7 +21,7 @@ SpaceshipGameTest >> testCreateAGameWithMoreThanOnePlayer [
 aSpaceship :=  Spaceship withName: 'Galindez'. 
 aSpaceship2 :=  Spaceship withName: 'Hernan'. 
 aSpaceshipArray := Array with: aSpaceship with: aSpaceship2.
-aGameboard :=  Gameboard numberOfSquares: 5.
+aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
 aDie := LoadedDie of: 4.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -35,7 +35,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 aSpaceship :=  Spaceship withName: 'Hernan'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 5.
+aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
 aDie := LoadedDie of: 4.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -54,7 +54,7 @@ SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 12.
+aGameboard :=  Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
 aDie := Die of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -69,7 +69,7 @@ SpaceshipGameTest >> testGameWinner [
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 aSpaceship :=  Spaceship withName: 'Galindez'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 5.
+aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
 aDie := LoadedDie of: 4.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -79,12 +79,32 @@ self assert: aGame winner equals: aSpaceship
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
+
+| aSpaceship aGameboard aDie aGame aSpaceship2 aSpaceshipArray |
+aSpaceship :=  Spaceship withName: 'Pancho'. 
+aSpaceship2 :=  Spaceship withName: 'Seijas'. 
+aSpaceshipArray := Array with: aSpaceship with: aSpaceship2.
+aGameboard :=  Gameboard numberOfSquares: 11 withWormholeAt:2 and: 4 .
+aDie := LoadedDie of: 5.
+aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
+
+aGame playTurn.
+aGame playTurn.
+aGame playTurn.
+
+
+self assert: aGame winner equals: aSpaceship.
+
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 |aGame aSpaceship aGameboard aDie aSpaceshipArray |
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 12.
+aGameboard :=  Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
 aDie := LoadedDie of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 self deny: (aGame isOver)
@@ -96,12 +116,12 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 
 aSpaceship :=  Spaceship withName: 'Zalo'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 13.
-aDie := LoadedDie of: 6.
+aGameboard :=  Gameboard numberOfSquares: 13 withWormholeAt: 2 and: 7.
+aDie := LoadedDie of: 12.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
 aGame playTurn.
-aGame playTurn.
+
 
 self assert: aGame isOver.  
 
@@ -113,7 +133,7 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 12.
+aGameboard :=  Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 9.
 aDie := LoadedDie of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -128,7 +148,7 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 12.
+aGameboard :=  Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
 aDie := LoadedDie of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -141,11 +161,41 @@ SpaceshipGameTest >> testWhenPlayerDontPlayAndAskForWinnerThenThereIsNoWinner [
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 aSpaceship :=  Spaceship withName: 'Galindez'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 5.
+aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
 aDie := LoadedDie of: 4.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
 self assert: aGame winner equals: 'There is no winner yet'.
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWormhole [
+
+| aSpaceship aGameboard aDice aGame aSpaceshipArray |
+aSpaceship :=  Spaceship withName: 'Helado de menta granizada'. 
+aSpaceshipArray := Array with: aSpaceship.
+aGameboard :=  Gameboard numberOfSquares: 15 withWormholeAt: 9 and: 12.
+aDice := Dice with: (LoadedDie of: 3) with: (LoadedDie of: 5).
+aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDice . 
+
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 12 
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWormhole [
+
+| aSpaceship aGameboard aDice aGame aSpaceshipArray |
+aSpaceship :=  Spaceship withName: 'Tornillito loco'. 
+aSpaceshipArray := Array with: aSpaceship.
+aGameboard :=  Gameboard numberOfSquares: 15 withWormholeAt: 9 and: 12.
+aDice := Dice with: (LoadedDie of: 7) with: (LoadedDie of: 4).
+aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDice . 
+
+aGame playTurn.
+
+self assert: (aGame positionOf: aSpaceship) equals: 9 
 ]
 
 { #category : #tests }
@@ -154,7 +204,7 @@ SpaceshipGameTest >> testWhenTargetIsOutOfBoundMoveToTheEnd [
 | aSpaceship aGameboard aDie aGame aSpaceshipArray |
 aSpaceship :=  Spaceship withName: 'Zepo'. 
 aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 5.
+aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
 aDie := LoadedDie of: 6.
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
 
@@ -170,7 +220,7 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 | aSpaceship aGameboard aDice aGame aSpaceshipArray |
 
 aSpaceship :=  Spaceship withName: 'Pancho'. 
-aGameboard :=  Gameboard numberOfSquares: 12.
+aGameboard :=  Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
 aSpaceshipArray:= Array with: aSpaceship.
 aDice := Dice with:(LoadedDie of: 6) with: (LoadedDie of: 3).
 aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDice . 
