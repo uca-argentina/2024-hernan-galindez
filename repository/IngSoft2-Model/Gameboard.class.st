@@ -44,39 +44,34 @@ Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPos
 { #category : #accessing }
 Gameboard >> find: aTarget [
 
-self withIndexDo: [ :aSquare :index | 
-	(aSquare includes: aTarget) ifTrue: [ ^ index ] 
-	 ]
-
-
+	^ self detectIndex: [ :square | square includes: aTarget ]
 ]
 
 { #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [
-	|currentPosition targetSquare sum |
+
+	| currentPosition targetSquare sum |
 	currentPosition := self find: aSpaceship.
 	sum := currentPosition + aNumberOfSquares.
-	targetSquare := self verifySumNotOutOfBounds: sum.
-	
+	targetSquare := self validMoveOf: sum.
+
 	(self at: currentPosition) remove: aSpaceship.
-	(self at: targetSquare) land: aSpaceship. 
-
-
+	(self at: targetSquare) land: aSpaceship
 ]
 
 { #category : #initialization }
 Gameboard >> setPlayers: players [
 
-| firstSquare |
-firstSquare := self at: 1.
+	| firstSquare |
+	firstSquare := self at: 1.
 
-players do: [ :eachPlayer | firstSquare land: eachPlayer ]
-
-
+	players do: [ :player | firstSquare land: player ]
 ]
 
 { #category : #accessing }
-Gameboard >> verifySumNotOutOfBounds: sum [
+Gameboard >> validMoveOf: anAmountOfSquaresToMove [
 
- ^ (sum < self size) ifFalse:[self size] ifTrue:[sum]
+	^ anAmountOfSquaresToMove < self size
+		  ifFalse: [ self size ]
+		  ifTrue: [ anAmountOfSquaresToMove ]
 ]
