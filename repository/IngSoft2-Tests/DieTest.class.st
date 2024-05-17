@@ -1,7 +1,7 @@
 Class {
 	#name : #DieTest,
 	#superclass : #TestCase,
-	#category : 'IngSoft2-Tests'
+	#category : #'IngSoft2-Tests'
 }
 
 { #category : #asserting }
@@ -17,7 +17,7 @@ DieTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessag
 { #category : #asserting }
 DieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [ 
 
-self should: [ LoadedDie of: 2 ] raise: Error withMessage: 'Faces should be more than 2'.
+self should: [ Die of: 2 ] raise: Error withMessage: 'Faces should be more than 2'.
 ]
 
 { #category : #tests }
