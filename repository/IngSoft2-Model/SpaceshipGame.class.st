@@ -7,7 +7,8 @@ Class {
 		'dice',
 		'isOver',
 		'winner',
-		'currentTurn'
+		'currentTurn',
+		'square'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -44,7 +45,10 @@ SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard wi
 { #category : #testing }
 SpaceshipGame >> isOver [
 
-	^ isOver
+	| lastSquarePosition |
+	lastSquarePosition := gameboard size.
+	^ self players anySatisfy: [ :aSpaceship |
+		  (self positionOf: aSpaceship) = lastSquarePosition ]
 ]
 
 { #category : #'game controls' }
@@ -87,18 +91,13 @@ SpaceshipGame >> verifyGameIsNotOver [
 ]
 
 { #category : #'game logic' }
-SpaceshipGame >> verifyIfThePlayerReachedTheEnd: aSpaceship [
-
-	| currentPosition |
-	currentPosition := self positionOf: aSpaceship.
-
-	currentPosition = gameboard size ifFalse: [ ^ self ].
-
-	isOver := true.
-	winner := aSpaceship
-]
-
-{ #category : #'game logic' }
 SpaceshipGame >> winner [
-	^ winner
+	| lastSquarePosition |
+	lastSquarePosition := gameboard size.
+
+	self players do: [:aSpaceship |
+		(self positionOf: aSpaceship) = lastSquarePosition ifTrue: [ ^ aSpaceship ]].
+
+	^ 'There is no winner yet'
+
 ]
