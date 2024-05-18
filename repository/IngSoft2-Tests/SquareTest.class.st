@@ -7,27 +7,26 @@ Class {
 { #category : #tests }
 SquareTest >> testCreationOfSquareWIthSpaceship [
 
-| aSquare aSpaceship |
-aSquare := Square create.
-aSpaceship := Spaceship withName: 'Delepa'.
-aSquare land: aSpaceship.
+	| aSquare aSpaceship |
+	aSquare := Square create.
+	aSpaceship := 'Delepa'.
+	aSquare land: aSpaceship.
 
-self assert: (aSquare currentPlayers includes: aSpaceship).
-
+	self assert: (aSquare currentPlayers includes: aSpaceship)
 ]
 
 { #category : #tests }
 SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 
-| aSquare aSpaceship aSpaceship2 |
-aSquare := Square create.
-aSpaceship := Spaceship withName: 'Delepa'.
-aSpaceship2 := Spaceship withName: 'Juan'.
-aSquare land: aSpaceship.
-aSquare land: aSpaceship2.
+	| aSquare aSpaceship aSpaceship2 |
+	aSquare := Square create.
+	aSpaceship := 'Delepa'.
+	aSpaceship2 := 'Juan'.
+	aSquare land: aSpaceship.
+	aSquare land: aSpaceship2.
 
-self assert: (aSquare currentPlayers includes: aSpaceship).
-self assert: (aSquare currentPlayers includes: aSpaceship2).
+	self assert: (aSquare currentPlayers includes: aSpaceship).
+	self assert: (aSquare currentPlayers includes: aSpaceship2)
 ]
 
 { #category : #tests }
@@ -41,14 +40,13 @@ self assert: (aSquare currentPlayers isEmpty).
 ]
 
 { #category : #tests }
-SquareTest >> testRemoveSpaceshipFromSquare [ 
+SquareTest >> testRemoveSpaceshipFromSquare [
 
-| aSquare aSpaceship |
-aSquare := Square create.
-aSpaceship := Spaceship withName: 'Delepa'.
-aSquare land: aSpaceship.
-aSquare remove: aSpaceship.
+	| aSquare aSpaceship |
+	aSquare := Square create.
+	aSpaceship := 'Delepa'.
+	aSquare land: aSpaceship.
+	aSquare remove: aSpaceship.
 
-self deny: (aSquare currentPlayers includes: aSpaceship).
-
+	self deny: (aSquare currentPlayers includes: aSpaceship)
 ]
