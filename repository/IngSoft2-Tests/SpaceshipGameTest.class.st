@@ -33,6 +33,25 @@ SpaceshipGameTest >> testCreateAGameWithMoreThanOnePlayer [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
+
+	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
+	aSpaceship := 'Galindez'.
+	aSpaceshipArray := Array with: aSpaceship.
+	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
+	aDie := LoadedDie of: 4.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipArray
+		         withGameboard: aGameboard
+		         withDie: aDie.
+
+	self
+		should: [ aGame winner ]
+		raise: Error
+		withMessage: 'There is no winner yet'
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -199,22 +218,6 @@ SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
 
 	self assert: (aGame positionOf: aSpaceship) equals: 11.
 	self assert: (aGame positionOf: anotherSpaceship) equals: 6
-]
-
-{ #category : #tests }
-SpaceshipGameTest >> testWhenPlayerDontPlayAndAskForWinnerThenThereIsNoWinner [
-
-	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
-	aSpaceship := 'Galindez'.
-	aSpaceshipArray := Array with: aSpaceship.
-	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
-	aDie := LoadedDie of: 4.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipArray
-		         withGameboard: aGameboard
-		         withDie: aDie.
-
-	self assert: aGame winner equals: 'There is no winner yet'
 ]
 
 { #category : #tests }

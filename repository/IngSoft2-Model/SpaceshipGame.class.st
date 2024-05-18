@@ -68,7 +68,6 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	currentPlayer := players at: currentTurn.
 	gameboard move: currentPlayer with: aNumber.
-	self winner.
 	currentTurn := self nextTurn
 ]
 
@@ -92,12 +91,12 @@ SpaceshipGame >> verifyGameIsNotOver [
 
 { #category : #'game logic' }
 SpaceshipGame >> winner [
+
 	| lastSquarePosition |
 	lastSquarePosition := gameboard size.
 
-	self players do: [:aSpaceship |
-		(self positionOf: aSpaceship) = lastSquarePosition ifTrue: [ ^ aSpaceship ]].
-
-	^ 'There is no winner yet'
-
+	^ players
+		  detect: [ :player |
+		  (self positionOf: player) = lastSquarePosition ]
+		  ifNone: [ Error signal:'There is no winner yet' ]
 ]
