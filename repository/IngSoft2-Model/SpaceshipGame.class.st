@@ -68,7 +68,8 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	currentPlayer := players at: currentTurn.
 	gameboard move: currentPlayer with: aNumber.
-	self verifyIfThePlayerReachedTheEnd: currentPlayer.
+	self winner.
+	self verifyGameIsNotOver.
 	currentTurn := self nextTurn
 ]
 

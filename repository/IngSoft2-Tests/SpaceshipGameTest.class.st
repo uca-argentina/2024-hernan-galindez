@@ -30,21 +30,24 @@ self assert: aGame players equals: aSpaceshipArray.
 ]
 
 { #category : #tests }
-SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [ 
+SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 
-| aSpaceship aGameboard aDie aGame aSpaceshipArray |
-aSpaceship :=  Spaceship withName: 'Hernan'. 
-aSpaceshipArray := Array with: aSpaceship.
-aGameboard :=  Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
-aDie := LoadedDie of: 4.
-aGame := SpaceshipGame withPlayers: aSpaceshipArray withGameboard: aGameboard withDie: aDie . 
+	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
+	aSpaceship := Spaceship withName: 'Hernan'.
+	aSpaceshipArray := Array with: aSpaceship.
+	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
+	aDie := LoadedDie of: 4.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipArray
+		         withGameboard: aGameboard
+		         withDie: aDie.
 
-aGame playTurn.
+	aGame playTurn.
 
-self
-	should: [ aGame playTurn ]
-	raise: Error
-	withMessage: 'Game is over'
+	self
+		should: [ aGame playTurn ]
+		raise: Error
+		withMessage: 'Game is over'
 ]
 
 { #category : #tests }
