@@ -40,12 +40,3 @@ GameboardTest >> testErrorWhenWormholeAtPositionsGreaterThanBoardSize [
 		raise: Error
 		withMessage: 'Wormholes must be between the first and the second to last square'
 ]
-
-{ #category : #tests }
-GameboardTest >> testGameboardCreationWithWormhole [
-| aGameboard |
-
-aGameboard := Gameboard numberOfSquares: 10 withWormholeAt: 2 and: 7.
-
-self assert: (aGameboard at:2) isWormhole.
-]

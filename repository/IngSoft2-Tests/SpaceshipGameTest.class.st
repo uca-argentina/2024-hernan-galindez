@@ -227,7 +227,10 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 	aSpaceship := 'Helado de menta granizada'.
 	aSpaceshipArray := Array with: aSpaceship.
 	aGameboard := Gameboard numberOfSquares: 15 withWormholeAt: 9 and: 12.
-	aDice := Dice with: (LoadedDie of: 3) with: (LoadedDie of: 5).
+	aDice := Dice with:
+		         (OrderedCollection
+			          with: (LoadedDie of: 3)
+			          with: (LoadedDie of: 5)).
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
@@ -245,7 +248,10 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 	aSpaceship := 'Tornillito loco'.
 	aSpaceshipArray := Array with: aSpaceship.
 	aGameboard := Gameboard numberOfSquares: 15 withWormholeAt: 9 and: 12.
-	aDice := Dice with: (LoadedDie of: 7) with: (LoadedDie of: 4).
+	aDice := Dice with:
+		         (OrderedCollection
+			          with: (LoadedDie of: 7)
+			          with: (LoadedDie of: 4)).
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
@@ -281,7 +287,10 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 	aSpaceship := 'Pancho'.
 	aGameboard := Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
 	aSpaceshipArray := Array with: aSpaceship.
-	aDice := Dice with: (LoadedDie of: 6) with: (LoadedDie of: 3).
+	aDice := Dice with:
+		         (OrderedCollection
+			          with: (LoadedDie of: 6)
+			          with: (LoadedDie of: 3)).
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
