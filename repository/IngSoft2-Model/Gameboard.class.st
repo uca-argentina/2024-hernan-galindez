@@ -1,32 +1,27 @@
 Class {
 	#name : #Gameboard,
-	#superclass : #Array,
+	#superclass : #Object,
 	#type : #variable,
+	#instVars : [
+		'board'
+	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #accessing }
 Gameboard class >> numberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
 
-	| anArray wormholePair aWormhole anotherWormhole |
 	self verifyGreaterThanZero: aNumberOfSquares.
 	self
 		verifyThereAreNoWormholesOutOfBounds: aNumberOfSquares
 		withPositions: firstWormholePosition
 		and: secondWormholePosition.
-	anArray := self new: aNumberOfSquares.
-	wormholePair := Wormhole newPair.
-	aWormhole := wormholePair at: 1.
-	anotherWormhole := wormholePair at: 2.
 
-	1 to: aNumberOfSquares do: [ :index |
-	anArray at: index put: Square create ].
 
-	anArray
-		at: firstWormholePosition put: aWormhole;
-		at: secondWormholePosition put: anotherWormhole.
-
-	^ anArray
+	^ self new
+		  initializeWithNumberOfSquares: aNumberOfSquares
+		  withWormholeAt: firstWormholePosition
+		  and: secondWormholePosition
 ]
 
 { #category : #accessing }
@@ -44,7 +39,22 @@ Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPos
 { #category : #accessing }
 Gameboard >> find: aTarget [
 
-	^ self detectIndex: [ :square | square includes: aTarget ]
+	^ board detectIndex: [ :square | square includes: aTarget ]
+]
+
+{ #category : #accessing }
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
+
+	| wormholePair aWormhole anotherWormhole |
+	board := (Array new: aNumberOfSquares) collect: [ :square |
+		         Square create ].
+	wormholePair := Wormhole newPair.
+	aWormhole := wormholePair at: 1.
+	anotherWormhole := wormholePair at: 2.
+
+	board
+		at: firstWormholePosition put: aWormhole;
+		at: secondWormholePosition put: anotherWormhole
 ]
 
 { #category : #accessing }
@@ -55,23 +65,29 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	sum := currentPosition + aNumberOfSquares.
 	targetSquare := self validMoveOf: sum.
 
-	(self at: currentPosition) remove: aSpaceship.
-	(self at: targetSquare) land: aSpaceship
+	(board at: currentPosition) remove: aSpaceship.
+	(board at: targetSquare) land: aSpaceship
 ]
 
 { #category : #initialization }
-Gameboard >> setPlayers: players [
+Gameboard >> setPlayersAtFirstPosition: players [
 
 	| firstSquare |
-	firstSquare := self at: 1.
+	firstSquare := board at: 1.
 
 	players do: [ :player | firstSquare land: player ]
 ]
 
 { #category : #accessing }
+Gameboard >> size [
+
+	^ board size
+]
+
+{ #category : #accessing }
 Gameboard >> validMoveOf: anAmountOfSquaresToMove [
 
-	^ anAmountOfSquaresToMove < self size
-		  ifFalse: [ self size ]
+	^ anAmountOfSquaresToMove < board size
+		  ifFalse: [ board size ]
 		  ifTrue: [ anAmountOfSquaresToMove ]
 ]

@@ -34,7 +34,7 @@ SpaceshipGame >> gameboard [
 SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
 
 	players := somePlayers.
-	aGameboard setPlayers: somePlayers.
+	aGameboard setPlayersAtFirstPosition: somePlayers.
 	gameboard := aGameboard.
 	dice := aDice.
 	currentTurn := 1.
