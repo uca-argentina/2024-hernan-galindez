@@ -8,7 +8,7 @@ Class {
 SquareTest >> testCreationOfSquareWIthSpaceship [
 
 	| aSquare aSpaceship |
-	aSquare := Square create.
+	aSquare := NormalSquare create.
 	aSpaceship := 'Delepa'.
 	aSquare land: aSpaceship.
 
@@ -19,7 +19,7 @@ SquareTest >> testCreationOfSquareWIthSpaceship [
 SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 
 	| aSquare aSpaceship aSpaceship2 |
-	aSquare := Square create.
+	aSquare := NormalSquare create.
 	aSpaceship := 'Delepa'.
 	aSpaceship2 := 'Juan'.
 	aSquare land: aSpaceship.
@@ -33,7 +33,7 @@ SquareTest >> testCreationOfSquareWithMoreThanOneSpaceship [
 SquareTest >> testCreationOfSquareWithNoSpaceship [ 
 
 | aSquare |
-aSquare := Square create.
+aSquare := NormalSquare create.
 
 self assert: (aSquare currentPlayers isEmpty).
 
@@ -43,7 +43,7 @@ self assert: (aSquare currentPlayers isEmpty).
 SquareTest >> testRemoveSpaceshipFromSquare [
 
 	| aSquare aSpaceship |
-	aSquare := Square create.
+	aSquare := NormalSquare create.
 	aSpaceship := 'Delepa'.
 	aSquare land: aSpaceship.
 	aSquare remove: aSpaceship.

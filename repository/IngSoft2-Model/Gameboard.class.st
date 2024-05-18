@@ -47,7 +47,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: fir
 
 	| wormholePair aWormhole anotherWormhole |
 	board := (Array new: aNumberOfSquares) collect: [ :square |
-		         Square create ].
+		         NormalSquare create ].
 	wormholePair := Wormhole newPair.
 	aWormhole := wormholePair at: 1.
 	anotherWormhole := wormholePair at: 2.

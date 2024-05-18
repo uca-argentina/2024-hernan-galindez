@@ -36,17 +36,18 @@ Wormhole >> connection [
 ^ connection 
 ]
 
-{ #category : #testing }
-Wormhole >> isWormhole [
-	^true
-]
-
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 	connection teleport: aSpaceship.
 	
 	 
 
+]
+
+{ #category : #'add/remove' }
+Wormhole >> remove: aSpaceship [
+
+	occupiedBy remove: aSpaceship
 ]
 
 { #category : #'add/remove' }
