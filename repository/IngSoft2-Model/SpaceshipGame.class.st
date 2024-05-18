@@ -69,7 +69,6 @@ SpaceshipGame >> playTurn [
 	currentPlayer := players at: currentTurn.
 	gameboard move: currentPlayer with: aNumber.
 	self winner.
-	self verifyGameIsNotOver.
 	currentTurn := self nextTurn
 ]
 
@@ -88,7 +87,7 @@ SpaceshipGame >> positionOf: aSpaceship [
 { #category : #'game logic' }
 SpaceshipGame >> verifyGameIsNotOver [
 
-	isOver ifTrue: [ Error signal: 'Game is over' ]
+	self isOver ifTrue: [ Error signal: 'Game is over' ]
 ]
 
 { #category : #'game logic' }
