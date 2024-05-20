@@ -22,18 +22,6 @@ SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie
 		  withDice: aDie
 ]
 
-{ #category : #testing }
-SpaceshipGame >> dice [
-
-	^ dice
-]
-
-{ #category : #testing }
-SpaceshipGame >> gameboard [
-
-	^ gameboard
-]
-
 { #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
 
@@ -46,7 +34,7 @@ SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard wi
 	winner := 'There is no winner yet'
 ]
 
-{ #category : #testing }
+{ #category : #'game logic' }
 SpaceshipGame >> isOver [
 
 	| lastSquarePosition |
@@ -73,12 +61,6 @@ SpaceshipGame >> playTurn [
 	currentPlayer := players at: currentTurn.
 	gameboard move: currentPlayer with: aNumber.
 	currentTurn := self nextTurn
-]
-
-{ #category : #testing }
-SpaceshipGame >> players [
-
-	^ players
 ]
 
 { #category : #'game logic' }
