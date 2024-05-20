@@ -15,24 +15,6 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 ]
 
 { #category : #tests }
-SpaceshipGameTest >> testCreateAGameWithMoreThanOnePlayer [
-
-	| aSpaceship aGameboard aDie aGame aSpaceship2 aSpaceshipArray |
-	aSpaceship := 'Galindez'.
-	aSpaceship2 := 'Hernan'.
-	aSpaceshipArray := Array with: aSpaceship with: aSpaceship2.
-	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
-	aDie := LoadedDie of: 4.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipArray
-		         withGameboard: aGameboard
-		         withDie: aDie.
-
-
-	self assert: aGame players equals: aSpaceshipArray
-]
-
-{ #category : #tests }
 SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -70,42 +52,6 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		should: [ aGame playTurn ]
 		raise: Error
 		withMessage: 'Game is over'
-]
-
-{ #category : #tests }
-SpaceshipGameTest >> testGameCanBeCreatedWithPlayersGameboardAndDie [
-
-	| aGame aSpaceship aGameboard aDie aSpaceshipArray |
-	aSpaceship := 'Pancho'.
-	aSpaceshipArray := Array with: aSpaceship.
-	aGameboard := Gameboard numberOfSquares: 12 withWormholeAt: 2 and: 7.
-	aDie := Die of: 6.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipArray
-		         withGameboard: aGameboard
-		         withDie: aDie.
-
-	self assert: aGame players equals: aSpaceshipArray.
-	self assert: aGame gameboard equals: aGameboard.
-	self assert: aGame dice equals: aDie
-]
-
-{ #category : #tests }
-SpaceshipGameTest >> testGameWinner [
-
-	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
-	aSpaceship := 'Galindez'.
-	aSpaceshipArray := Array with: aSpaceship.
-	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
-	aDie := LoadedDie of: 4.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipArray
-		         withGameboard: aGameboard
-		         withDie: aDie.
-
-	aGame playTurn.
-
-	self assert: aGame winner equals: aSpaceship
 ]
 
 { #category : #tests }
@@ -221,6 +167,42 @@ SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenNextMoveIsOutOfBoundMoveToTheEnd [
+
+	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
+	aSpaceship := 'Zepo'.
+	aSpaceshipArray := Array with: aSpaceship.
+	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
+	aDie := LoadedDie of: 6.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipArray
+		         withGameboard: aGameboard
+		         withDie: aDie.
+
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 5
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
+
+	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
+	aSpaceship := 'Galindez'.
+	aSpaceshipArray := Array with: aSpaceship.
+	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
+	aDie := LoadedDie of: 4.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipArray
+		         withGameboard: aGameboard
+		         withDie: aDie.
+
+	aGame playTurn.
+
+	self assert: aGame winner equals: aSpaceship
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWormhole [
 
 	| aSpaceship aGameboard aDice aGame aSpaceshipArray |
@@ -260,24 +242,6 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 9
-]
-
-{ #category : #tests }
-SpaceshipGameTest >> testWhenTargetIsOutOfBoundMoveToTheEnd [
-
-	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
-	aSpaceship := 'Zepo'.
-	aSpaceshipArray := Array with: aSpaceship.
-	aGameboard := Gameboard numberOfSquares: 5 withWormholeAt: 2 and: 4.
-	aDie := LoadedDie of: 6.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipArray
-		         withGameboard: aGameboard
-		         withDie: aDie.
-
-	aGame playTurn.
-
-	self assert: (aGame positionOf: aSpaceship) equals: 5
 ]
 
 { #category : #tests }
