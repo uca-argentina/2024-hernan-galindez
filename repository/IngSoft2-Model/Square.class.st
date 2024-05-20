@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 Square class >> create [
 
-^(self new) initialize
+	^ self new initialize
 ]
 
 { #category : #accessing }
@@ -28,7 +28,7 @@ Square >> initialize [
 { #category : #'add/remove' }
 Square >> land: aSpaceship [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'add/remove' }

@@ -9,37 +9,33 @@ Class {
 
 { #category : #'instance creation' }
 Wormhole class >> newPair [
-|aWormhole anotherWormhole wormholePair|
 
-aWormhole := self new.
-anotherWormhole := self new.
-aWormhole connectTo: anotherWormhole.
-anotherWormhole connectTo: aWormhole.
+	| aWormhole anotherWormhole wormholePair |
+	aWormhole := self new.
+	anotherWormhole := self new.
+	aWormhole connectTo: anotherWormhole.
+	anotherWormhole connectTo: aWormhole.
 
-wormholePair := OrderedCollection with: aWormhole with: anotherWormhole .
-^ wormholePair .
-
-
-
-
+	wormholePair := OrderedCollection
+		                with: aWormhole
+		                with: anotherWormhole.
+	^ wormholePair
 ]
 
 { #category : #'public - line' }
 Wormhole >> connectTo: anotherWormhole [
 
-connection:= anotherWormhole.
+	connection := anotherWormhole
 ]
 
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
-	connection teleport: aSpaceship.
-	
-	 
 
+	connection teleport: aSpaceship
 ]
 
 { #category : #'add/remove' }
 Wormhole >> teleport: aSpaceship [
 
-occupiedBy add: aSpaceship.
+	occupiedBy add: aSpaceship
 ]

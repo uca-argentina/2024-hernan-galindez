@@ -15,7 +15,11 @@ Class {
 
 { #category : #'accesing - defaults' }
 SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
-	^ (self new) initializeWithPlayers: aSpaceship withGameboard: aGameboard withDice: aDie
+
+	^ self new
+		  initializeWithPlayers: aSpaceship
+		  withGameboard: aGameboard
+		  withDice: aDie
 ]
 
 { #category : #testing }
@@ -47,7 +51,7 @@ SpaceshipGame >> isOver [
 
 	| lastSquarePosition |
 	lastSquarePosition := gameboard size.
-	^	players anySatisfy: [ :aSpaceship |
+	^ players anySatisfy: [ :aSpaceship |
 		  (self positionOf: aSpaceship) = lastSquarePosition ]
 ]
 

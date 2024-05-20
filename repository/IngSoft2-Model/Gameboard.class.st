@@ -26,14 +26,18 @@ Gameboard class >> numberOfSquares: aNumberOfSquares withWormholeAt: firstWormho
 
 { #category : #accessing }
 Gameboard class >> verifyGreaterThanZero: aLength [
-	aLength > 0 ifFalse: [ Error signal: 'Length must be greater than zero' ]
+
+	aLength > 0 ifFalse: [
+		Error signal: 'Length must be greater than zero' ]
 ]
 
 { #category : #accessing }
 Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPositions: firstPosition and: secondPosition [
 
-	(firstPosition >= numberOfSquares or: secondPosition >= numberOfSquares)
-		ifTrue: [ Error signal: 'Wormholes must be between the first and the second to last square' ]
+	(firstPosition >= numberOfSquares or:
+		 secondPosition >= numberOfSquares) ifTrue: [
+		Error signal:
+			'Wormholes must be between the first and the second to last square' ]
 ]
 
 { #category : #accessing }
