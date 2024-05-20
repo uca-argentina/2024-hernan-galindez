@@ -39,5 +39,6 @@ GameboardTest >> testBoardCannotBeCreatedWithWormholeAtPositionsGreaterThanBoard
 	self
 		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 12 ]
 		raise: Error
-		withMessage: 'Wormholes must be between the first and the second to last square'
+		withMessage:
+		'Wormholes must be between the first and the second to last square'
 ]

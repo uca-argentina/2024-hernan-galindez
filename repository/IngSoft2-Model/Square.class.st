@@ -13,12 +13,6 @@ Square class >> create [
 ^(self new) initialize
 ]
 
-{ #category : #tests }
-Square >> currentPlayers [
-
-	^ occupiedBy
-]
-
 { #category : #accessing }
 Square >> includes: aSpaceship [
 
