@@ -22,7 +22,7 @@ Square >> includes: aSpaceship [
 { #category : #initialization }
 Square >> initialize [
 
-	self subclassResponsibility 
+	occupiedBy := OrderedCollection new
 ]
 
 { #category : #'add/remove' }
