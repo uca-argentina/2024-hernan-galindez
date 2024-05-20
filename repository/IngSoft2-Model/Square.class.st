@@ -28,7 +28,7 @@ Square >> initialize [
 { #category : #'add/remove' }
 Square >> land: aSpaceship [
 
-	self subclassResponsibility
+	occupiedBy add: aSpaceship
 ]
 
 { #category : #'add/remove' }
