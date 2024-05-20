@@ -47,7 +47,7 @@ SpaceshipGame >> isOver [
 
 	| lastSquarePosition |
 	lastSquarePosition := gameboard size.
-	^ self players anySatisfy: [ :aSpaceship |
+	^	players anySatisfy: [ :aSpaceship |
 		  (self positionOf: aSpaceship) = lastSquarePosition ]
 ]
 

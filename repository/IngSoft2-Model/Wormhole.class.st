@@ -45,12 +45,6 @@ Wormhole >> land: aSpaceship [
 ]
 
 { #category : #'add/remove' }
-Wormhole >> remove: aSpaceship [
-
-	occupiedBy remove: aSpaceship
-]
-
-{ #category : #'add/remove' }
 Wormhole >> teleport: aSpaceship [
 
 occupiedBy add: aSpaceship.

@@ -40,5 +40,5 @@ Square >> land: aSpaceship [
 { #category : #'add/remove' }
 Square >> remove: aSpaceship [
 
-	self subclassResponsibility
+	occupiedBy remove: aSpaceship
 ]
