@@ -15,25 +15,26 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 ]
 
 { #category : #tests }
-GameboardTest >> testErrorWhenLengthIsNotGreaterThanZero [ 
+GameboardTest >> testBoardCannotBeCreatedWithLengthLessThanZero [
 
 	self
-	should: [ Gameboard numberOfSquares: -1 withWormholeAt: 1 and: 2 ]
-	raise: Error 
-	withMessage: 'Length must be greater than zero'
+		should: [ Gameboard numberOfSquares: -1 withWormholeAt: 1 and: 2 ]
+		raise: Error
+		withMessage: 'Length must be greater than zero'
 ]
 
 { #category : #tests }
-GameboardTest >> testErrorWhenWormholeAtLastSqaure [
+GameboardTest >> testBoardCannotBeCreatedWithWormholeAtLastSquare [
 
 	self
 		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 10 ]
 		raise: Error
-		withMessage: 'Wormholes must be between the first and the second to last square'
+		withMessage:
+		'Wormholes must be between the first and the second to last square'
 ]
 
 { #category : #tests }
-GameboardTest >> testErrorWhenWormholeAtPositionsGreaterThanBoardSize [
+GameboardTest >> testBoardCannotBeCreatedWithWormholeAtPositionsGreaterThanBoardSize [
 
 	self
 		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 12 ]
