@@ -30,12 +30,6 @@ Wormhole >> connectTo: anotherWormhole [
 connection:= anotherWormhole.
 ]
 
-{ #category : #accessing }
-Wormhole >> connection [ 
-
-^ connection 
-]
-
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 	connection teleport: aSpaceship.
