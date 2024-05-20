@@ -28,6 +28,12 @@ Wormhole >> connectTo: anotherWormhole [
 	connection := anotherWormhole
 ]
 
+{ #category : #initialization }
+Wormhole >> initialize [
+
+	occupiedBy := OrderedCollection new.
+]
+
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 
