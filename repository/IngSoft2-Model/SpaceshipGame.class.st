@@ -5,30 +5,32 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'isOver',
-		'winner',
-		'currentTurn',
-		'square'
+		'currentTurn'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'accesing - defaults' }
-SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection [
 
 	^ self new
-		  initializeWithPlayers: aSpaceship
-		  withGameboard: aGameboard
-		  withDice: aDie
+		  initializeWithPlayers: somePlayers
+		  withGameboardLength: aLength
+		  withWormholesPoisitions: wormholePositions
+		  withDice: aDiceCollection
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
+SpaceshipGame >> initializeWithPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection [
 
-	players := somePlayers.
-	aGameboard setPlayersAtFirstPosition: somePlayers.
-	gameboard := aGameboard.
-	dice := aDice.
+	players := somePlayers copy.
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             withWormholeAt: (wormholePositions at: 1)
+		             and: (wormholePositions at: 2).
+	gameboard setPlayersAtFirstPosition: somePlayers.
+	dice := Dice with: aDiceCollection copy.
+
 	currentTurn := 1
 ]
 
