@@ -1,10 +1,11 @@
 Class {
-	#name : #NormalSquare,
-	#superclass : #Square,
-	#category : #'IngSoft2-Model'
+	#name : 'NormalSquare',
+	#superclass : 'Square',
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 NormalSquare >> land: aSpaceship [
 
 	occupiedBy add: aSpaceship

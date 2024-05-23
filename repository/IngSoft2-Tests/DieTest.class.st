@@ -1,10 +1,11 @@
 Class {
-	#name : #DieTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'DieTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DieTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -14,7 +15,7 @@ DieTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessag
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 DieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 
 	self
@@ -23,7 +24,7 @@ DieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 		withMessage: 'Faces should be more than 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DieTest >> testReturnsAValueBetweenOneAndNumberOfFacesOfDie [
 
 	| aDie |
@@ -32,7 +33,7 @@ DieTest >> testReturnsAValueBetweenOneAndNumberOfFacesOfDie [
 	self assert: (aDie throw between: 1 and: 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DieTest >> testWhenDieIsThrownThenValueIsBetweenOneAndNumberOfFaces [
 
 	| aDie |

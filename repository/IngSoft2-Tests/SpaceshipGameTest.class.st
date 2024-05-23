@@ -1,10 +1,11 @@
 Class {
-	#name : #SpaceshipGameTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'SpaceshipGameTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anErrorMessage [
 
 	self
@@ -14,7 +15,7 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 		self assert: error messageText equals: anErrorMessage ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -25,7 +26,8 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	self
 		should: [ aGame winner ]
@@ -33,7 +35,7 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 		withMessage: 'There is no winner yet'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -44,7 +46,8 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 
@@ -54,7 +57,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		withMessage: 'Game is over'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 
 	| aSpaceship aGameboard aDie aGame aSpaceship2 aSpaceshipArray |
@@ -66,7 +69,8 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -76,7 +80,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 	self assert: aGame winner equals: aSpaceship
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 
 	| aGame aSpaceship aGameboard aDie aSpaceshipArray |
@@ -87,11 +91,12 @@ SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 	self deny: aGame isOver
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -102,7 +107,8 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 
@@ -110,7 +116,7 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 	self assert: aGame isOver
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -121,14 +127,15 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [
 
 	| aGame aSpaceship aGameboard aDie aSpaceshipArray |
@@ -139,12 +146,13 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
 
 	| aSpaceship aGameboard aDie aGame anotherSpaceship aSpaceshipArray |
@@ -156,7 +164,8 @@ SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -166,7 +175,7 @@ SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
 	self assert: (aGame positionOf: anotherSpaceship) equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenNextMoveIsOutOfBoundMoveToTheEnd [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -177,14 +186,36 @@ SpaceshipGameTest >> testWhenNextMoveIsOutOfBoundMoveToTheEnd [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
-
+		         withDie: aDie
+					withLaps: 2.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+SpaceshipGameTest >> testWhenPlayerReachesTheEndOnFirstLapThenGameIsNotOver [
+
+	| aSpaceship aGameboard aDice aGame aSpaceshipArray |
+	aSpaceship := 'Jorge Spaceship'.
+	aSpaceshipArray := Array with: aSpaceship.
+	aGameboard := Gameboard numberOfSquares: 15 withWormholeAt: 9 and: 12.
+	aDice := Dice with:
+		         (OrderedCollection
+			          with: (LoadedDie of: 10)
+			          with: (LoadedDie of: 5)).
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipArray
+		         withGameboard: aGameboard
+		         withDie: aDice
+		         withLaps: 2.
+
+	aGame playTurn.
+
+	self deny: aGame isOver
+]
+
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 
 	| aSpaceship aGameboard aDie aGame aSpaceshipArray |
@@ -195,14 +226,15 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDie.
+		         withDie: aDie
+					withLaps: 2.
 
 	aGame playTurn.
 
 	self assert: aGame winner equals: aSpaceship
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWormhole [
 
 	| aSpaceship aGameboard aDice aGame aSpaceshipArray |
@@ -216,14 +248,15 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDice.
+		         withDie: aDice
+					withLaps: 2.
 
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWormhole [
 
 	| aSpaceship aGameboard aDice aGame aSpaceshipArray |
@@ -237,14 +270,15 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDice.
+		         withDie: aDice
+					withLaps: 2.
 
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 9
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 
 	| aSpaceship aGameboard aDice aGame aSpaceshipArray |
@@ -258,7 +292,8 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboard: aGameboard
-		         withDie: aDice.
+		         withDie: aDice
+					withLaps: 2.
 
 	aGame playTurn.
 
