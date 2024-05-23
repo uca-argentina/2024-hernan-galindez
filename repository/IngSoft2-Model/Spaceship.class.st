@@ -8,7 +8,7 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance initialization' }
 Spaceship class >> withName: aName [
 
 	^ self new initializeWithName: aName

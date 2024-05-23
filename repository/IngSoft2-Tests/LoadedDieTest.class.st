@@ -1,16 +1,15 @@
 Class {
-	#name : 'LoadedDieTest',
-	#superclass : 'TestCase',
-	#category : 'IngSoft2-Tests',
-	#package : 'IngSoft2-Tests'
+	#name : #LoadedDieTest,
+	#superclass : #TestCase,
+	#category : 'IngSoft2-Tests'
 }
 
-{ #category : 'asserting' }
+{ #category : #asserting }
 LoadedDieTest >> should: anErrorBlock raise: anErrorClass withMessage: anErrorMessage [ 
 	self should: anErrorBlock raise: anErrorClass withExceptionDo: [:error | self assert: error messageText equals: anErrorMessage].
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 
 	self
@@ -19,7 +18,7 @@ LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 		withMessage: 'Faces should be more than 2'
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LoadedDieTest >> testDieIsCreatedWithAnAmountOfFaces [
 
 	| aDie |
@@ -28,7 +27,7 @@ LoadedDieTest >> testDieIsCreatedWithAnAmountOfFaces [
 	self assert: aDie throw equals: 5
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 LoadedDieTest >> testWhenDieIsThrownThenValueIsNumberOfFaces [ 
 
 | aDie |

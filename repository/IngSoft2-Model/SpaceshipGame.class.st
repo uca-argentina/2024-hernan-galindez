@@ -8,29 +8,34 @@ Class {
 		'currentTurn',
 		'numberOfLaps'
 	],
-	#category : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: aCollection withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	^ self new
-		  initializeWithPlayers: aCollection
-		  withGameboard: aGameboard
-		  withDie: aDice
-		  withLaps: aNumberOfLaps
+		  initializeWithPlayers: somePlayers
+		  withGameboardLength: aLength
+		  withWormholesPoisitions: wormholePositions
+		  withDice: aDiceCollection
+		  withLaps: anAmountOfLaps
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship withName: playerName ].
-	aGameboard setPlayersAtFirstPosition: players.
-	gameboard := aGameboard.
-	dice := aDice.
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             withWormholeAt: (wormholePositions at: 1)
+		             and: (wormholePositions at: 2).
+	gameboard setPlayersAtFirstPosition: players.
+	dice := Dice with: aDiceCollection copy.
+
 	currentTurn := 1.
-	numberOfLaps := aNumberOfLaps
+	numberOfLaps := anAmountOfLaps
 ]
 
 { #category : #'game logic' }
