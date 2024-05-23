@@ -21,16 +21,6 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
-
-	players := somePlayers.
-	aGameboard setPlayersAtFirstPosition: somePlayers.
-	gameboard := aGameboard.
-	dice := aDice.
-	currentTurn := 1
-]
-
-{ #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection [
 
 	players := somePlayers copy.
