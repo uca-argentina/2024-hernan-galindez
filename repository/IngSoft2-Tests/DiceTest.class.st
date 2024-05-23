@@ -1,10 +1,11 @@
 Class {
-	#name : #DiceTest,
-	#superclass : #TestCase,
-	#category : #'IngSoft2-Tests'
+	#name : 'DiceTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiceTest >> testWhenCreateDiceWithThreeLoadedDieAndSixLoadedDieItThrowsNine [
 
 	| aThreeLoadedDie aSixLoadedDie aDice someDice |
@@ -17,7 +18,7 @@ DiceTest >> testWhenCreateDiceWithThreeLoadedDieAndSixLoadedDieItThrowsNine [
 	self assert: aDice throw equals: 9
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiceTest >> testWhenDiceAreThrownThenItsRollIsTheSumOfEachDie [
 
 	| aDice |

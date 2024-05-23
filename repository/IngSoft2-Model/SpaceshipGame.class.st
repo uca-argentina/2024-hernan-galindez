@@ -1,49 +1,47 @@
 Class {
-	#name : #SpaceshipGame,
-	#superclass : #Object,
+	#name : 'SpaceshipGame',
+	#superclass : 'Object',
 	#instVars : [
 		'players',
 		'gameboard',
 		'dice',
-		'isOver',
-		'winner',
 		'currentTurn',
-		'square'
+		'numberOfLaps'
 	],
-	#category : #'IngSoft2-Model'
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
 }
 
-{ #category : #'accesing - defaults' }
-SpaceshipGame class >> withPlayers: aSpaceship withGameboard: aGameboard withDie: aDie [
+{ #category : 'instance creation' }
+SpaceshipGame class >> withPlayers: aCollection withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
 
 	^ self new
-		  initializeWithPlayers: aSpaceship
+		  initializeWithPlayers: aCollection
 		  withGameboard: aGameboard
-		  withDice: aDie
+		  withDie: aDice
+		  withLaps: aNumberOfLaps
 ]
 
-{ #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard withDice: aDice [
+{ #category : 'initialization' }
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
 
-	players := somePlayers.
-	aGameboard setPlayersAtFirstPosition: somePlayers.
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship withName: playerName ].
+	aGameboard setPlayersAtFirstPosition: players.
 	gameboard := aGameboard.
 	dice := aDice.
 	currentTurn := 1.
-	isOver := false.
-	winner := 'There is no winner yet'
+	numberOfLaps := aNumberOfLaps
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> isOver [
 
-	| lastSquarePosition |
-	lastSquarePosition := gameboard size.
 	^ players anySatisfy: [ :aSpaceship |
-		  (self positionOf: aSpaceship) = lastSquarePosition ]
+		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
-{ #category : #'game controls' }
+{ #category : 'game controls' }
 SpaceshipGame >> nextTurn [
 
 	currentTurn := currentTurn = players size
@@ -52,7 +50,7 @@ SpaceshipGame >> nextTurn [
 	^ currentTurn
 ]
 
-{ #category : #'game controls' }
+{ #category : 'game controls' }
 SpaceshipGame >> playTurn [
 
 	| aNumber currentPlayer |
@@ -63,26 +61,30 @@ SpaceshipGame >> playTurn [
 	currentTurn := self nextTurn
 ]
 
-{ #category : #'game logic' }
-SpaceshipGame >> positionOf: aSpaceship [
+{ #category : 'game logic' }
+SpaceshipGame >> positionOf: aSpaceshipName [
 
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ] ifNone:[aSpaceshipName].
 	^ gameboard find: aSpaceship
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> verifyGameIsNotOver [
 
 	self isOver ifTrue: [ Error signal: 'Game is over' ]
 ]
 
-{ #category : #'game logic' }
+{ #category : 'game logic' }
 SpaceshipGame >> winner [
 
-	| lastSquarePosition |
+	| lastSquarePosition spaceshipWinner |
 	lastSquarePosition := gameboard size.
 
-	^ players
-		  detect: [ :player |
-		  (self positionOf: player) = lastSquarePosition ]
-		  ifNone: [ Error signal:'There is no winner yet' ]
+	spaceshipWinner := players
+		                   detect: [ :player |
+		                   player lapsCompleted >= numberOfLaps ]
+		                   ifNone: [ Error signal: 'There is no winner yet' ].
+	^spaceshipWinner name
 ]
