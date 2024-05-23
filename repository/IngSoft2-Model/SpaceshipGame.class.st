@@ -1,6 +1,6 @@
 Class {
-	#name : 'SpaceshipGame',
-	#superclass : 'Object',
+	#name : #SpaceshipGame,
+	#superclass : #Object,
 	#instVars : [
 		'players',
 		'gameboard',
@@ -8,11 +8,10 @@ Class {
 		'currentTurn',
 		'numberOfLaps'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 SpaceshipGame class >> withPlayers: aCollection withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
 
 	^ self new
@@ -22,7 +21,7 @@ SpaceshipGame class >> withPlayers: aCollection withGameboard: aGameboard withDi
 		  withLaps: aNumberOfLaps
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
 
 	players := aCollectionOfPlayers collect: [ :playerName |
@@ -34,14 +33,14 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboard: aGam
 	numberOfLaps := aNumberOfLaps
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> isOver [
 
 	^ players anySatisfy: [ :aSpaceship |
 		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
-{ #category : 'game controls' }
+{ #category : #'game controls' }
 SpaceshipGame >> nextTurn [
 
 	currentTurn := currentTurn = players size
@@ -50,7 +49,7 @@ SpaceshipGame >> nextTurn [
 	^ currentTurn
 ]
 
-{ #category : 'game controls' }
+{ #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
 	| aNumber currentPlayer |
@@ -61,7 +60,7 @@ SpaceshipGame >> playTurn [
 	currentTurn := self nextTurn
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> positionOf: aSpaceshipName [
 
 	| aSpaceship |
@@ -70,13 +69,13 @@ SpaceshipGame >> positionOf: aSpaceshipName [
 	^ gameboard find: aSpaceship
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> verifyGameIsNotOver [
 
 	self isOver ifTrue: [ Error signal: 'Game is over' ]
 ]
 
-{ #category : 'game logic' }
+{ #category : #'game logic' }
 SpaceshipGame >> winner [
 
 	| lastSquarePosition spaceshipWinner |

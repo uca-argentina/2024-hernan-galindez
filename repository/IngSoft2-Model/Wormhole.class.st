@@ -1,14 +1,13 @@
 Class {
-	#name : 'Wormhole',
-	#superclass : 'Square',
+	#name : #Wormhole,
+	#superclass : #Square,
 	#instVars : [
 		'connection'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 Wormhole class >> newPair [
 
 	| aWormhole anotherWormhole wormholePair |
@@ -23,19 +22,19 @@ Wormhole class >> newPair [
 	^ wormholePair
 ]
 
-{ #category : 'public - line' }
+{ #category : #'public - line' }
 Wormhole >> connectTo: anotherWormhole [
 
 	connection := anotherWormhole
 ]
 
-{ #category : 'add/remove' }
+{ #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 
 	connection teleport: aSpaceship
 ]
 
-{ #category : 'add/remove' }
+{ #category : #'add/remove' }
 Wormhole >> teleport: aSpaceship [
 
 	occupiedBy add: aSpaceship

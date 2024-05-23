@@ -1,15 +1,14 @@
 Class {
-	#name : 'Gameboard',
-	#superclass : 'Object',
-	#type : 'variable',
+	#name : #Gameboard,
+	#superclass : #Object,
+	#type : #variable,
 	#instVars : [
 		'board'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard class >> numberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
@@ -25,14 +24,14 @@ Gameboard class >> numberOfSquares: aNumberOfSquares withWormholeAt: firstWormho
 		  and: secondWormholePosition
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard class >> verifyGreaterThanZero: aLength [
 
 	aLength > 0 ifFalse: [
 		Error signal: 'Length must be greater than zero' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPositions: firstPosition and: secondPosition [
 
 	(firstPosition >= numberOfSquares or:
@@ -41,7 +40,7 @@ Gameboard class >> verifyThereAreNoWormholesOutOfBounds: numberOfSquares withPos
 			'Wormholes must be between the first and the second to last square' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard >> find: aTarget [
 
 	^ board
@@ -49,7 +48,7 @@ Gameboard >> find: aTarget [
 		  ifNone: [ Error signal: 'spaceship not found' ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
 
 	| wormholePair aWormhole anotherWormhole |
@@ -64,28 +63,28 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: fir
 		at: secondWormholePosition put: anotherWormhole
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
 	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
 
-	nextPosition := (currentPosition + aNumberOfSquares) % board size = 0
+
+
+
+	nextPosition := currentPosition + aNumberOfSquares % board size.
+	nextPosition := nextPosition = 0
 		                ifTrue: [ board size ]
-		                ifFalse: [
-		                (currentPosition + aNumberOfSquares) % board size ].
-	aNumberOfLaps := (currentPosition + aNumberOfSquares) // board size.
+		                ifFalse: [ nextPosition ].
+
+	aNumberOfLaps := currentPosition + aNumberOfSquares // board size.
 	aSpaceship addLaps: aNumberOfLaps.
-	"nextPosition = board size ifTrue: [
-		aSpaceship addLaps: aNumberOfLaps ].
-	nextPosition > board size ifTrue: [
-		aSpaceship addLaps: aNumberOfLaps.
-		nextPosition := nextPosition % board size ]."
+
 	(board at: currentPosition) remove: aSpaceship.
 	(board at: nextPosition) land: aSpaceship
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Gameboard >> setPlayersAtFirstPosition: players [
 
 	| firstSquare |
@@ -94,7 +93,7 @@ Gameboard >> setPlayersAtFirstPosition: players [
 	players do: [ :player | firstSquare land: player ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Gameboard >> size [
 
 	^ board size

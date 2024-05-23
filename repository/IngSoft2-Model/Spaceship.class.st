@@ -1,39 +1,38 @@
 Class {
-	#name : 'Spaceship',
-	#superclass : 'Object',
+	#name : #Spaceship,
+	#superclass : #Object,
 	#instVars : [
 		'name',
 		'laps'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 Spaceship class >> withName: aName [
 
 	^ self new initializeWithName: aName
 ]
 
-{ #category : 'initialization' }
+{ #category : #accessing }
 Spaceship >> addLaps: aNumberOfLaps [
 
 	laps := laps + aNumberOfLaps 
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Spaceship >> initializeWithName: aName [
 
 	name := aName.
 	laps := 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #accessing }
 Spaceship >> lapsCompleted [
 	^laps.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Spaceship >> name [ 
 	^name
 ]

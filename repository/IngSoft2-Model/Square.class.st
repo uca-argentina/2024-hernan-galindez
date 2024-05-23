@@ -1,38 +1,37 @@
 Class {
-	#name : 'Square',
-	#superclass : 'Object',
+	#name : #Square,
+	#superclass : #Object,
 	#instVars : [
 		'occupiedBy'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 Square class >> create [
 
 	^ self new initialize
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 Square >> includes: aSpaceship [
 
 	^ occupiedBy includes: aSpaceship
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Square >> initialize [
 
 	occupiedBy := OrderedCollection new
 ]
 
-{ #category : 'add/remove' }
+{ #category : #'add/remove' }
 Square >> land: aSpaceship [
 
 	self subclassResponsibility 
 ]
 
-{ #category : 'add/remove' }
+{ #category : #'add/remove' }
 Square >> remove: aSpaceship [
 
 	occupiedBy remove: aSpaceship

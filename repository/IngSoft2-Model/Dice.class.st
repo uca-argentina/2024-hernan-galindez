@@ -1,27 +1,26 @@
 Class {
-	#name : 'Dice',
-	#superclass : 'Object',
-	#type : 'variable',
+	#name : #Dice,
+	#superclass : #Object,
+	#type : #variable,
 	#instVars : [
 		'diceArray'
 	],
-	#category : 'IngSoft2-Model',
-	#package : 'IngSoft2-Model'
+	#category : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 Dice class >> with: anArrayMadeOfDice [
 
 	^ self new initializeWith: anArrayMadeOfDice
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Dice >> initializeWith: anArrayMadeOfDice [
 
 	diceArray := anArrayMadeOfDice
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 Dice >> throw [
 
 	^ diceArray sum: [ :die | die throw ]
