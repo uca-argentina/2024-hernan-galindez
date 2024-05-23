@@ -5,7 +5,8 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'currentTurn'
+		'currentTurn',
+		'numberOfLaps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -24,21 +25,20 @@ SpaceshipGame class >> withPlayers: aCollection withGameboard: aGameboard withDi
 { #category : 'initialization' }
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboard: aGameboard withDie: aDice withLaps: aNumberOfLaps [
 
-	players:= aCollectionOfPlayers collect:[:playerName|Spaceship withName: playerName ].
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship withName: playerName ].
 	aGameboard setPlayersAtFirstPosition: players.
 	gameboard := aGameboard.
 	dice := aDice.
-	currentTurn := 1
+	currentTurn := 1.
+	numberOfLaps := aNumberOfLaps
 ]
 
 { #category : 'game logic' }
 SpaceshipGame >> isOver [
 
-	| lastSquarePosition |
-	lastSquarePosition := gameboard size.
-	"players inspect."
 	^ players anySatisfy: [ :aSpaceship |
-		  (self positionOf: aSpaceship) = lastSquarePosition ]
+		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
 { #category : 'game controls' }
@@ -79,11 +79,12 @@ SpaceshipGame >> verifyGameIsNotOver [
 { #category : 'game logic' }
 SpaceshipGame >> winner [
 
-	| lastSquarePosition |
+	| lastSquarePosition spaceshipWinner |
 	lastSquarePosition := gameboard size.
 
-	^ players
-		  detect: [ :player |
-		  (self positionOf: player) = lastSquarePosition ]
-		  ifNone: [ Error signal:'There is no winner yet' ]
+	spaceshipWinner := players
+		                   detect: [ :player |
+		                   player lapsCompleted >= numberOfLaps ]
+		                   ifNone: [ Error signal: 'There is no winner yet' ].
+	^spaceshipWinner name
 ]

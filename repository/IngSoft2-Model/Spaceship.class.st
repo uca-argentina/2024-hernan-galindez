@@ -16,9 +16,9 @@ Spaceship class >> withName: aName [
 ]
 
 { #category : 'initialization' }
-Spaceship >> addLap [
+Spaceship >> addLaps: aNumberOfLaps [
 
-	laps := laps + 1
+	laps := laps + aNumberOfLaps 
 ]
 
 { #category : 'initialization' }
@@ -26,6 +26,11 @@ Spaceship >> initializeWithName: aName [
 
 	name := aName.
 	laps := 0
+]
+
+{ #category : 'as yet unclassified' }
+Spaceship >> lapsCompleted [
+	^laps.
 ]
 
 { #category : 'accessing' }

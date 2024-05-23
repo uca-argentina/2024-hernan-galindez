@@ -67,15 +67,22 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: fir
 { #category : 'accessing' }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
-	| currentPosition targetSquare sum |
+	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
-	sum := currentPosition + aNumberOfSquares.
-	targetSquare := sum.
-	sum > board size ifTrue: [
-		targetSquare := sum - board size.
-		aSpaceship addLap ].
+
+	nextPosition := (currentPosition + aNumberOfSquares) % board size = 0
+		                ifTrue: [ board size ]
+		                ifFalse: [
+		                (currentPosition + aNumberOfSquares) % board size ].
+	aNumberOfLaps := (currentPosition + aNumberOfSquares) // board size.
+	aSpaceship addLaps: aNumberOfLaps.
+	"nextPosition = board size ifTrue: [
+		aSpaceship addLaps: aNumberOfLaps ].
+	nextPosition > board size ifTrue: [
+		aSpaceship addLaps: aNumberOfLaps.
+		nextPosition := nextPosition % board size ]."
 	(board at: currentPosition) remove: aSpaceship.
-	(board at: targetSquare) land: aSpaceship
+	(board at: nextPosition) land: aSpaceship
 ]
 
 { #category : 'initialization' }
