@@ -29,9 +29,7 @@ SpaceshipGame >> initializeWithPlayers: somePlayers withGameboard: aGameboard wi
 	aGameboard setPlayersAtFirstPosition: somePlayers.
 	gameboard := aGameboard.
 	dice := aDice.
-	currentTurn := 1.
-	isOver := false.
-	winner := 'There is no winner yet'
+	currentTurn := 1
 ]
 
 { #category : #'game logic' }
