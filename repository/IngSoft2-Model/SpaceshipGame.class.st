@@ -30,6 +30,7 @@ SpaceshipGame >> initializeWithPlayers: somePlayers withGameboardLength: aLength
 		             and: (wormholePositions at: 2).
 	gameboard setPlayersAtFirstPosition: somePlayers.
 	dice := Dice with: aDiceCollection copy.
+
 	currentTurn := 1
 ]
 
