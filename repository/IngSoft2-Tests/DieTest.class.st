@@ -1,7 +1,7 @@
 Class {
 	#name : #DieTest,
 	#superclass : #TestCase,
-	#category : 'IngSoft2-Tests'
+	#category : #'IngSoft2-Tests'
 }
 
 { #category : #asserting }
@@ -21,6 +21,15 @@ DieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 		should: [ Die of: 2 ]
 		raise: Error
 		withMessage: 'Faces should be more than 2'
+]
+
+{ #category : #tests }
+DieTest >> testMaxThrowIsNumberOfFaces [
+
+	| aDie |
+	aDie := Die of: 4.
+
+	self assert: (aDie maxThrow) equals: 4
 ]
 
 { #category : #tests }
