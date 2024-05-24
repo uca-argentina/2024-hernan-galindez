@@ -2,29 +2,30 @@ Class {
 	#name : #LoadedDie,
 	#superclass : #Object,
 	#instVars : [
+		'sequence',
 		'faces'
 	],
-	#category : 'IngSoft2-Tests'
+	#category : #'IngSoft2-Tests'
 }
 
 { #category : #'instance creation' }
-LoadedDie class >> of: anArrayOfValues [
+LoadedDie class >> sequence: anArrayOfValues [
 	self verifyGreaterThanTwo: anArrayOfValues .
-	^ self new initializeOf: anArrayOfValues.
+	^ self new initializeSequence: anArrayOfValues.
 ]
 
 { #category : #'instance creation' }
 LoadedDie class >> verifyGreaterThanTwo: anArrayOfValues [
 
-anArrayOfValues > 2 ifFalse: [ Error signal: 'Faces should be more than 2'].
+	anArrayOfValues min > 2 ifFalse: [
+		Error signal: 'Faces should be more than 2' ]
 ]
 
-{ #category : #initialization }
-LoadedDie >> initializeOf: anAmountOfFaces [
-	faces := anAmountOfFaces.
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LoadedDie >> throw [
-	^faces.
+
+	| currentThrow |
+	currentThrow := sequence removeFirst.
+	sequence addLast: currentThrow.
+	^ currentThrow
 ]
