@@ -69,9 +69,6 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
 
-
-
-
 	nextPosition := currentPosition + aNumberOfSquares % board size.
 	nextPosition := nextPosition = 0
 		                ifTrue: [ board size ]
@@ -84,11 +81,20 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	(board at: nextPosition) land: aSpaceship
 ]
 
+{ #category : #'as yet unclassified' }
+Gameboard >> moveToStart: aSpaceship [
+
+	| currentPosition |
+	currentPosition := self find: aSpaceship.
+	(board at: 1) land: aSpaceship.
+	(board at: currentPosition) remove: aSpaceship
+]
+
 { #category : #initialization }
 Gameboard >> setPlayersAtFirstPosition: players [
 
 	| firstSquare |
-	firstSquare := board at: 1.
+	firstSquare := board at:1.
 
 	players do: [ :player | firstSquare land: player ]
 ]

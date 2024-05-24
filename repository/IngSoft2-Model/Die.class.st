@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'faces'
 	],
-	#category : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
@@ -25,6 +25,12 @@ Die class >> verifyGreaterThanTwo: anAmountOfFaces [
 Die >> initializeOf: anAmountOfFaces [
 
 	faces := anAmountOfFaces
+]
+
+{ #category : #accessing }
+Die >> maxThrow [
+
+^ faces
 ]
 
 { #category : #initialization }
