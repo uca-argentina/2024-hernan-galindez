@@ -124,6 +124,27 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
+	aSpaceship := 'Helado de menta granizada'.
+	aSpaceshipCollection := OrderedCollection with: aSpaceship.
+	aDiceCollection := OrderedCollection with:
+		                   (LoadedDie sequence: #( 3 )).
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withWormholesPoisitions: #( 11 13 )
+		         withDice: aDiceCollection
+		         withLaps: 2.
+
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 1
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 
 	| aGame aSpaceship aDiceCollection aSpaceshipCollection |

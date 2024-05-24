@@ -20,6 +20,11 @@ Dice >> initializeWith: anArrayMadeOfDice [
 	diceCollection := anArrayMadeOfDice
 ]
 
+{ #category : #accessing }
+Dice >> maxThrow [
+	^ (diceCollection sum: [ :die | die maxThrow ])
+]
+
 { #category : #initialization }
 Dice >> throw [
 

@@ -25,14 +25,17 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 { #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection withLaps: anAmountOfLaps [
 
+	dice := Dice with: aDiceCollection copy.
 	players := aCollectionOfPlayers collect: [ :playerName |
-		           Spaceship withName: playerName ].
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2 ].
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             withWormholeAt: (wormholePositions at: 1)
 		             and: (wormholePositions at: 2).
 	gameboard setPlayersAtFirstPosition: players.
-	dice := Dice with: aDiceCollection copy.
+
 
 	currentTurn := 1.
 	numberOfLaps := anAmountOfLaps
@@ -61,7 +64,8 @@ SpaceshipGame >> playTurn [
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	currentPlayer := players at: currentTurn.
-	gameboard move: currentPlayer with: aNumber.
+	"gameboard move: currentPlayer with: aNumber."
+	currentPlayer move: aNumber in: gameboard.
 	currentTurn := self nextTurn
 ]
 
@@ -70,7 +74,7 @@ SpaceshipGame >> positionOf: aSpaceshipName [
 
 	| aSpaceship |
 	aSpaceship := players detect: [ :player |
-		              player name = aSpaceshipName ] ifNone:[aSpaceshipName].
+		              player name = aSpaceshipName ].
 	^ gameboard find: aSpaceship
 ]
 

@@ -21,6 +21,19 @@ LoadedDie class >> verifyGreaterThanTwo: anArrayOfValues [
 		Error signal: 'Faces should be more than 2' ]
 ]
 
+{ #category : #initialization }
+LoadedDie >> initializeSequence: anArrayOfValues [
+
+	sequence := anArrayOfValues asOrderedCollection.
+	faces:= 0.
+]
+
+{ #category : #accessing }
+LoadedDie >> maxThrow [
+
+	^ faces max: (sequence max)
+]
+
 { #category : #accessing }
 LoadedDie >> throw [
 
