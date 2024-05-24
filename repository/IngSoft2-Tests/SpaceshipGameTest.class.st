@@ -282,6 +282,85 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 6 4 6 3 3 4 )) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withWormholesPoisitions: #( 2 14 )
+		         withDice: aDiceCollection
+		         withLaps: 1.
+
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	
+	self assert: (aGame positionOf: aSpaceship) equals: 5.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 11
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #(6 5 3 4)) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withWormholesPoisitions: #( 2 4 )
+		         withDice: aDiceCollection
+		         withLaps: 1.
+
+	aGame playTurn.
+	aGame playTurn.
+	aGame skipTurn.
+	aGame playTurn.
+
+
+	self assert: (aGame positionOf: aSpaceship) equals: 7.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 9
+	
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
+	aSpaceship := 'Pancho'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #(5 5)) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withWormholesPoisitions: #( 2 4 )
+		         withDice: aDiceCollection
+		         withLaps: 1.
+
+	aGame playTurn.
+	aGame skipTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 11.
+	
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWormhole [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
@@ -328,7 +407,7 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'Pancho'.
-	aSpaceshipCollection := Array with: aSpaceship.
+	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 6 ))
 		                   with: (LoadedDie sequence: #( 3 )).

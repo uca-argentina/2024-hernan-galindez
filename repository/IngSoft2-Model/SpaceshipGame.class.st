@@ -5,8 +5,8 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'currentTurn',
-		'numberOfLaps'
+		'numberOfLaps',
+		'turnHandler'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -36,8 +36,11 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             and: (wormholePositions at: 2).
 	gameboard setPlayersAtFirstPosition: players.
 
+	turnHandler := Dictionary
+		               newFromKeys: players
+		               andValues:
+		               (OrderedCollection new: players size withAll: 0).
 
-	currentTurn := 1.
 	numberOfLaps := anAmountOfLaps
 ]
 
@@ -48,25 +51,30 @@ SpaceshipGame >> isOver [
 		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
-{ #category : #'game controls' }
-SpaceshipGame >> nextTurn [
+{ #category : #'game logic' }
+SpaceshipGame >> nextPlayer [
 
-	currentTurn := currentTurn = players size
-		               ifTrue: [ 1 ]
-		               ifFalse: [ currentTurn + 1 ].
-	^ currentTurn
+	| currentPlayer |
+	currentPlayer := players removeFirst.
+	players addLast: currentPlayer.
+
+	[ (turnHandler at: currentPlayer) = 0 ] whileFalse: [
+		turnHandler at: currentPlayer update: [ :x | x + 1 ].
+		currentPlayer refuel.
+		currentPlayer := players removeFirst.
+		players addLast: currentPlayer ].
+
+	^ currentPlayer
 ]
 
 { #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
-	| aNumber currentPlayer |
+	| aNumber spaceshipToPlay |
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
-	currentPlayer := players at: currentTurn.
-	"gameboard move: currentPlayer with: aNumber."
-	currentPlayer move: aNumber in: gameboard.
-	currentTurn := self nextTurn
+	spaceshipToPlay := self nextPlayer.
+	spaceshipToPlay move: aNumber in: gameboard with: turnHandler.
 ]
 
 { #category : #'game logic' }
@@ -76,6 +84,16 @@ SpaceshipGame >> positionOf: aSpaceshipName [
 	aSpaceship := players detect: [ :player |
 		              player name = aSpaceshipName ].
 	^ gameboard find: aSpaceship
+]
+
+{ #category : #'game logic' }
+SpaceshipGame >> skipTurn [
+
+	| currentPlayer |
+	currentPlayer := players removeFirst.
+	players addLast: currentPlayer.
+
+	turnHandler at: currentPlayer update: [ :aNumber | aNumber - 1 ]
 ]
 
 { #category : #'game logic' }
