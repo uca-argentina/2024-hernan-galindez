@@ -2,8 +2,7 @@ Class {
 	#name : #LoadedDie,
 	#superclass : #Object,
 	#instVars : [
-		'sequence',
-		'faces'
+		'sequence'
 	],
 	#category : #'IngSoft2-Tests'
 }
@@ -24,14 +23,13 @@ LoadedDie class >> verifyGreaterThanTwo: anArrayOfValues [
 { #category : #initialization }
 LoadedDie >> initializeSequence: anArrayOfValues [
 
-	sequence := anArrayOfValues asOrderedCollection.
-	faces:= 0.
+	sequence := anArrayOfValues asOrderedCollection
 ]
 
 { #category : #accessing }
 LoadedDie >> maxThrow [
 
-	^ faces max: (sequence max)
+	^ sequence max
 ]
 
 { #category : #accessing }
