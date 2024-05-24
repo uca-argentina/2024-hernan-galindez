@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'occupiedBy'
 	],
-	#category : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ Square >> land: aSpaceship [
 ]
 
 { #category : #'add/remove' }
-Square >> remove: aSpaceship [
+Square >> leaves: aSpaceship [
 
 	occupiedBy remove: aSpaceship
 ]

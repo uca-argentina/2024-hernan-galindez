@@ -16,7 +16,7 @@ Spaceship class >> withName: aName withFuel: fuelCapacity [
 	^ self new initializeWithName: aName withFuel: fuelCapacity.
 ]
 
-{ #category : #accessing }
+{ #category : #setting }
 Spaceship >> addLaps: aNumberOfLaps [
 
 	laps := laps + aNumberOfLaps 
@@ -52,4 +52,10 @@ Spaceship >> move: anAmountOfSquares in: aGameboard with: turnHandler [
 { #category : #accessing }
 Spaceship >> name [ 
 	^name
+]
+
+{ #category : #setting }
+Spaceship >> refuel [
+
+	currentFuel := maxCapacity
 ]

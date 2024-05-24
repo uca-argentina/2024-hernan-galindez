@@ -48,7 +48,7 @@ Gameboard >> find: aTarget [
 		  ifNone: [ Error signal: 'spaceship not found' ]
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withWormholeAt: firstWormholePosition and: secondWormholePosition [
 
 	| wormholePair aWormhole anotherWormhole |
@@ -77,20 +77,20 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	aNumberOfLaps := currentPosition + aNumberOfSquares // board size.
 	aSpaceship addLaps: aNumberOfLaps.
 
-	(board at: currentPosition) remove: aSpaceship.
+	(board at: currentPosition) leaves: aSpaceship.
 	(board at: nextPosition) land: aSpaceship
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #setting }
 Gameboard >> moveToStart: aSpaceship [
 
 	| currentPosition |
 	currentPosition := self find: aSpaceship.
 	(board at: 1) land: aSpaceship.
-	(board at: currentPosition) remove: aSpaceship
+	(board at: currentPosition) leaves: aSpaceship
 ]
 
-{ #category : #initialization }
+{ #category : #setting }
 Gameboard >> setPlayersAtFirstPosition: players [
 
 	| firstSquare |
