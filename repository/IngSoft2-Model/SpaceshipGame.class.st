@@ -70,11 +70,12 @@ SpaceshipGame >> nextPlayer [
 { #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
-	| aNumber spaceshipToPlay |
+	| aNumber spaceshipToPlay lostTurns |
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	spaceshipToPlay move: aNumber in: gameboard with: turnHandler.
+	lostTurns := spaceshipToPlay move: aNumber in: gameboard.
+	turnHandler at: spaceshipToPlay update: [ :x | x - lostTurns ]
 ]
 
 { #category : #'game logic' }

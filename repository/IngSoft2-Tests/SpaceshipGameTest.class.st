@@ -290,7 +290,7 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 6 4 6 3 3 4 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 7 4 7 3 3 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
@@ -303,9 +303,8 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
-	aGame playTurn.
 	
-	self assert: (aGame positionOf: aSpaceship) equals: 5.
+	self assert: (aGame positionOf: aSpaceship) equals: 1.
 	self assert: (aGame positionOf: anotherSpaceship) equals: 11
 ]
 

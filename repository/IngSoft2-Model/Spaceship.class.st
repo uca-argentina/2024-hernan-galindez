@@ -37,16 +37,19 @@ Spaceship >> lapsCompleted [
 ]
 
 { #category : #accessing }
-Spaceship >> move: anAmountOfSquares in: aGameboard with: turnHandler [
+Spaceship >> move: anAmountOfSquares in: aGameboard [
 
 	currentFuel > anAmountOfSquares
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares.
-			aGameboard move: self with: anAmountOfSquares ]
+			aGameboard move: self with: anAmountOfSquares.
+			^ 0 ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
-			turnHandler at: self update: [ :aNumber | aNumber - 1 ] ]
+			^ 2]
+		
+	
 ]
 
 { #category : #accessing }
