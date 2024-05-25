@@ -57,7 +57,9 @@ SpaceshipGame >> nextPlayer [
 	players addLast: currentPlayer.
 
 	[ (turnHandler at: currentPlayer) = 0 ] whileFalse: [
-		turnHandler at: currentPlayer update: [ :x | x + 1 ].
+		turnHandler
+			at: currentPlayer
+			put: (turnHandler at: currentPlayer) + 1.
 		currentPlayer refuel.
 		currentPlayer := players removeFirst.
 		players addLast: currentPlayer ].
@@ -73,7 +75,9 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
 	lostTurns := spaceshipToPlay move: aNumber.
-	turnHandler at: spaceshipToPlay update: [ :x | x - lostTurns ]
+	turnHandler
+		at: spaceshipToPlay
+		put: (turnHandler at: spaceshipToPlay) - lostTurns
 ]
 
 { #category : #'game logic' }
