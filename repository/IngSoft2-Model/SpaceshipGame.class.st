@@ -12,28 +12,26 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection withLaps: anAmountOfLaps [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	^ self new
 		  initializeWithPlayers: somePlayers
 		  withGameboardLength: aLength
-		  withWormholesPoisitions: wormholePositions
 		  withDice: aDiceCollection
 		  withLaps: anAmountOfLaps
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection withLaps: anAmountOfLaps [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	dice := Dice with: aDiceCollection copy.
+	gameboard := Gameboard numberOfSquares: aLength usingDice: dice.
+
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
-			           withFuel: dice maxThrow * 2 ].
-	gameboard := Gameboard
-		             numberOfSquares: aLength
-		             withWormholeAt: (wormholePositions at: 1)
-		             and: (wormholePositions at: 2).
+			           withFuel: dice maxThrow * 2
+			           inGameboard: gameboard ].
 	gameboard setPlayersAtFirstPosition: players.
 
 	turnHandler := Dictionary
@@ -74,7 +72,7 @@ SpaceshipGame >> playTurn [
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	lostTurns := spaceshipToPlay move: aNumber in: gameboard.
+	lostTurns := spaceshipToPlay move: aNumber.
 	turnHandler at: spaceshipToPlay update: [ :x | x - lostTurns ]
 ]
 

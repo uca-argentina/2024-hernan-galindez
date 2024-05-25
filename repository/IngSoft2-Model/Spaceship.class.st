@@ -5,15 +5,16 @@ Class {
 		'name',
 		'laps',
 		'maxCapacity',
-		'currentFuel'
+		'currentFuel',
+		'gameboard'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance initialization' }
-Spaceship class >> withName: aName withFuel: fuelCapacity [
+Spaceship class >> withName: aName withFuel: fuelCapacity inGameboard: aGameboard [
 
-	^ self new initializeWithName: aName withFuel: fuelCapacity.
+	^ self new initializeWithName: aName withFuel: fuelCapacity inGameboard: aGameboard.
 ]
 
 { #category : #setting }
@@ -23,11 +24,12 @@ Spaceship >> addLaps: aNumberOfLaps [
 ]
 
 { #category : #initialization }
-Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
+Spaceship >> initializeWithName: aName withFuel: fuelCapacity inGameboard: aGameboard [
 
+	gameboard := aGameboard.
 	name := aName.
 	currentFuel := fuelCapacity.
-	maxCapacity:= fuelCapacity.
+	maxCapacity := fuelCapacity.
 	laps := 0
 ]
 
@@ -37,19 +39,17 @@ Spaceship >> lapsCompleted [
 ]
 
 { #category : #accessing }
-Spaceship >> move: anAmountOfSquares in: aGameboard [
+Spaceship >> move: anAmountOfSquares [
 
 	currentFuel > anAmountOfSquares
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares.
-			aGameboard move: self with: anAmountOfSquares.
+			gameboard move: self with: anAmountOfSquares.
 			^ 0 ]
 		ifFalse: [
-			aGameboard moveToStart: self.
+			gameboard moveToStart: self.
 			currentFuel := maxCapacity.
-			^ 2]
-		
-	
+			^ 2 ]
 ]
 
 { #category : #accessing }
