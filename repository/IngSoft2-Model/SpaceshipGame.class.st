@@ -96,7 +96,9 @@ SpaceshipGame >> skipTurn [
 	currentPlayer := players removeFirst.
 	players addLast: currentPlayer.
 
-	turnHandler at: currentPlayer update: [ :aNumber | aNumber - 1 ]
+	turnHandler
+		at: currentPlayer
+		put: (turnHandler at: currentPlayer) - 1
 ]
 
 { #category : #'game logic' }
