@@ -18,7 +18,7 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 GameboardTest >> testBoardCannotBeCreatedWithLengthLessThanZero [
 
 	self
-		should: [ Gameboard numberOfSquares: -1 usingDice: (Dice with: {Die of: 4})]
+		should: [ Gameboard numberOfSquares: -1 ]
 		raise: Error
 		withMessage: 'Length must be greater than zero'
 ]

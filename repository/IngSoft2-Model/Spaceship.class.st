@@ -11,7 +11,7 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #'instance initialization' }
+{ #category : #initialization }
 Spaceship class >> withName: aName withFuel: fuelCapacity [
 
 	^ self new initializeWithName: aName withFuel: fuelCapacity

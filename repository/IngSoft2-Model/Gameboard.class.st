@@ -3,21 +3,18 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'board',
-		'dice'
+		'board'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares usingDice: aDiceCollection [
+Gameboard class >> numberOfSquares: aNumberOfSquares [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
 
-	^ self new
-		  initializeWithNumberOfSquares: aNumberOfSquares
-		  withDice: aDiceCollection
+	^ self new initializeWithNumberOfSquares: aNumberOfSquares
 ]
 
 { #category : #accessing }
@@ -36,12 +33,11 @@ Gameboard >> find: aTarget [
 ]
 
 { #category : #'instance creation' }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withDice: aDiceCollection [
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares [
 
 	| wormholePair aWormhole anotherWormhole hyperGravity |
 	board := (Array new: aNumberOfSquares) collect: [ :square |
 		         NormalSquare create ].
-	dice := aDiceCollection.
 	wormholePair := Wormhole newPair.
 	hyperGravity := HyperGravity withExpectedNumber: 4.
 	aWormhole := wormholePair at: 1.

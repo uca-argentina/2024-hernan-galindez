@@ -25,7 +25,7 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	dice := Dice with: aDiceCollection copy.
-	gameboard := Gameboard numberOfSquares: aLength usingDice: dice.
+	gameboard := Gameboard numberOfSquares: aLength.
 
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
