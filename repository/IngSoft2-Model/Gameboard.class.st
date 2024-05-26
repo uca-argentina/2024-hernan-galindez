@@ -43,7 +43,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withDice: aDiceColl
 		         NormalSquare create ].
 	dice := aDiceCollection.
 	wormholePair := Wormhole newPair.
-	hyperGravity := HyperGravity withDice: aDiceCollection withExpectedNumber: 4.
+	hyperGravity := HyperGravity withExpectedNumber: 4.
 	aWormhole := wormholePair at: 1.
 	anotherWormhole := wormholePair at: 2.
 
@@ -59,10 +59,8 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
 
-	nextPosition := currentPosition + aNumberOfSquares % board size.
-	nextPosition := nextPosition = 0
-		                ifTrue: [ board size ]
-		                ifFalse: [ nextPosition ].
+	nextPosition := currentPosition - 1 + aNumberOfSquares
+	                   \\ board size + 1.
 
 	aNumberOfLaps := currentPosition + aNumberOfSquares // board size.
 	aSpaceship addLaps: aNumberOfLaps.

@@ -30,8 +30,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
-			           withFuel: dice maxThrow * 2
-			           inGameboard: gameboard ].
+			           withFuel: dice maxThrow * 2 ].
 	gameboard setPlayersAtFirstPosition: players.
 
 	turnHandler := Dictionary
@@ -74,7 +73,7 @@ SpaceshipGame >> playTurn [
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	lostTurns := spaceshipToPlay move: aNumber.
+	lostTurns := spaceshipToPlay move: aNumber in: gameboard.
 	turnHandler
 		at: spaceshipToPlay
 		put: (turnHandler at: spaceshipToPlay) - lostTurns

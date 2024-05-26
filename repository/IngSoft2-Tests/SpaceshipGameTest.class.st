@@ -103,7 +103,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 6 5 5 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 7 7 5 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 11
@@ -112,9 +112,10 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 
 	aGame playTurn.
 	aGame playTurn.
+	aGame playTurn.
 
 
-	self assert: aGame winner equals: anotherSpaceship
+	self assert: aGame winner equals: aSpaceship
 ]
 
 { #category : #tests }
@@ -206,31 +207,6 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 ]
 
 { #category : #tests }
-SpaceshipGameTest >> testWhenGameFinishGivesThePositionOfTheSpaceships [
-
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
-	aSpaceship := 'Pancho'.
-	anotherSpaceship := 'Seijas'.
-	aSpaceshipCollection := OrderedCollection
-		                        with: aSpaceship
-		                        with: anotherSpaceship.
-	aDiceCollection := OrderedCollection with:
-		                   (LoadedDie sequence: #( 5 5 3 3 9 )).
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 15
-		         withDice: aDiceCollection
-		         withLaps: 2.
-
-	aGame playTurn.
-	aGame playTurn.
-	aGame playTurn.
-
-	self assert: (aGame positionOf: aSpaceship) equals: 14.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 5
-]
-
-{ #category : #tests }
 SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanExpectedNumberThenStaysInTheSamePosition [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
@@ -243,6 +219,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanE
 		         withDice: aDiceCollection
 		         withLaps: 1.
 
+	aGame playTurn.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 6
@@ -261,6 +238,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsHigherNumberThanN
 		         withDice: aDiceCollection
 		         withLaps: 1.
 
+	aGame playTurn.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 13
@@ -353,7 +331,7 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
 
 
 	self assert: (aGame positionOf: aSpaceship) equals: 7.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 9
+	self assert: (aGame positionOf: anotherSpaceship) equals: 6
 ]
 
 { #category : #tests }
@@ -374,6 +352,31 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 15
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenSomePlayersMoceGivesThePositionOfTheSpaceships [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := OrderedCollection with:
+		                   (LoadedDie sequence: #( 7 5 3 3 9 )).
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withDice: aDiceCollection
+		         withLaps: 1.
+
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 11.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 6
 ]
 
 { #category : #tests }

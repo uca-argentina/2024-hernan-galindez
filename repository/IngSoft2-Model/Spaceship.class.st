@@ -6,15 +6,15 @@ Class {
 		'laps',
 		'maxCapacity',
 		'currentFuel',
-		'gameboard'
+		'needsToThrow'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance initialization' }
-Spaceship class >> withName: aName withFuel: fuelCapacity inGameboard: aGameboard [
+Spaceship class >> withName: aName withFuel: fuelCapacity [
 
-	^ self new initializeWithName: aName withFuel: fuelCapacity inGameboard: aGameboard.
+	^ self new initializeWithName: aName withFuel: fuelCapacity
 ]
 
 { #category : #setting }
@@ -24,13 +24,13 @@ Spaceship >> addLaps: aNumberOfLaps [
 ]
 
 { #category : #initialization }
-Spaceship >> initializeWithName: aName withFuel: fuelCapacity inGameboard: aGameboard [
+Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 
-	gameboard := aGameboard.
 	name := aName.
 	currentFuel := fuelCapacity.
 	maxCapacity := fuelCapacity.
-	laps := 0
+	laps := 0.
+	needsToThrow := 0.
 ]
 
 { #category : #accessing }
@@ -39,15 +39,17 @@ Spaceship >> lapsCompleted [
 ]
 
 { #category : #accessing }
-Spaceship >> move: anAmountOfSquares [
+Spaceship >> move: anAmountOfSquares in: aGameboard [
 
+	anAmountOfSquares < needsToThrow ifTrue: [ ^ 0 ].
+	needsToThrow := 0.
 	currentFuel > anAmountOfSquares
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares.
-			gameboard move: self with: anAmountOfSquares.
+			aGameboard move: self with: anAmountOfSquares.
 			^ 0 ]
 		ifFalse: [
-			gameboard moveToStart: self.
+			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
 			^ 2 ]
 ]
@@ -55,6 +57,12 @@ Spaceship >> move: anAmountOfSquares [
 { #category : #accessing }
 Spaceship >> name [ 
 	^name
+]
+
+{ #category : #initialization }
+Spaceship >> needsToThrow: expectedNumber [
+
+	needsToThrow := expectedNumber.
 ]
 
 { #category : #setting }
