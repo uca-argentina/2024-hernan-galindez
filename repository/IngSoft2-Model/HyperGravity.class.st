@@ -8,6 +8,12 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
+{ #category : #initialization }
+HyperGravity class >> withExpectedNumber: aNumber [
+
+	^ self new initializeWithExpectedNumber: aNumber
+]
+
 { #category : #'add/remove' }
 HyperGravity >> initializeWithExpectedNumber: aNumber [
 
