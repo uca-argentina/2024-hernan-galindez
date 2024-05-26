@@ -41,17 +41,19 @@ Spaceship >> lapsCompleted [
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	anAmountOfSquares < needsToThrow ifTrue: [ ^ 0 ].
+	| lostTurns |
+	lostTurns := 0.
+	anAmountOfSquares < needsToThrow ifTrue: [ ^ lostTurns ].
 	needsToThrow := 0.
 	currentFuel > anAmountOfSquares
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares.
-			aGameboard move: self with: anAmountOfSquares.
-			^ 0 ]
+			aGameboard move: self with: anAmountOfSquares ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
-			^ 2 ]
+			lostTurns := 2 ].
+	^ lostTurns
 ]
 
 { #category : #accessing }
