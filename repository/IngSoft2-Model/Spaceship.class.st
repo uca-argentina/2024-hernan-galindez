@@ -18,16 +18,16 @@ Spaceship class >> withName: aName withFuel: fuelCapacity [
 	^ self new initializeWithName: aName withFuel: fuelCapacity
 ]
 
-{ #category : #setting }
-Spaceship >> addLaps: aNumberOfLaps [
-
-	laps := laps + aNumberOfLaps 
-]
-
 { #category : #testing }
 Spaceship >> canPlay [
 
 	^ lostTurns = 0
+]
+
+{ #category : #setting }
+Spaceship >> changeLapsBy: aNumberOfLaps [
+
+	laps := laps + aNumberOfLaps 
 ]
 
 { #category : #initialization }
@@ -66,13 +66,6 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 ]
 
 { #category : #accessing }
-Spaceship >> moveBack: anAmountOfSquares in: aGameboard [
-	
-	self move: anAmountOfSquares  in: aGameboard 
-
-]
-
-{ #category : #accessing }
 Spaceship >> moveFoward: anAmountOfSquares in: aGameboard [
 
 	lostTurns > 0 ifTrue: [
@@ -98,10 +91,4 @@ Spaceship >> needsToThrow: expectedNumber [
 Spaceship >> refuel [
 
 	currentFuel := maxCapacity
-]
-
-{ #category : #'game logic' }
-Spaceship >> skipTurns [
-
-	lostTurns := lostTurns + 1.
 ]
