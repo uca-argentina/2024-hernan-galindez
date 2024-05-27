@@ -36,9 +36,7 @@ Gameboard >> find: aTarget [
 { #category : #'instance creation' }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection [
 
-
-	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole |
-
+	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole atomicBomb |
 	spaceships := spaceshipsCollection.
 
 	board := (Array new: aNumberOfSquares) collect: [ :square |
@@ -48,9 +46,9 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	anotherWormhole := wormholePair at: 2.
 	hyperGravity := HyperGravity withExpectedNumber: 4.
 	moonWalk := MoonWalk withSquaresToMove: 3 in: self.
-
 	blackHole := BlackHole in: self.
 	anotherBlackHole := BlackHole in: self.
+	atomicBomb := AtomicBomb in: self.
 
 
 	board
@@ -59,11 +57,11 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 		at: 5 put: anotherWormhole;
 		at: 6 put: hyperGravity;
 		at: 7 put: moonWalk;
-		at: 8 put: blackHole.
+		at: 8 put: blackHole;
+		at: 9 put: atomicBomb.
 
 
 	self setPlayersAtFirstPosition: spaceships
-
 ]
 
 { #category : #accessing }
@@ -91,6 +89,12 @@ Gameboard >> moveAllBack: anAmountOfSquares except: aSpaceship [
 
 	playersToMove do: [ :player |
 		player move: anAmountOfSquares negated in: self ]
+]
+
+{ #category : #setting }
+Gameboard >> moveAllToStart [
+
+	spaceships do: [ :spaceship | self moveToStart: spaceship ]
 ]
 
 { #category : #setting }
