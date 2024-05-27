@@ -5,8 +5,7 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'numberOfLaps',
-		'turnHandler'
+		'numberOfLaps'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -25,19 +24,12 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
 
 	dice := Dice with: aDiceCollection copy.
-	gameboard := Gameboard numberOfSquares: aLength.
 
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
-	gameboard setPlayersAtFirstPosition: players.
-
-	turnHandler := Dictionary
-		               newFromKeys: players
-		               andValues:
-		               (OrderedCollection new: players size withAll: 0).
-
+	gameboard := Gameboard numberOfSquares: aLength spaceships: players.
 	numberOfLaps := anAmountOfLaps
 ]
 
@@ -55,11 +47,10 @@ SpaceshipGame >> nextPlayer [
 	currentPlayer := players removeFirst.
 	players addLast: currentPlayer.
 
-	[ (turnHandler at: currentPlayer) = 0 ] whileFalse: [
-		turnHandler
-			at: currentPlayer
-			put: (turnHandler at: currentPlayer) + 1.
-		currentPlayer refuel.
+
+
+	[ currentPlayer canPlay ] whileFalse: [
+		currentPlayer lostATurn.
 		currentPlayer := players removeFirst.
 		players addLast: currentPlayer ].
 
@@ -69,14 +60,11 @@ SpaceshipGame >> nextPlayer [
 { #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
-	| aNumber spaceshipToPlay lostTurns |
+	| aNumber spaceshipToPlay |
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	lostTurns := spaceshipToPlay move: aNumber in: gameboard.
-	turnHandler
-		at: spaceshipToPlay
-		put: (turnHandler at: spaceshipToPlay) - lostTurns
+	spaceshipToPlay moveFoward: aNumber in: gameboard
 ]
 
 { #category : #'game logic' }
@@ -92,12 +80,8 @@ SpaceshipGame >> positionOf: aSpaceshipName [
 SpaceshipGame >> skipTurn [
 
 	| currentPlayer |
-	currentPlayer := players removeFirst.
-	players addLast: currentPlayer.
-
-	turnHandler
-		at: currentPlayer
-		put: (turnHandler at: currentPlayer) - 1
+	currentPlayer := self nextPlayer.
+	currentPlayer refuel
 ]
 
 { #category : #'game logic' }

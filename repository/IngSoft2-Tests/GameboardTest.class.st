@@ -18,7 +18,7 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 GameboardTest >> testBoardCannotBeCreatedWithLengthLessThanZero [
 
 	self
-		should: [ Gameboard numberOfSquares: -1 ]
+		should: [ Gameboard numberOfSquares: -1 spaceships: #('Pancho') asOrderedCollection ]
 		raise: Error
 		withMessage: 'Length must be greater than zero'
 ]

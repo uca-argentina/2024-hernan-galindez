@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'connection'
 	],
-	#category : 'IngSoft2-Model'
+	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
@@ -31,11 +31,5 @@ Wormhole >> connectTo: anotherWormhole [
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 
-	connection teleport: aSpaceship
-]
-
-{ #category : #'add/remove' }
-Wormhole >> teleport: aSpaceship [
-
-	occupiedBy add: aSpaceship
+	connection keep: aSpaceship
 ]
