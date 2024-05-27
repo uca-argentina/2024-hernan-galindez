@@ -25,7 +25,8 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	self
 		should: [ aGame winner ]
@@ -44,7 +45,8 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -67,7 +69,8 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
-		         withLaps: 3.
+		         withLaps: 3
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -87,7 +90,8 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
-		         withLaps: 3.
+		         withLaps: 3
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -108,7 +112,8 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 11
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -130,7 +135,8 @@ SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -149,7 +155,8 @@ SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 	self deny: aGame isOver
 ]
 
@@ -164,7 +171,8 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 13
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -183,7 +191,8 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -201,9 +210,34 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePositionAndTheNextPlayerThatLandsOnItMovesOneSquareForward [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 |
+	aSpaceship := 'Banana'.
+	aSpaceship2 := 'Dolca'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: aSpaceship2.
+	aDiceCollection := { (LoadedDie sequence: #( 9 9 )) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 10
+		         withDice: aDiceCollection
+		         withLaps: 2
+		         withParsecs: 100.
+
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 10.
+	self assert: (aGame positionOf: aSpaceship2) equals: 1
 ]
 
 { #category : #tests }
@@ -217,7 +251,8 @@ SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquar
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -236,18 +271,19 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: aSpaceship2.
-	aDiceCollection := { (LoadedDie sequence: #( 9 4 7 3 9  )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 9 4 7 3 9 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 150.
 
 	aGame playTurn.
 	aGame playTurn.
-	aGame playTurn. 
-	aGame playTurn. 
-	self assert: (aGame positionOf: aSpaceship) equals: 1.
+	aGame playTurn.
+	aGame playTurn.
+	self assert: (aGame positionOf: aSpaceship) equals: 1
 ]
 
 { #category : #tests }
@@ -264,7 +300,8 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -274,7 +311,7 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 	aGame skipTurn.
 	aGame playTurn.
 	aGame playTurn.
-	self assert: (aGame winner) equals: aSpaceship.
+	self assert: aGame winner equals: aSpaceship
 ]
 
 { #category : #tests }
@@ -293,7 +330,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnAtomicBombThenAllPlayersStartFromIniti
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -323,7 +361,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBack
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -342,7 +381,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -361,7 +401,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanE
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -380,7 +421,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsHigherNumberThanN
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -404,11 +446,12 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonWalkThenAllOtherSpaceshipsMoveThre
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame playTurn. 
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 7.
@@ -432,14 +475,15 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonwalkThenOtherPlayersMoveBackwardsA
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame skipTurn. 
-	aGame playTurn. 
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame skipTurn.
+	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1.
 	self assert: (aGame positionOf: aSpaceship2) equals: 13
@@ -458,7 +502,8 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndOnFirstLapThenGameIsNotOver [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -476,7 +521,8 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -499,17 +545,17 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame playTurn. 
-	aGame playTurn.	
-	aGame playTurn.	 
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 13
-
+	self assert: (aGame positionOf: anotherSpaceship) equals: 14
 ]
 
 { #category : #tests }
@@ -521,12 +567,13 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 9 9 4 10)) }.
+	aDiceCollection := { (LoadedDie sequence: #( 9 9 4 10 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -535,7 +582,7 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
 
 
 	self assert: (aGame positionOf: aSpaceship) equals: 10.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 14
+	self assert: (aGame positionOf: anotherSpaceship) equals: 15
 ]
 
 { #category : #tests }
@@ -549,7 +596,8 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame skipTurn.
@@ -557,7 +605,6 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 
 
 	self assert: (aGame positionOf: aSpaceship) equals: 5
-
 ]
 
 { #category : #tests }
@@ -575,7 +622,8 @@ SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 1.
+		         withLaps: 1
+		         withParsecs: 100.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -591,13 +639,14 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'Helado de menta granizada'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
-	aDiceCollection := OrderedCollection
-		                   with: (LoadedDie sequence: #( 3 )).
+	aDiceCollection := OrderedCollection with:
+		                   (LoadedDie sequence: #( 3 )).
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -610,13 +659,14 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'Tornillito loco'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
-	aDiceCollection := OrderedCollection
-		                   with: (LoadedDie sequence: #( 4 )).
+	aDiceCollection := OrderedCollection with:
+		                   (LoadedDie sequence: #( 4 )).
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -636,7 +686,8 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
-		         withLaps: 2.
+		         withLaps: 2
+		         withParsecs: 100.
 
 	aGame playTurn.
 
