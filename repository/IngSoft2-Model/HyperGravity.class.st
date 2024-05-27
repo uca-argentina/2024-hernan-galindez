@@ -2,7 +2,6 @@ Class {
 	#name : #HyperGravity,
 	#superclass : #Square,
 	#instVars : [
-		'dice',
 		'expectedNumber'
 	],
 	#category : #'IngSoft2-Model'
