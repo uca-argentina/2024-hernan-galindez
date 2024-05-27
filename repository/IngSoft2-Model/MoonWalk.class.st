@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #initialization }
+MoonWalk class >> withSquaresToMove: anAmountOfSquares in: aBoard [
+
+	^ (self new) initializeWithSquaresToMove: anAmountOfSquares in: aBoard.
+]
+
+{ #category : #initialization }
 MoonWalk >> initializeWithSquaresToMove: anAmountOfSquares in: aBoard [
 
 	squaresToMove := anAmountOfSquares.

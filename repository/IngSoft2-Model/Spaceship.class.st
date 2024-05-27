@@ -46,6 +46,12 @@ Spaceship >> lapsCompleted [
 	^laps.
 ]
 
+{ #category : #'game logic' }
+Spaceship >> lostATurn [
+	lostTurns := lostTurns - 1.
+
+]
+
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
