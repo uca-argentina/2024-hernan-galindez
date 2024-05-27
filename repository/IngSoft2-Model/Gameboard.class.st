@@ -4,18 +4,22 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'board',
-		'spaceships'
+		'spaceships',
+		'parsecsPerSquare'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection [
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
 
-	^ self new initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: aSpaceshipCollection
+	^ self new
+		  initializeWithNumberOfSquares: aNumberOfSquares
+		  withSpaceships: aSpaceshipCollection
+		  withParsecs: aNumberOfParsecs
 ]
 
 { #category : #accessing }
@@ -34,13 +38,16 @@ Gameboard >> find: aTarget [
 ]
 
 { #category : #'instance creation' }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection [
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs [
 
-	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole atomicBomb |
+	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole atomicBomb hyperJump |
 	spaceships := spaceshipsCollection.
 
 	board := (Array new: aNumberOfSquares) collect: [ :square |
 		         NormalSquare create ].
+
+	parsecsPerSquare := aNumberOfParsecs // board size.
+
 	wormholePair := Wormhole newPair.
 	aWormhole := wormholePair at: 1.
 	anotherWormhole := wormholePair at: 2.
@@ -49,6 +56,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	blackHole := BlackHole in: self.
 	anotherBlackHole := BlackHole in: self.
 	atomicBomb := AtomicBomb in: self.
+	hyperJump := HyperJump in: self withParsecs: parsecsPerSquare.
 
 
 	board
@@ -58,7 +66,8 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 		at: 6 put: hyperGravity;
 		at: 7 put: moonWalk;
 		at: 8 put: blackHole;
-		at: 9 put: atomicBomb.
+		at: 9 put: atomicBomb;
+		at: 10 put: hyperJump.
 
 
 	self setPlayersAtFirstPosition: spaceships

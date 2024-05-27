@@ -11,17 +11,18 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
 	^ self new
 		  initializeWithPlayers: somePlayers
 		  withGameboardLength: aLength
 		  withDice: aDiceCollection
 		  withLaps: anAmountOfLaps
+		  withParsecs: aNumberOfParsecs
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
 	dice := Dice with: aDiceCollection copy.
 
@@ -29,7 +30,10 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
-	gameboard := Gameboard numberOfSquares: aLength spaceships: players.
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs.
 	numberOfLaps := anAmountOfLaps
 ]
 
