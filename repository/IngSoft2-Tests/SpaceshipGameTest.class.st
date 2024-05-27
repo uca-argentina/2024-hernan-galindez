@@ -39,7 +39,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'Hernan'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 14 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 15 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
@@ -159,7 +159,7 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 	| aSpaceship aDiceCollection aGame aSpaceshipArray |
 	aSpaceship := 'Zalo'.
 	aSpaceshipArray := OrderedCollection with: aSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 12 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 13 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 13
@@ -207,7 +207,6 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 ]
 
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquaresThenGoesBackwardsToPreviousLap [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
@@ -229,7 +228,6 @@ SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquar
 ]
 
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPlayerLandsOnMoonWalkAndTheOtherPlayerRunsOutOfFuelThenItGoesBackToTheFirstSquareOnTheSameLap [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 |
@@ -280,7 +278,6 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 ]
 
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBackwardsThenGoesToFirstSquareAndLosesTwoTurns [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
@@ -319,7 +316,6 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 ]
 
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanExpectedNumberThenStaysInTheSamePosition [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
@@ -440,7 +436,7 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'Galindez'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 14 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 15 )) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15

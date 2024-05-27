@@ -68,9 +68,6 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 { #category : #accessing }
 Spaceship >> moveFoward: anAmountOfSquares in: aGameboard [
 
-	lostTurns > 0 ifTrue: [
-		lostTurns := lostTurns - 1.
-		^ self ].
 	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
 	needsToThrow := 0.
 	self move: anAmountOfSquares in: aGameboard
