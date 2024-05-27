@@ -6,7 +6,8 @@ Class {
 		'laps',
 		'maxCapacity',
 		'currentFuel',
-		'needsToThrow'
+		'needsToThrow',
+		'lostTurns'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -17,8 +18,14 @@ Spaceship class >> withName: aName withFuel: fuelCapacity [
 	^ self new initializeWithName: aName withFuel: fuelCapacity
 ]
 
+{ #category : #testing }
+Spaceship >> canPlay [
+
+	^ lostTurns = 0
+]
+
 { #category : #setting }
-Spaceship >> addLaps: aNumberOfLaps [
+Spaceship >> changeLapsBy: aNumberOfLaps [
 
 	laps := laps + aNumberOfLaps 
 ]
@@ -31,6 +38,7 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	maxCapacity := fuelCapacity.
 	laps := 0.
 	needsToThrow := 0.
+	lostTurns := 0.
 ]
 
 { #category : #accessing }
@@ -38,22 +46,34 @@ Spaceship >> lapsCompleted [
 	^laps.
 ]
 
+{ #category : #'game logic' }
+Spaceship >> lostATurn [
+	lostTurns := lostTurns - 1.
+
+]
+
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	| lostTurns |
-	lostTurns := 0.
-	anAmountOfSquares < needsToThrow ifTrue: [ ^ lostTurns ].
-	needsToThrow := 0.
-	currentFuel > anAmountOfSquares
+	currentFuel > anAmountOfSquares abs
 		ifTrue: [
-			currentFuel := currentFuel - anAmountOfSquares.
+			currentFuel := currentFuel - anAmountOfSquares abs.
 			aGameboard move: self with: anAmountOfSquares ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
-			lostTurns := 2 ].
-	^ lostTurns
+			lostTurns := 2 ]
+]
+
+{ #category : #accessing }
+Spaceship >> moveFoward: anAmountOfSquares in: aGameboard [
+
+	lostTurns > 0 ifTrue: [
+		lostTurns := lostTurns - 1.
+		^ self ].
+	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
+	needsToThrow := 0.
+	self move: anAmountOfSquares in: aGameboard
 ]
 
 { #category : #accessing }

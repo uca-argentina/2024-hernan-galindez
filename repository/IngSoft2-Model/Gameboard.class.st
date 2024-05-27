@@ -3,18 +3,19 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'board'
+		'board',
+		'spaceships'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares [
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
 
-	^ self new initializeWithNumberOfSquares: aNumberOfSquares
+	^ self new initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: aSpaceshipCollection
 ]
 
 { #category : #accessing }
@@ -33,20 +34,26 @@ Gameboard >> find: aTarget [
 ]
 
 { #category : #'instance creation' }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares [
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection [
 
-	| wormholePair aWormhole anotherWormhole hyperGravity |
+	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk |
+	spaceships := spaceshipsCollection.
+
 	board := (Array new: aNumberOfSquares) collect: [ :square |
 		         NormalSquare create ].
 	wormholePair := Wormhole newPair.
-	hyperGravity := HyperGravity withExpectedNumber: 4.
 	aWormhole := wormholePair at: 1.
 	anotherWormhole := wormholePair at: 2.
+	hyperGravity := HyperGravity withExpectedNumber: 4.
+	moonWalk := MoonWalk withSquaresToMove: 3 in: self.
 
 	board
 		at: 4 put: aWormhole;
 		at: 5 put: anotherWormhole;
-		at: 6 put: hyperGravity
+		at: 6 put: hyperGravity;
+		at: 7 put: moonWalk.
+
+	self setPlayersAtFirstPosition: spaceships 
 ]
 
 { #category : #accessing }
@@ -59,10 +66,21 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	                   \\ board size + 1.
 
 	aNumberOfLaps := currentPosition + aNumberOfSquares // board size.
-	aSpaceship addLaps: aNumberOfLaps.
+	aSpaceship changeLapsBy: aNumberOfLaps.
 
 	(board at: currentPosition) leaves: aSpaceship.
 	(board at: nextPosition) land: aSpaceship
+]
+
+{ #category : #setting }
+Gameboard >> moveAllBack: anAmountOfSquares except: aSpaceship [
+
+	| playersToMove |
+	playersToMove := spaceships select: [ :spaceship |
+		                 spaceship ~= aSpaceship ].
+
+	playersToMove do: [ :player |
+		player move: anAmountOfSquares negated in: self ]
 ]
 
 { #category : #setting }
