@@ -57,7 +57,7 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 
 	currentFuel > anAmountOfSquares abs
 		ifTrue: [
-			currentFuel := currentFuel - anAmountOfSquares.
+			currentFuel := currentFuel - anAmountOfSquares abs.
 			aGameboard move: self with: anAmountOfSquares ]
 		ifFalse: [
 			aGameboard moveToStart: self.
