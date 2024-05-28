@@ -22,6 +22,5 @@ AtomicBomb >> initializeWithBoard: board [
 { #category : #'add/remove' }
 AtomicBomb >> land: aSpaceship [
 
-	occupiedBy add: aSpaceship.
 	gameboard moveAllToStart 
 ]

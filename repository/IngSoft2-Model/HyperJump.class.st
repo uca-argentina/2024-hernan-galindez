@@ -27,12 +27,10 @@ HyperJump >> initializeWithBoard: board withParsecs: aNumberOfParsecs [
 HyperJump >> land: aSpaceship [
 
 	| numberOfParsecsToMove squaresToMove |
-	occupiedBy add: aSpaceship.
-
 	numberOfParsecsToMove := listOfValues removeFirst.
 	listOfValues addLast: numberOfParsecsToMove.
 	squaresToMove := numberOfParsecsToMove // parsecs.
 
 	squaresToMove = 0 ifTrue: [ ^ self ].
-	aSpaceship move: squaresToMove in: gameboard withEffects: false
+	aSpaceship move: squaresToMove in: gameboard
 ]

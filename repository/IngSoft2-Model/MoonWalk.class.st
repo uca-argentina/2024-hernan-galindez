@@ -24,7 +24,6 @@ MoonWalk >> initializeWithSquaresToMove: anAmountOfSquares in: aBoard [
 { #category : #'add/remove' }
 MoonWalk >> land: aSpaceschip [
 
-	occupiedBy add: aSpaceschip.
 	board moveAllBack: squaresToMove except: aSpaceschip.
 	
 ]

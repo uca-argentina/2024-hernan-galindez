@@ -38,6 +38,14 @@ Gameboard >> find: aTarget [
 		  ifNone: [ Error signal: 'spaceship not found' ]
 ]
 
+{ #category : #accessing }
+Gameboard >> implementEffectOn: aSpaceship [
+
+	| currentPosition |
+	currentPosition := self find: aSpaceship.
+	(board at: currentPosition) land: aSpaceship
+]
+
 { #category : #initialization }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection [
 
@@ -73,9 +81,9 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	wormhole := wormholePair first.
 	anotherWormhole := wormholePair second.
 	firstWormholePosition := aNumberOfSquares atRandom.
-	secondWormholePositions := firstWormholePosition
+	secondWormholePositions := (firstWormholePosition
 	                           + aNumberOfSquares atRandom
-	                           % aNumberOfSquares.
+	                           % aNumberOfSquares) + 1.
 
 
 
@@ -89,7 +97,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 ]
 
 { #category : #accessing }
-Gameboard >> move: aSpaceship with: aNumberOfSquares withEffects: aBoolean [
+Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
 	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
@@ -101,9 +109,7 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares withEffects: aBoolean [
 	aSpaceship changeLapsBy: aNumberOfLaps.
 
 	(board at: currentPosition) leaves: aSpaceship.
-	aBoolean
-		ifTrue: [ (board at: nextPosition) land: aSpaceship ]
-		ifFalse: [ (board at: nextPosition) keep: aSpaceship ]
+	(board at: nextPosition) keep: aSpaceship
 ]
 
 { #category : #setting }
@@ -114,7 +120,7 @@ Gameboard >> moveAllBack: anAmountOfSquares except: aSpaceship [
 		                 spaceship ~= aSpaceship ].
 
 	playersToMove do: [ :player |
-		player move: anAmountOfSquares negated in: self withEffects: false ]
+		player move: anAmountOfSquares negated in: self ]
 ]
 
 { #category : #setting }

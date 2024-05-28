@@ -134,17 +134,17 @@ SpaceshipGameTest >> testRandomGameFinishes [
 		                        with: aSpaceship
 		                        with: aSpaceship2
 		                        with: aSpaceship3.
-	aDiceCollection := { (Die of: 20) }.
+	aDiceCollection := { (Die of: 50) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 100
+		         withGameboardLength: 20
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 1000.
 
 	[ aGame isOver ] whileFalse: [
 		aGame playTurn.
-		Random new next < 0.66 ifTrue: [ aGame skipTurn ] ].
+		Random new next < 0.8 ifTrue: [ aGame skipTurn ] ].
 
 
 	self assert: aGame isOver

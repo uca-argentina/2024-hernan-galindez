@@ -53,12 +53,13 @@ Spaceship >> lostATurn [
 ]
 
 { #category : #accessing }
-Spaceship >> move: anAmountOfSquares in: aGameboard withEffects: aBoolean [
+Spaceship >> move: anAmountOfSquares in: aGameboard [
 
 	currentFuel > anAmountOfSquares abs
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares abs.
-			aGameboard move: self with: anAmountOfSquares withEffects: aBoolean ]
+			aGameboard move: self with: anAmountOfSquares.
+			aGameboard implementEffectOn: self ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
@@ -66,11 +67,11 @@ Spaceship >> move: anAmountOfSquares in: aGameboard withEffects: aBoolean [
 ]
 
 { #category : #accessing }
-Spaceship >> moveFoward: anAmountOfSquares in: aGameboard withEffects: aBoolean [
+Spaceship >> moveFoward: anAmountOfSquares in: aGameboard [
 
 	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
 	needsToThrow := 0.
-	self move: anAmountOfSquares in: aGameboard withEffects: aBoolean
+	self move: anAmountOfSquares in: aGameboard
 ]
 
 { #category : #accessing }

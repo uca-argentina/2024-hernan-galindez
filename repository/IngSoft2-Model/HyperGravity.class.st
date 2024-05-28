@@ -23,5 +23,5 @@ HyperGravity >> initializeWithExpectedNumber: aNumber [
 HyperGravity >> land: aSpaceship [
 
 	aSpaceship needsToThrow: expectedNumber.
-	occupiedBy add: aSpaceship
+
 ]
