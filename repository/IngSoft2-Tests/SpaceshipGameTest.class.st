@@ -252,7 +252,7 @@ SpaceshipGameTest >> testWhenGameFinishesGivesTheRankingOfTheSpaceships [
 		                        with: aSpaceship2
 		                        with: aSpaceship3.
 	aDiceCollection := { (LoadedDie sequence: #( 15 10 3 10 16 7 5 50 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
