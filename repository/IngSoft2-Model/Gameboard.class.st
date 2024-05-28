@@ -74,7 +74,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 ]
 
 { #category : #accessing }
-Gameboard >> move: aSpaceship with: aNumberOfSquares [
+Gameboard >> move: aSpaceship with: aNumberOfSquares withEffects: aBoolean [
 
 	| currentPosition nextPosition aNumberOfLaps |
 	currentPosition := self find: aSpaceship.
@@ -86,7 +86,9 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	aSpaceship changeLapsBy: aNumberOfLaps.
 
 	(board at: currentPosition) leaves: aSpaceship.
-	(board at: nextPosition) land: aSpaceship
+	aBoolean
+		ifTrue: [ (board at: nextPosition) land: aSpaceship ]
+		ifFalse: [ (board at: nextPosition) keep: aSpaceship ]
 ]
 
 { #category : #setting }
@@ -97,7 +99,7 @@ Gameboard >> moveAllBack: anAmountOfSquares except: aSpaceship [
 		                 spaceship ~= aSpaceship ].
 
 	playersToMove do: [ :player |
-		player move: anAmountOfSquares negated in: self ]
+		player move: anAmountOfSquares negated in: self withEffects: false ]
 ]
 
 { #category : #setting }
@@ -111,7 +113,7 @@ Gameboard >> moveToStart: aSpaceship [
 
 	| currentPosition |
 	currentPosition := self find: aSpaceship.
-	(board at: 1) land: aSpaceship.
+	(board at: 1) keep: aSpaceship.
 	(board at: currentPosition) leaves: aSpaceship
 ]
 

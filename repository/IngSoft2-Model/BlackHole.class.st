@@ -23,5 +23,5 @@ BlackHole >> initializeWithBoard: board [
 BlackHole >> land: aSpaceship [
 
 	occupiedBy add: aSpaceship.
-	aSpaceship move: -4 in: gameboard
+	aSpaceship move: -4 in: gameboard withEffects: false
 ]

@@ -68,7 +68,7 @@ SpaceshipGame >> playTurn [
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	spaceshipToPlay moveFoward: aNumber in: gameboard
+	spaceshipToPlay moveFoward: aNumber in: gameboard withEffects: true
 ]
 
 { #category : #'game logic' }

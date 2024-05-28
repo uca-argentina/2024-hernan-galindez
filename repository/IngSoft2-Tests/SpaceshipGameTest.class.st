@@ -387,7 +387,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 	aGame playTurn.
 	aGame playTurn.
 
-	self assert: (aGame positionOf: aSpaceship) equals: 5
+	self assert: (aGame positionOf: aSpaceship) equals: 4
 ]
 
 { #category : #tests }
