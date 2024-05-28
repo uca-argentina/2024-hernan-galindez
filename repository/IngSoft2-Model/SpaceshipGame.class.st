@@ -6,12 +6,15 @@ Class {
 		'gameboard',
 		'dice',
 		'numberOfLaps'
+
 	],
 	#category : #'IngSoft2-Model'
 }
 
+
 { #category : #'instance creation' }
 SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
+
 
 	^ self new
 		  initializeWithPlayers: somePlayers
@@ -36,6 +39,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             withParsecs: aNumberOfParsecs
 		             using: dice.
 	numberOfLaps := anAmountOfLaps
+
 ]
 
 { #category : #'game logic' }
