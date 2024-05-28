@@ -41,33 +41,23 @@ Gameboard >> find: aTarget [
 { #category : #initialization }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection [
 
-	| normalCount blackHoleCount hyperGravityCount moonWalkCount hyperJumpCount atomicBombCount squaresList remainingSquares wormholePair wormhole anotherWormhole |
-	remainingSquares := aNumberOfSquares - 2.
-
+	| normalCount blackHoleCount hyperGravityCount moonWalkCount hyperJumpCount atomicBombCount squaresList wormholePair wormhole anotherWormhole firstWormholePosition secondWormholePositions |
 	spaceships := spaceshipsCollection.
 	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
 
-	normalCount := (remainingSquares * 0.40) floor.
-	blackHoleCount := (remainingSquares * 0.20) floor.
-	hyperGravityCount := (remainingSquares * 0.20) floor.
-	moonWalkCount := (remainingSquares * 0.10) floor.
-	hyperJumpCount := (remainingSquares * 0.08) floor.
-	atomicBombCount := (remainingSquares * 0.02) floor.
+	normalCount := (aNumberOfSquares * 0.40) rounded.
+	blackHoleCount := (aNumberOfSquares * 0.20) rounded.
+	hyperGravityCount := (aNumberOfSquares * 0.20) rounded.
+	moonWalkCount := (aNumberOfSquares * 0.10) rounded.
+	hyperJumpCount := (aNumberOfSquares * 0.08) rounded.
+	atomicBombCount := (aNumberOfSquares * 0.02) rounded.
 
-
+	"Crear la lista de Squares con instancias únicas"
 	squaresList := OrderedCollection new.
-	wormholePair := Wormhole newPair.
-	wormhole := wormholePair at: 1.
-	anotherWormhole := wormholePair at: 2.
-	squaresList add: wormhole.
-	squaresList add: anotherWormhole.
-
-
 	normalCount timesRepeat: [ squaresList add: NormalSquare create ].
 	blackHoleCount timesRepeat: [ squaresList add: (BlackHole in: self) ].
 	hyperGravityCount timesRepeat: [
-		squaresList add:
-			(HyperGravity withExpectedNumber: aDiceCollection maxThrow atRandom) ].
+		squaresList add: (HyperGravity withExpectedNumber: 4) ].
 	moonWalkCount timesRepeat: [
 		squaresList add: (MoonWalk withSquaresToMove: 3 in: self) ].
 	hyperJumpCount timesRepeat: [
@@ -75,13 +65,26 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	atomicBombCount timesRepeat: [
 		squaresList add: (AtomicBomb in: self) ].
 
-	[ squaresList size < aNumberOfSquares ] whileTrue: [
-		squaresList add: NormalSquare create ].
-
+	"Barajar la lista de Squares"
 	squaresList := squaresList asSortedCollection: [ :a :b |
 		               Random new next < 0.5 ].
 
-	board := squaresList asOrderedCollection.
+
+	wormholePair := Wormhole newPair.
+	wormhole := wormholePair first.
+	anotherWormhole := wormholePair second.
+	firstWormholePosition := aNumberOfSquares atRandom.
+	secondWormholePositions := firstWormholePosition
+	                           + aNumberOfSquares atRandom
+	                           % aNumberOfSquares.
+
+
+
+	board := squaresList asArray.
+
+	board
+		at: firstWormholePosition put: wormhole;
+		at: secondWormholePositions put: anotherWormhole.
 
 	self setPlayersAtFirstPosition: spaceships
 ]
