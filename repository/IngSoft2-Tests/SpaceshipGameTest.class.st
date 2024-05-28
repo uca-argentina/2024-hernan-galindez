@@ -241,6 +241,42 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenGameFinishesGivesTheRankingOfTheSpaceships [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 |
+	aSpaceship := 'Pancho'.
+	aSpaceship2 := 'Zepo'.
+	aSpaceship3 := 'Zalo'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: aSpaceship2
+		                        with: aSpaceship3.
+	aDiceCollection := { (LoadedDie sequence: #( 15 10 3 10 16 7 5 50 )) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withDice: aDiceCollection
+		         withLaps: 2
+		         withParsecs: 150.
+
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+"	self assert: (aGame positionOf: aSpaceship) equals: 1.
+	self assert: (aGame positionOf: aSpaceship2) equals: 12.
+	self assert: (aGame positionOf: aSpaceship3) equals: 12"
+	
+	self assert: (aGame rankings) equals: #('Pancho' 'Zepo' 'Zalo') asOrderedCollection . 
+
+
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquaresThenGoesBackwardsToPreviousLap [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |

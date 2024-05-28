@@ -81,6 +81,31 @@ SpaceshipGame >> positionOf: aSpaceshipName [
 ]
 
 { #category : #'game logic' }
+SpaceshipGame >> rankings [
+
+	| comparisonBlock sortedCollection playerPosition playerLap playerPositionArray |
+	self isOver ifFalse: [ Error signal: 'Game is not over' ].
+
+	comparisonBlock := [ :a :b |
+	                   a second x = b second x
+		                   ifTrue: [ a second y >= b second y ]
+		                   ifFalse: [ a second x > b second x ] ].
+
+	sortedCollection := SortedCollection sortBlock: comparisonBlock.
+
+	players do: [ :player |
+		playerPosition := gameboard find: player.
+		playerLap := player lapsCompleted.
+		playerPositionArray := OrderedCollection
+			                       with: player
+			                       with: playerLap @ playerPosition.
+		sortedCollection add: playerPositionArray ].
+
+
+	^ sortedCollection collect: [ :position | position first name ]
+]
+
+{ #category : #'game logic' }
 SpaceshipGame >> skipTurn [
 
 	| currentPlayer |
