@@ -33,7 +33,8 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
-		             withParsecs: aNumberOfParsecs.
+		             withParsecs: aNumberOfParsecs
+		             using: dice.
 	numberOfLaps := anAmountOfLaps
 ]
 

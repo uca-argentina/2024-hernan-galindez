@@ -21,7 +21,7 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 	aSpaceship := 'Galindez'.
 	aSpaceshipArray := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 4 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -41,7 +41,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 	aSpaceship := 'Hernan'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 15 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -65,7 +65,7 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 20 ))
 		                   with: (LoadedDie sequence: #( 15 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
@@ -86,7 +86,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 20 ))
 		                   with: (LoadedDie sequence: #( 15 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
@@ -108,7 +108,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 11
 		         withDice: aDiceCollection
@@ -131,7 +131,7 @@ SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection with:
 		                   (LoadedDie sequence: #( 3 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -151,7 +151,7 @@ SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 6 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
@@ -167,7 +167,7 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 	aSpaceship := 'Zalo'.
 	aSpaceshipArray := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 13 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 13
 		         withDice: aDiceCollection
@@ -187,7 +187,7 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 6 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
@@ -206,7 +206,7 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 6 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
@@ -226,7 +226,7 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		                        with: aSpaceship
 		                        with: aSpaceship2.
 	aDiceCollection := { (LoadedDie sequence: #( 9 9 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
@@ -247,7 +247,7 @@ SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquar
 	aSpaceship := 'Zalon'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 10 4 3 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -272,7 +272,7 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		                        with: aSpaceship
 		                        with: aSpaceship2.
 	aDiceCollection := { (LoadedDie sequence: #( 9 4 7 3 9 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -296,7 +296,7 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		                        with: aSpaceship
 		                        with: aSpaceship2.
 	aDiceCollection := { (LoadedDie sequence: #( 10 4 6 3 10 18 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -326,7 +326,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnAtomicBombThenAllPlayersStartFromIniti
 		                        with: aSpaceship2
 		                        with: aSpaceship3.
 	aDiceCollection := { (LoadedDie sequence: #( 9 9 8 3 3 3 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -357,7 +357,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBack
 	aSpaceship := 'Zalon'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 4 4 5 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -377,7 +377,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 	aSpaceship := 'Zalon'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 4 4 8 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -397,7 +397,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanE
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 5 3 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -417,7 +417,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsHigherNumberThanN
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 5 7 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -442,7 +442,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonWalkThenAllOtherSpaceshipsMoveThre
 		                        with: aSpaceship2
 		                        with: aSpaceship3.
 	aDiceCollection := { (LoadedDie sequence: #( 4 3 4 3 10 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -471,7 +471,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonwalkThenOtherPlayersMoveBackwardsA
 
 	aDiceCollection := { (LoadedDie sequence: #( 4 4 6 3 6 )) }.
 
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -498,7 +498,7 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndOnFirstLapThenGameIsNotOver [
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 10 ))
 		                   with: (LoadedDie sequence: #( 5 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -517,7 +517,7 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 	aSpaceship := 'Galindez'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 15 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -541,7 +541,7 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 
 	aDiceCollection := { (LoadedDie sequence: #( 9 4 9 6 3 )) }.
 
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -568,7 +568,7 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 9 9 4 10 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -592,7 +592,7 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 	aSpaceship := 'Pancho'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 9 9 )) }.
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -618,7 +618,7 @@ SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 		                        with: anotherSpaceship.
 	aDiceCollection := OrderedCollection with:
 		                   (LoadedDie sequence: #( 9 5 3 3 9 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -641,7 +641,7 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection with:
 		                   (LoadedDie sequence: #( 3 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -661,7 +661,7 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection with:
 		                   (LoadedDie sequence: #( 4 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
@@ -682,7 +682,7 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 6 ))
 		                   with: (LoadedDie sequence: #( 3 )).
-	aGame := SpaceshipGame
+	aGame := LoadedSpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 12
 		         withDice: aDiceCollection
