@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs [
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
@@ -20,6 +20,7 @@ Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipColle
 		  initializeWithNumberOfSquares: aNumberOfSquares
 		  withSpaceships: aSpaceshipCollection
 		  withParsecs: aNumberOfParsecs
+		  withDice: aDiceCollection
 ]
 
 { #category : #accessing }
@@ -37,38 +38,50 @@ Gameboard >> find: aTarget [
 		  ifNone: [ Error signal: 'spaceship not found' ]
 ]
 
-{ #category : #'instance creation' }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs [
+{ #category : #initialization }
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection [
 
-	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole atomicBomb hyperJump |
+	| normalCount blackHoleCount hyperGravityCount moonWalkCount hyperJumpCount atomicBombCount squaresList remainingSquares wormholePair wormhole anotherWormhole |
+	remainingSquares := aNumberOfSquares - 2.
+
 	spaceships := spaceshipsCollection.
+	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
 
-	board := (Array new: aNumberOfSquares) collect: [ :square |
-		         NormalSquare create ].
+	normalCount := (remainingSquares * 0.40) floor.
+	blackHoleCount := (remainingSquares * 0.20) floor.
+	hyperGravityCount := (remainingSquares * 0.20) floor.
+	moonWalkCount := (remainingSquares * 0.10) floor.
+	hyperJumpCount := (remainingSquares * 0.08) floor.
+	atomicBombCount := (remainingSquares * 0.02) floor.
 
-	parsecsPerSquare := aNumberOfParsecs // board size.
 
+	squaresList := OrderedCollection new.
 	wormholePair := Wormhole newPair.
-	aWormhole := wormholePair at: 1.
+	wormhole := wormholePair at: 1.
 	anotherWormhole := wormholePair at: 2.
-	hyperGravity := HyperGravity withExpectedNumber: 4.
-	moonWalk := MoonWalk withSquaresToMove: 3 in: self.
-	blackHole := BlackHole in: self.
-	anotherBlackHole := BlackHole in: self.
-	atomicBomb := AtomicBomb in: self.
-	hyperJump := HyperJump in: self withParsecs: parsecsPerSquare.
+	squaresList add: wormhole.
+	squaresList add: anotherWormhole.
 
 
-	board
-		at: 3 put: anotherBlackHole;
-		at: 4 put: aWormhole;
-		at: 5 put: anotherWormhole;
-		at: 6 put: hyperGravity;
-		at: 7 put: moonWalk;
-		at: 8 put: blackHole;
-		at: 9 put: atomicBomb;
-		at: 10 put: hyperJump.
+	normalCount timesRepeat: [ squaresList add: NormalSquare create ].
+	blackHoleCount timesRepeat: [ squaresList add: (BlackHole in: self) ].
+	hyperGravityCount timesRepeat: [
+		squaresList add:
+			(HyperGravity withExpectedNumber: aDiceCollection maxThrow atRandom) ].
+	moonWalkCount timesRepeat: [
+		squaresList add: (MoonWalk withSquaresToMove: 3 in: self) ].
+	hyperJumpCount timesRepeat: [
+		squaresList add: (HyperJump in: self withParsecs: parsecsPerSquare) ].
+	atomicBombCount timesRepeat: [
+		squaresList add: (AtomicBomb in: self) ].
 
+	[ squaresList size < aNumberOfSquares ] whileTrue: [
+		squaresList add: NormalSquare create ].
+
+	squaresList := squaresList asSortedCollection: [ :a :b |
+		               Random new next < 0.5 ].
+
+	board := squaresList asOrderedCollection.
 
 	self setPlayersAtFirstPosition: spaceships
 ]
@@ -123,7 +136,7 @@ Gameboard >> setPlayersAtFirstPosition: players [
 	| firstSquare |
 	firstSquare := board at:1.
 
-	players do: [ :player | firstSquare land: player ]
+	players do: [ :player | firstSquare keep: player ]
 ]
 
 { #category : #accessing }
