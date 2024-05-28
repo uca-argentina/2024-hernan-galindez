@@ -124,6 +124,33 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testRandomGameFinishes [
+
+| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 |
+	aSpaceship := 'Pancho'.
+	aSpaceship2 := 'Zepo'.
+	aSpaceship3 := 'Zalo'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: aSpaceship2
+		                        with: aSpaceship3.
+	aDiceCollection := { (Die of: 20) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 100
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 1000.
+
+	[ aGame isOver ] whileFalse: [
+		aGame playTurn.
+		Random new next < 0.66 ifTrue: [ aGame skipTurn ] ].
+
+
+	self assert: aGame isOver
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
