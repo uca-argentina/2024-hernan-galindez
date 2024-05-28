@@ -34,5 +34,5 @@ HyperJump >> land: aSpaceship [
 	squaresToMove := numberOfParsecsToMove // parsecs.
 
 	squaresToMove = 0 ifTrue: [ ^ self ].
-	aSpaceship move: squaresToMove in: gameboard
+	aSpaceship move: squaresToMove in: gameboard withEffects: false
 ]
