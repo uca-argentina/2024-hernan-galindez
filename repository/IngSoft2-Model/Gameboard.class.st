@@ -52,7 +52,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	hyperJumpCount := (aNumberOfSquares * 0.08) rounded.
 	atomicBombCount := (aNumberOfSquares * 0.02) rounded.
 
-	"Crear la lista de Squares con instancias únicas"
+
 	squaresList := OrderedCollection new.
 	normalCount timesRepeat: [ squaresList add: NormalSquare create ].
 	blackHoleCount timesRepeat: [ squaresList add: (BlackHole in: self) ].
@@ -65,7 +65,6 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	atomicBombCount timesRepeat: [
 		squaresList add: (AtomicBomb in: self) ].
 
-	"Barajar la lista de Squares"
 	squaresList := squaresList asSortedCollection: [ :a :b |
 		               Random new next < 0.5 ].
 
