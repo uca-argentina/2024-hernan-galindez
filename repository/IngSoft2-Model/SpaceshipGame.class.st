@@ -47,6 +47,17 @@ SpaceshipGame >> isOver [
 		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
+{ #category : #accessing }
+SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
+
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ].
+
+
+	^ aSpaceship lapsCompleted
+]
+
 { #category : #'game logic' }
 SpaceshipGame >> nextPlayer [
 

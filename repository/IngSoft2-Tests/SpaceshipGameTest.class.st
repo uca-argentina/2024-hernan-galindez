@@ -265,6 +265,7 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		         withLaps: 2
 		         withParsecs: 100.
 
+
 	aGame playTurn.
 	aGame playTurn.
 
@@ -676,6 +677,33 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 |
+	aSpaceship := 'Banana'.
+	aSpaceship2 := 'Dolca'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: aSpaceship2.
+	aDiceCollection := { (LoadedDie sequence: #( 15 15 )) }.
+	aGame := LoadedSpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withDice: aDiceCollection
+		         withLaps: 2
+		         withParsecs: 100.
+
+	aGame playTurn.
+	
+	self assert: (aGame lapsCompletedOf: aSpaceship) equals: 1.
+	
+	aGame playTurn.
+	
+	self assert: (aGame lapsCompletedOf: aSpaceship2) equals: 1.
+]
+
+{ #category : #tests }
+
 SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
