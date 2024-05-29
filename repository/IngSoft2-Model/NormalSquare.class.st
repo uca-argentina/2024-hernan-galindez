@@ -7,5 +7,5 @@ Class {
 { #category : #'add/remove' }
 NormalSquare >> land: aSpaceship [
 
-	occupiedBy add: aSpaceship
+	^ self
 ]

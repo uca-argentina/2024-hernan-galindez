@@ -8,8 +8,8 @@ Class {
 DiceTest >> testWhenCreateDiceWithThreeLoadedDieAndSixLoadedDieItThrowsNine [
 
 	| aThreeLoadedDie aSixLoadedDie aDice someDice |
-	aThreeLoadedDie := LoadedDie of: 3.
-	aSixLoadedDie := LoadedDie of: 6.
+	aThreeLoadedDie := LoadedDie sequence: #( 3 ).
+	aSixLoadedDie := LoadedDie sequence: #( 6 ).
 	someDice := OrderedCollection
 		            with: aThreeLoadedDie
 		            with: aSixLoadedDie.
@@ -21,7 +21,8 @@ DiceTest >> testWhenCreateDiceWithThreeLoadedDieAndSixLoadedDieItThrowsNine [
 DiceTest >> testWhenDiceAreThrownThenItsRollIsTheSumOfEachDie [
 
 	| aDice |
-	aDice := Dice with:
-		         (OrderedCollection with: (LoadedDie of: 6) with: (LoadedDie of: 3)).
+	aDice := Dice with: (OrderedCollection
+			          with: (LoadedDie sequence: #( 6 ))
+			          with: (LoadedDie sequence: #( 3 ))).
 	self assert: aDice throw equals: 9
 ]

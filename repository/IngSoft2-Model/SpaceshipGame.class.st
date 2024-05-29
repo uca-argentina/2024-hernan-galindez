@@ -5,68 +5,116 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'currentTurn'
+		'numberOfLaps'
 	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #'accesing - defaults' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection [
+{ #category : #'instance creation' }
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
+
 
 	^ self new
 		  initializeWithPlayers: somePlayers
 		  withGameboardLength: aLength
-		  withWormholesPoisitions: wormholePositions
 		  withDice: aDiceCollection
+		  withLaps: anAmountOfLaps
+		  withParsecs: aNumberOfParsecs
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: somePlayers withGameboardLength: aLength withWormholesPoisitions: wormholePositions withDice: aDiceCollection [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
-	players := somePlayers copy.
-	gameboard := Gameboard
-		             numberOfSquares: aLength
-		             withWormholeAt: (wormholePositions at: 1)
-		             and: (wormholePositions at: 2).
-	gameboard setPlayersAtFirstPosition: somePlayers.
 	dice := Dice with: aDiceCollection copy.
 
-	currentTurn := 1
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2 ].
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs
+		             using: dice.
+	numberOfLaps := anAmountOfLaps
+
 ]
 
 { #category : #'game logic' }
 SpaceshipGame >> isOver [
 
-	| lastSquarePosition |
-	lastSquarePosition := gameboard size.
 	^ players anySatisfy: [ :aSpaceship |
-		  (self positionOf: aSpaceship) = lastSquarePosition ]
+		  aSpaceship lapsCompleted >= numberOfLaps ]
 ]
 
-{ #category : #'game controls' }
-SpaceshipGame >> nextTurn [
+{ #category : #'game logic' }
+SpaceshipGame >> nextPlayer [
 
-	currentTurn := currentTurn = players size
-		               ifTrue: [ 1 ]
-		               ifFalse: [ currentTurn + 1 ].
-	^ currentTurn
+	| currentPlayer |
+	currentPlayer := players removeFirst.
+	players addLast: currentPlayer.
+
+
+
+	[ currentPlayer canPlay ] whileFalse: [
+		currentPlayer lostATurn.
+		currentPlayer := players removeFirst.
+		players addLast: currentPlayer ].
+
+	^ currentPlayer
 ]
 
 { #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
-	| aNumber currentPlayer |
+	| aNumber spaceshipToPlay |
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
-	currentPlayer := players at: currentTurn.
-	gameboard move: currentPlayer with: aNumber.
-	currentTurn := self nextTurn
+	spaceshipToPlay := self nextPlayer.
+	spaceshipToPlay moveFoward: aNumber in: gameboard.
+	gameboard implementEffectOn: spaceshipToPlay.
 ]
 
 { #category : #'game logic' }
-SpaceshipGame >> positionOf: aSpaceship [
+SpaceshipGame >> positionOf: aSpaceshipName [
 
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ].
 	^ gameboard find: aSpaceship
+]
+
+{ #category : #'game logic' }
+SpaceshipGame >> rankings [
+
+	| comparisonBlock sortedCollection playerPosition playerLap playerPositionArray |
+	self isOver ifFalse: [ Error signal: 'Game is not over' ].
+
+	comparisonBlock := [ :a :b |
+	                   a second x = b second x
+		                   ifTrue: [ a second y >= b second y ]
+		                   ifFalse: [ a second x > b second x ] ].
+
+	sortedCollection := SortedCollection sortBlock: comparisonBlock.
+
+	players do: [ :player |
+		playerPosition := gameboard find: player.
+		playerLap := player lapsCompleted.
+		playerPositionArray := OrderedCollection
+			                       with: player
+			                       with: playerLap @ playerPosition.
+		sortedCollection add: playerPositionArray ].
+
+
+	^ sortedCollection collect: [ :position | position first name ]
+]
+
+{ #category : #'game logic' }
+SpaceshipGame >> skipTurn [
+
+	| currentPlayer |
+	currentPlayer := self nextPlayer.
+	currentPlayer refuel
 ]
 
 { #category : #'game logic' }
@@ -78,11 +126,12 @@ SpaceshipGame >> verifyGameIsNotOver [
 { #category : #'game logic' }
 SpaceshipGame >> winner [
 
-	| lastSquarePosition |
+	| lastSquarePosition spaceshipWinner |
 	lastSquarePosition := gameboard size.
 
-	^ players
-		  detect: [ :player |
-		  (self positionOf: player) = lastSquarePosition ]
-		  ifNone: [ Error signal:'There is no winner yet' ]
+	spaceshipWinner := players
+		                   detect: [ :player |
+		                   player lapsCompleted >= numberOfLaps ]
+		                   ifNone: [ Error signal: 'There is no winner yet' ].
+	^spaceshipWinner name
 ]

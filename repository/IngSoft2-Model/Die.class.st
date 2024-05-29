@@ -27,6 +27,12 @@ Die >> initializeOf: anAmountOfFaces [
 	faces := anAmountOfFaces
 ]
 
+{ #category : #accessing }
+Die >> maxThrow [
+
+^ faces
+]
+
 { #category : #initialization }
 Die >> throw [
 

@@ -24,6 +24,15 @@ DieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 ]
 
 { #category : #tests }
+DieTest >> testMaxThrowIsNumberOfFaces [
+
+	| aDie |
+	aDie := Die of: 4.
+
+	self assert: (aDie maxThrow) equals: 4
+]
+
+{ #category : #tests }
 DieTest >> testReturnsAValueBetweenOneAndNumberOfFacesOfDie [
 
 	| aDie |

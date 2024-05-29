@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'diceArray'
+		'diceCollection'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -17,11 +17,16 @@ Dice class >> with: anArrayMadeOfDice [
 { #category : #initialization }
 Dice >> initializeWith: anArrayMadeOfDice [
 
-	diceArray := anArrayMadeOfDice
+	diceCollection := anArrayMadeOfDice
+]
+
+{ #category : #accessing }
+Dice >> maxThrow [
+	^ (diceCollection sum: [ :die | die maxThrow ])
 ]
 
 { #category : #initialization }
 Dice >> throw [
 
-	^ diceArray sum: [ :die | die throw ]
+	^ (diceCollection collect: [ :eachDie | eachDie throw ] )sum
 ]

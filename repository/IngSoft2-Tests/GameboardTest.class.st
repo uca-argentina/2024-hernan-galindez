@@ -18,27 +18,12 @@ GameboardTest >> should: anErrorBlock raise: exceptionClass withMessage: anError
 GameboardTest >> testBoardCannotBeCreatedWithLengthLessThanZero [
 
 	self
-		should: [ Gameboard numberOfSquares: -1 withWormholeAt: 1 and: 2 ]
+		should: [
+			Gameboard
+				numberOfSquares: -1
+				spaceships: #( 'Pancho' ) asOrderedCollection
+				withParsecs: 100
+				using: (Dice with: { (Die of: 4) }) ]
 		raise: Error
 		withMessage: 'Length must be greater than zero'
-]
-
-{ #category : #tests }
-GameboardTest >> testBoardCannotBeCreatedWithWormholeAtLastSquare [
-
-	self
-		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 10 ]
-		raise: Error
-		withMessage:
-		'Wormholes must be between the first and the second to last square'
-]
-
-{ #category : #tests }
-GameboardTest >> testBoardCannotBeCreatedWithWormholeAtPositionsGreaterThanBoardSize [
-
-	self
-		should: [ Gameboard numberOfSquares: 10 withWormholeAt: 1 and: 12 ]
-		raise: Error
-		withMessage:
-		'Wormholes must be between the first and the second to last square'
 ]

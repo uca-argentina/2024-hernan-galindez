@@ -31,11 +31,6 @@ Wormhole >> connectTo: anotherWormhole [
 { #category : #'add/remove' }
 Wormhole >> land: aSpaceship [
 
-	connection teleport: aSpaceship
-]
-
-{ #category : #'add/remove' }
-Wormhole >> teleport: aSpaceship [
-
-	occupiedBy add: aSpaceship
+	occupiedBy remove: aSpaceship.
+	connection keep: aSpaceship
 ]

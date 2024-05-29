@@ -13,7 +13,7 @@ LoadedDieTest >> should: anErrorBlock raise: anErrorClass withMessage: anErrorMe
 LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 
 	self
-		should: [ LoadedDie of: 2 ]
+		should: [ LoadedDie sequence: #(2) ]
 		raise: Error
 		withMessage: 'Faces should be more than 2'
 ]
@@ -22,17 +22,16 @@ LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
 LoadedDieTest >> testDieIsCreatedWithAnAmountOfFaces [
 
 	| aDie |
-	aDie := LoadedDie of: 5.
+	aDie := LoadedDie sequence: #( 3 ).
 
-	self assert: aDie throw equals: 5
+	self assert: aDie throw equals: 3
 ]
 
 { #category : #tests }
-LoadedDieTest >> testWhenDieIsThrownThenValueIsNumberOfFaces [ 
+LoadedDieTest >> testWhenDieIsThrownThenValueIsNumberOfFaces [
 
-| aDie |
+	| aDie |
+	aDie := LoadedDie sequence: #( 5 ).
 
-aDie := LoadedDie of: 5.
-
-self assert: aDie throw equals: 5.
+	self assert: aDie throw equals: 5
 ]
