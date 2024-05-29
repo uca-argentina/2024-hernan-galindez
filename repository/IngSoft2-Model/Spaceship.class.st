@@ -58,8 +58,7 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 	currentFuel > anAmountOfSquares abs
 		ifTrue: [
 			currentFuel := currentFuel - anAmountOfSquares abs.
-			aGameboard move: self with: anAmountOfSquares.
-			aGameboard implementEffectOn: self ]
+			aGameboard move: self with: anAmountOfSquares ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.

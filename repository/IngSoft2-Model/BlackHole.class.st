@@ -24,5 +24,4 @@ BlackHole >> land: aSpaceship [
 
 
 	aSpaceship move: -4 in: gameboard.
-	gameboard implementEffectOn: aSpaceship
 ]
