@@ -265,6 +265,7 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		         withLaps: 2
 		         withParsecs: 100.
 
+
 	aGame playTurn.
 	aGame playTurn.
 
@@ -702,6 +703,7 @@ SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
 ]
 
 { #category : #tests }
+
 SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |
