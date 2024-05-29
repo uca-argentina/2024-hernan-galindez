@@ -13,6 +13,7 @@ Class {
 { #category : #'instance creation' }
 SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
+
 	^ self new
 		  initializeWithPlayers: somePlayers
 		  withGameboardLength: aLength
@@ -36,6 +37,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             withParsecs: aNumberOfParsecs
 		             using: dice.
 	numberOfLaps := anAmountOfLaps
+
 ]
 
 { #category : #'game logic' }

@@ -28,6 +28,7 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 		         withLaps: 2
 		         withParsecs: 100.
 
+
 	self
 		should: [ aGame winner ]
 		raise: Error
@@ -47,6 +48,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100.
+
 
 	aGame playTurn.
 
@@ -126,6 +128,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 { #category : #tests }
 SpaceshipGameTest >> testRandomGameFinishes [
 
+
 | aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 |
 	aSpaceship := 'Pancho'.
 	aSpaceship2 := 'Zepo'.
@@ -201,6 +204,7 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 		         withLaps: 1
 		         withParsecs: 100.
 
+
 	aGame playTurn.
 
 
@@ -239,6 +243,7 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100.
+
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1
 ]
@@ -294,9 +299,6 @@ SpaceshipGameTest >> testWhenGameFinishesGivesTheRankingOfTheSpaceships [
 	aGame playTurn.
 	aGame playTurn.
 
-"	self assert: (aGame positionOf: aSpaceship) equals: 1.
-	self assert: (aGame positionOf: aSpaceship2) equals: 12.
-	self assert: (aGame positionOf: aSpaceship3) equals: 12"
 	
 	self assert: (aGame rankings) equals: #('Pancho' 'Zepo' 'Zalo') asOrderedCollection . 
 
@@ -316,6 +318,7 @@ SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquar
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100.
+
 
 	aGame playTurn.
 	aGame playTurn.
@@ -341,6 +344,7 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 150.
+
 
 	aGame playTurn.
 	aGame playTurn.
@@ -587,6 +591,7 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 		         withLaps: 1
 		         withParsecs: 100.
 
+
 	aGame playTurn.
 
 	self assert: aGame winner equals: aSpaceship
@@ -711,6 +716,7 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 		         withLaps: 2
 		         withParsecs: 100.
 
+
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 5
@@ -730,6 +736,7 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100.
+
 
 	aGame playTurn.
 
