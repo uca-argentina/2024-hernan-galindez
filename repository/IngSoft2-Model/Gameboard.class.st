@@ -109,15 +109,16 @@ Gameboard >> lapsCompletedOf: aSpaceship [
 { #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
-	| currentPosition nextPosition lapsCompleted |
+	| currentPosition nextPosition currentLaps lapsCompleted |
 	currentPosition := self find: aSpaceship.
 
 	nextPosition := currentPosition - 1 + aNumberOfSquares \\ board size
 	                + 1.
 
+	currentLaps := lapCounter at: aSpaceship.
 	lapsCompleted := currentPosition - 1 + aNumberOfSquares // board size.
-	lapCounter at: aSpaceship update: [ :currentLaps | currentLaps + lapsCompleted  ].
-	
+	lapCounter at: aSpaceship put: currentLaps + 1.
+
 
 	(board at: currentPosition) leaves: aSpaceship.
 	(board at: nextPosition) keep: aSpaceship
