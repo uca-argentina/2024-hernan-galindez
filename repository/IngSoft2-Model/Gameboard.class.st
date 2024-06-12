@@ -117,7 +117,7 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
 	currentLaps := lapCounter at: aSpaceship.
 	lapsCompleted := currentPosition - 1 + aNumberOfSquares // board size.
-	lapCounter at: aSpaceship put: currentLaps + 1.
+	lapCounter at: aSpaceship put: currentLaps + lapsCompleted.
 
 
 	(board at: currentPosition) leaves: aSpaceship.
