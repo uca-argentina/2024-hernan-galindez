@@ -703,7 +703,6 @@ SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
 ]
 
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection |

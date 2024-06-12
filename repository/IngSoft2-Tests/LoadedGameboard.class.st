@@ -10,6 +10,7 @@ LoadedGameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceship
 
 	| wormholePair aWormhole anotherWormhole hyperGravity moonWalk blackHole anotherBlackHole atomicBomb hyperJump |
 	spaceships := spaceshipsCollection.
+	lapCounter := Dictionary newFromKeys: spaceships  andValues:  (OrderedCollection new: spaceships size withAll: 0).
 
 	board := (Array new: aNumberOfSquares) collect: [ :square |
 		         NormalSquare create ].

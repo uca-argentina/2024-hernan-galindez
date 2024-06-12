@@ -5,7 +5,8 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
-		'parsecsPerSquare'
+		'parsecsPerSquare',
+		'lapCounter'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -51,6 +52,9 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 
 	| normalCount blackHoleCount hyperGravityCount moonWalkCount hyperJumpCount atomicBombCount squaresList wormholePair wormhole anotherWormhole firstWormholePosition secondWormholePositions |
 	spaceships := spaceshipsCollection.
+	lapCounter := Dictionary newFromKeys: spaceships  andValues:  (OrderedCollection new: spaceships size withAll: 0). 
+	
+	
 	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
 
 	normalCount := (aNumberOfSquares * 0.40) rounded.
@@ -97,16 +101,23 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 ]
 
 { #category : #accessing }
+Gameboard >> lapsCompletedOf: aSpaceship [
+
+	^ lapCounter at: aSpaceship
+]
+
+{ #category : #accessing }
 Gameboard >> move: aSpaceship with: aNumberOfSquares [
 
-	| currentPosition nextPosition aNumberOfLaps |
+	| currentPosition nextPosition lapsCompleted |
 	currentPosition := self find: aSpaceship.
 
 	nextPosition := currentPosition - 1 + aNumberOfSquares \\ board size
 	                + 1.
 
-	aNumberOfLaps := currentPosition - 1 + aNumberOfSquares // board size.
-	aSpaceship changeLapsBy: aNumberOfLaps.
+	lapsCompleted := currentPosition - 1 + aNumberOfSquares // board size.
+	lapCounter at: aSpaceship update: [ :currentLaps | currentLaps + lapsCompleted  ].
+	
 
 	(board at: currentPosition) leaves: aSpaceship.
 	(board at: nextPosition) keep: aSpaceship
