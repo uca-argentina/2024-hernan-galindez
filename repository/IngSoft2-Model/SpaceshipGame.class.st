@@ -12,18 +12,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator [
-
-	^ self new
-		  initializeWithPlayers: somePlayers
-		  withGameboardLength: aLength
-		  withDice: aDiceCollection
-		  withLaps: anAmountOfLaps
-		  withParsecs: aNumberOfParsecs
-		  withSquareGenerator: sqaureGenerator
-]
-
-{ #category : #'instance creation' }
 SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards [
 
 	^ self new
@@ -34,27 +22,6 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withParsecs: aNumberOfParsecs
 		  withSquareGenerator: sqaureGenerator
 		  withRewards: rewards
-]
-
-{ #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
-
-	dice := Dice with: aDiceCollection .
-
-	players := aCollectionOfPlayers collect: [ :playerName |
-		           Spaceship
-			           withName: playerName
-			           withFuel: dice maxThrow * 2 ].
-
-	gameboard := Gameboard
-		             numberOfSquares: aLength
-		             spaceships: players
-		             withParsecs: aNumberOfParsecs
-		             using: dice
-		             generator: squareGenerator.
-	numberOfLaps := anAmountOfLaps.
-	
-
 ]
 
 { #category : #initialization }
