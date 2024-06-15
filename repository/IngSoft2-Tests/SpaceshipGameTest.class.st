@@ -158,7 +158,7 @@ SpaceshipGameTest >> testRandomGameFinishes [
 		                        { normalSquare }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 15
+		         withGameboardLength: 5
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
