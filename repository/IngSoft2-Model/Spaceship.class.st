@@ -3,7 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'laps',
 		'maxCapacity',
 		'currentFuel',
 		'needsToThrow',
@@ -30,9 +29,8 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	name := aName.
 	currentFuel := fuelCapacity.
 	maxCapacity := fuelCapacity.
-	laps := 0.
 	needsToThrow := 0.
-	lostTurns := 0.
+	lostTurns := 0
 ]
 
 { #category : #'game logic' }

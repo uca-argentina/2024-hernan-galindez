@@ -1,27 +1,17 @@
 Class {
 	#name : #BlackHole,
 	#superclass : #Square,
-	#instVars : [
-		'gameboard'
-	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #evaluating }
-BlackHole class >> in: board [
+{ #category : #'add/remove' }
+BlackHole >> applyEffectTo: aSpaceship in: aGameboard [
 
-	^ self new initializeWithBoard: board
+	aSpaceship move: -4 in: aGameboard
 ]
 
 { #category : #'add/remove' }
 BlackHole >> initializeWithBoard: board [
 
 	gameboard := board
-]
-
-{ #category : #'add/remove' }
-BlackHole >> land: aSpaceship [
-
-
-	aSpaceship move: -4 in: gameboard.
 ]

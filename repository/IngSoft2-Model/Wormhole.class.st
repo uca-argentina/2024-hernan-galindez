@@ -22,15 +22,31 @@ Wormhole class >> newPair [
 	^ wormholePair
 ]
 
+{ #category : #'instance creation' }
+Wormhole class >> newPairIn: aBoard at: firstPosition and: secondPosition [
+
+	| aWormhole anotherWormhole wormholePair |
+	aWormhole := self new.
+	anotherWormhole := self new.
+	aWormhole connectTo: anotherWormhole.
+	anotherWormhole connectTo: aWormhole.
+
+	wormholePair := OrderedCollection
+		                with: aWormhole
+		                with: anotherWormhole.
+	aBoard at: firstPosition put: aWormhole.
+	aBoard at: secondPosition put: anotherWormhole
+]
+
+{ #category : #'add/remove' }
+Wormhole >> applyEffectTo: aSpaceship in: aGameboard [
+
+	occupiedBy remove: aSpaceship.
+	connection keep: aSpaceship
+]
+
 { #category : #'public - line' }
 Wormhole >> connectTo: anotherWormhole [
 
 	connection := anotherWormhole
-]
-
-{ #category : #'add/remove' }
-Wormhole >> land: aSpaceship [
-
-	occupiedBy remove: aSpaceship.
-	connection keep: aSpaceship
 ]

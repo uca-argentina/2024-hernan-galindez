@@ -9,21 +9,20 @@ Class {
 }
 
 { #category : #initialization }
-MoonWalk class >> withSquaresToMove: anAmountOfSquares in: aBoard [
+MoonWalk class >> withSquaresToMove: anAmountOfSquares [ 
 
-	^ (self new) initializeWithSquaresToMove: anAmountOfSquares in: aBoard.
-]
-
-{ #category : #initialization }
-MoonWalk >> initializeWithSquaresToMove: anAmountOfSquares in: aBoard [
-
-	squaresToMove := anAmountOfSquares.
-	board:= aBoard. 
+	^ (self new) initializeWithSquaresToMove: anAmountOfSquares .
 ]
 
 { #category : #'add/remove' }
-MoonWalk >> land: aSpaceschip [
+MoonWalk >> applyEffectTo: aSpaceship in: aGameboard [
 
-	board moveAllBack: squaresToMove except: aSpaceschip.
-	
+	aGameboard moveAllBack: squaresToMove except: aSpaceship
+]
+
+{ #category : #initialization }
+MoonWalk >> initializeWithSquaresToMove: anAmountOfSquares [
+
+	squaresToMove := anAmountOfSquares.
+
 ]

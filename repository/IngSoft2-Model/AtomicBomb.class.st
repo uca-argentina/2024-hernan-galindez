@@ -1,26 +1,17 @@
 Class {
 	#name : #AtomicBomb,
 	#superclass : #Square,
-	#instVars : [
-		'gameboard'
-	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #evaluating }
-AtomicBomb class >> in: board [
+{ #category : #'add/remove' }
+AtomicBomb >> applyEffectTo: aSpaceship in: aGameboard [
 
-	^ self new initializeWithBoard: board
+	aGameboard moveAllToStart 
 ]
 
 { #category : #initialization }
 AtomicBomb >> initializeWithBoard: board [
 
 	gameboard := board
-]
-
-{ #category : #'add/remove' }
-AtomicBomb >> land: aSpaceship [
-
-	gameboard moveAllToStart 
 ]

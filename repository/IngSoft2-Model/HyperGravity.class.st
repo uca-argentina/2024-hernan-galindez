@@ -14,14 +14,14 @@ HyperGravity class >> withExpectedNumber: aNumber [
 ]
 
 { #category : #'add/remove' }
-HyperGravity >> initializeWithExpectedNumber: aNumber [
-
-	expectedNumber := aNumber
-]
-
-{ #category : #'add/remove' }
-HyperGravity >> land: aSpaceship [
+HyperGravity >> applyEffectTo: aSpaceship in: aGameboard [
 
 	aSpaceship needsToThrow: expectedNumber.
 
+]
+
+{ #category : #'add/remove' }
+HyperGravity >> initializeWithExpectedNumber: aNumber [
+
+	expectedNumber := aNumber
 ]

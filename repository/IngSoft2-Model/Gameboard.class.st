@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection [
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
@@ -22,6 +22,7 @@ Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipColle
 		  withSpaceships: aSpaceshipCollection
 		  withParsecs: aNumberOfParsecs
 		  withDice: aDiceCollection
+		  withGenerator: squareGenerator
 ]
 
 { #category : #accessing }
