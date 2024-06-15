@@ -48,6 +48,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 	aDiceCollection := { (LoadedDie sequence: #( 15 )) }.
 	specificGenerator := SpecificGenerator with:
 		                     { (NormalSquare create -> 1) }.
+
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
@@ -55,7 +56,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		         withLaps: 1
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
-					rewards: (DecrementFuelCapacity by: 1).
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -94,7 +95,7 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 { #category : #tests }
 SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator |
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator rewardsManager |
 	aSpaceship := 'zepito'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection
@@ -103,6 +104,9 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 	normalSquare := [ NormalSquare create ] -> 1.
 	probabilityGenerator := ProbabilityGenerator distributions:
 		                        { normalSquare }.
+	rewardsManager := RewardsManager with: {
+			                  ((DecrementFuelCapacity by: 1) -> 0.2).
+			                  ((IncrementFuelCapacity by: 1) -> 0.8) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
@@ -110,7 +114,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 		         withLaps: 3
 		         withParsecs: 100
 		         squareGenerator: probabilityGenerator
-		         rewards: (DecrementFuelCapacity by: 1).
+		         rewards: rewardsManager.
 
 	aGame playTurn.
 
