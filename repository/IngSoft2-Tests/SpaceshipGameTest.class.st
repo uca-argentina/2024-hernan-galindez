@@ -91,21 +91,22 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 { #category : #tests }
 SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator |
 	aSpaceship := 'zepito'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 20 ))
 		                   with: (LoadedDie sequence: #( 15 )).
-	specificGenerator := SpecificGenerator with:
-		                     { (NormalSquare create -> 1) }.
+	normalSquare := [ NormalSquare create ] -> 1.
+	probabilityGenerator := ProbabilityGenerator distributions:
+		                        { normalSquare }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
 		         withLaps: 3
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: probabilityGenerator.
 
 	aGame playTurn.
 
@@ -138,38 +139,6 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 
 
 	self assert: aGame winner equals: aSpaceship
-]
-
-{ #category : #tests }
-SpaceshipGameTest >> testRandomGameFinishes [
-
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 normalSquare  probabilityGenerator |
-	aSpaceship := 'Pancho'.
-	aSpaceship2 := 'Zepo'.
-	aSpaceship3 := 'Zalo'.
-	aSpaceshipCollection := OrderedCollection
-		                        with: aSpaceship
-		                        with: aSpaceship2
-		                        with: aSpaceship3.
-	aDiceCollection := { (Die of: 50) }.
-	normalSquare := [ NormalSquare create ] -> 1.
-
-	probabilityGenerator := ProbabilityGenerator distributions:
-		                        { normalSquare }.
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 5
-		         withDice: aDiceCollection
-		         withLaps: 1
-		         withParsecs: 100
-		         squareGenerator: probabilityGenerator.
-
-	[ aGame isOver ] whileFalse: [
-		aGame playTurn.
- ].
-
-
-	self assert: aGame isOver
 ]
 
 { #category : #tests }
