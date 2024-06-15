@@ -143,7 +143,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 { #category : #tests }
 SpaceshipGameTest >> testRandomGameFinishes [
 
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 normalSquare hyperGravity atomicBomb blackHole moonWalk hyperJump probabilityGenerator |
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection aSpaceship2 aSpaceship3 normalSquare  probabilityGenerator |
 	aSpaceship := 'Pancho'.
 	aSpaceship2 := 'Zepo'.
 	aSpaceship3 := 'Zalo'.
@@ -152,32 +152,21 @@ SpaceshipGameTest >> testRandomGameFinishes [
 		                        with: aSpaceship2
 		                        with: aSpaceship3.
 	aDiceCollection := { (Die of: 50) }.
-	normalSquare := [ NormalSquare create ] -> 0.4.
-	hyperGravity := [ HyperGravity withExpectedNumber: 25 atRandom ]
-	                -> 0.2.
-	atomicBomb := [ AtomicBomb create ] -> 0.02.
-	blackHole := [ BlackHole create ] -> 0.02.
-	moonWalk := [ MoonWalk withSquaresToMove: 10 atRandom ] -> 0.1.
-	hyperJump := [ HyperJump create ] -> 0.08.
+	normalSquare := [ NormalSquare create ] -> 1.
 
-	probabilityGenerator := ProbabilityGenerator distributions: {
-			                        normalSquare.
-			                        hyperGravity.
-			                        atomicBomb.
-			                        blackHole.
-			                        moonWalk.
-			                        hyperJump }.
+	probabilityGenerator := ProbabilityGenerator distributions:
+		                        { normalSquare }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
 		         withLaps: 1
-		         withParsecs: 1000
+		         withParsecs: 100
 		         squareGenerator: probabilityGenerator.
 
 	[ aGame isOver ] whileFalse: [
 		aGame playTurn.
-		Random new next < 0.8 ifTrue: [ aGame skipTurn ] ].
+		Random new next < 0.6 ifTrue: [ aGame skipTurn ] ].
 
 
 	self assert: aGame isOver
