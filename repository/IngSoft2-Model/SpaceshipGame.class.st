@@ -70,6 +70,17 @@ SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
 	^ aSpaceship lapsCompleted
 ]
 
+{ #category : #accessing }
+SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
+
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ].
+
+
+	^ aSpaceship lapsCompleted
+]
+
 { #category : #'game logic' }
 SpaceshipGame >> nextPlayer [
 
