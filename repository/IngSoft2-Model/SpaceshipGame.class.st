@@ -23,24 +23,6 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
-
-	dice := Dice with: aDiceCollection copy.
-
-	players := aCollectionOfPlayers collect: [ :playerName |
-		           Spaceship
-			           withName: playerName
-			           withFuel: dice maxThrow * 2 ].
-	gameboard := Gameboard
-		             numberOfSquares: aLength
-		             spaceships: players
-		             withParsecs: aNumberOfParsecs
-		             using: dice.
-	numberOfLaps := anAmountOfLaps
-
-]
-
-{ #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
 
 	dice := Dice with: aDiceCollection .
