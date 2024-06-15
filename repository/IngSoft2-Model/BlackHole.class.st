@@ -9,9 +9,3 @@ BlackHole >> applyEffectTo: aSpaceship in: aGameboard [
 
 	aSpaceship move: -4 in: aGameboard
 ]
-
-{ #category : #'add/remove' }
-BlackHole >> initializeWithBoard: board [
-
-	gameboard := board
-]

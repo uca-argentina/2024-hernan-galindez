@@ -8,12 +8,6 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #evaluating }
-HyperJump class >> in: board withParsecs: aNumberOfParsecs [
-
-	^self new initializeWithBoard: board withParsecs: aNumberOfParsecs
-]
-
 { #category : #'add/remove' }
 HyperJump >> applyEffectTo: aSpaceship in: aGameboard [
 
@@ -32,12 +26,4 @@ HyperJump >> initialize [
 
 	occupiedBy := OrderedCollection new.
 	listOfValues := #( 4 11 10 ) asOrderedCollection
-]
-
-{ #category : #'add/remove' }
-HyperJump >> initializeWithBoard: board withParsecs: aNumberOfParsecs [
-
-	gameboard := board.
-	parsecs := aNumberOfParsecs.
-	listOfValues := #(4 11 10) asOrderedCollection 
 ]

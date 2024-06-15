@@ -9,9 +9,3 @@ AtomicBomb >> applyEffectTo: aSpaceship in: aGameboard [
 
 	aGameboard moveAllToStart 
 ]
-
-{ #category : #initialization }
-AtomicBomb >> initializeWithBoard: board [
-
-	gameboard := board
-]

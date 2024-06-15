@@ -32,13 +32,6 @@ Square >> initialize [
 	occupiedBy := OrderedCollection new
 ]
 
-{ #category : #initialization }
-Square >> initializeWith: aGameboard [
-
-	occupiedBy := OrderedCollection new.
-	gameboard := aGameboard
-]
-
 { #category : #'add/remove' }
 Square >> keep: aSpaceship [
 

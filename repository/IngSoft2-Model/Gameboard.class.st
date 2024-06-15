@@ -77,7 +77,7 @@ Gameboard >> move: aSpaceship with: aNumberOfSquares [
 	| currentPosition nextPosition currentLaps lapsCompleted |
 	currentPosition := self find: aSpaceship.
 
-	nextPosition := currentPosition - 1 + aNumberOfSquares \\ board size
+	nextPosition := currentPosition - 1 + aNumberOfSquares \\ self size
 	                + 1.
 
 	currentLaps := lapCounter at: aSpaceship.
