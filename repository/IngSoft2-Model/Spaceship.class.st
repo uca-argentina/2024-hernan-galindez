@@ -3,7 +3,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'laps',
 		'maxCapacity',
 		'currentFuel',
 		'needsToThrow',
@@ -24,26 +23,14 @@ Spaceship >> canPlay [
 	^ lostTurns = 0
 ]
 
-{ #category : #setting }
-Spaceship >> changeLapsBy: aNumberOfLaps [
-
-	laps := laps + aNumberOfLaps 
-]
-
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 
 	name := aName.
 	currentFuel := fuelCapacity.
 	maxCapacity := fuelCapacity.
-	laps := 0.
 	needsToThrow := 0.
-	lostTurns := 0.
-]
-
-{ #category : #accessing }
-Spaceship >> lapsCompleted [
-	^laps.
+	lostTurns := 0
 ]
 
 { #category : #'game logic' }
@@ -66,14 +53,6 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 ]
 
 { #category : #accessing }
-Spaceship >> moveFoward: anAmountOfSquares in: aGameboard [
-
-	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
-	needsToThrow := 0.
-	self move: anAmountOfSquares in: aGameboard
-]
-
-{ #category : #accessing }
 Spaceship >> name [ 
 	^name
 ]
@@ -82,6 +61,14 @@ Spaceship >> name [
 Spaceship >> needsToThrow: expectedNumber [
 
 	needsToThrow := expectedNumber.
+]
+
+{ #category : #accessing }
+Spaceship >> playWith: anAmountOfSquares in: aGameboard [
+
+	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
+	needsToThrow := 0.
+	self move: anAmountOfSquares in: aGameboard
 ]
 
 { #category : #setting }

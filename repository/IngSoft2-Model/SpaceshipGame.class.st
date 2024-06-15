@@ -11,8 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
-
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator [
 
 	^ self new
 		  initializeWithPlayers: somePlayers
@@ -20,31 +19,55 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withDice: aDiceCollection
 		  withLaps: anAmountOfLaps
 		  withParsecs: aNumberOfParsecs
+		  withSquareGenerator: sqaureGenerator
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
 
-	dice := Dice with: aDiceCollection copy.
+	dice := Dice with: aDiceCollection .
 
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
+
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
 		             withParsecs: aNumberOfParsecs
-		             using: dice.
+		             using: dice
+		             generator: squareGenerator.
 	numberOfLaps := anAmountOfLaps
-
 ]
 
 { #category : #'game logic' }
 SpaceshipGame >> isOver [
 
 	^ players anySatisfy: [ :aSpaceship |
-		  aSpaceship lapsCompleted >= numberOfLaps ]
+		  (gameboard lapsCompletedOf: aSpaceship) >= numberOfLaps ]
+]
+
+{ #category : #accessing }
+SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
+
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ].
+
+
+	^ gameboard lapsCompletedOf: aSpaceship
+]
+
+{ #category : #accessing }
+SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
+
+	| aSpaceship |
+	aSpaceship := players detect: [ :player |
+		              player name = aSpaceshipName ].
+
+
+	^ aSpaceship lapsCompleted
 ]
 
 { #category : #accessing }
@@ -82,7 +105,7 @@ SpaceshipGame >> playTurn [
 	self verifyGameIsNotOver.
 	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
-	spaceshipToPlay moveFoward: aNumber in: gameboard.
+	spaceshipToPlay playWith: aNumber in: gameboard.
 	gameboard implementEffectOn: spaceshipToPlay.
 ]
 
@@ -101,16 +124,13 @@ SpaceshipGame >> rankings [
 	| comparisonBlock sortedCollection playerPosition playerLap playerPositionArray |
 	self isOver ifFalse: [ Error signal: 'Game is not over' ].
 
-	comparisonBlock := [ :a :b |
-	                   a second x = b second x
-		                   ifTrue: [ a second y >= b second y ]
-		                   ifFalse: [ a second x > b second x ] ].
+	comparisonBlock := [ :a :b | a second >= b second ].
 
 	sortedCollection := SortedCollection sortBlock: comparisonBlock.
 
 	players do: [ :player |
 		playerPosition := gameboard find: player.
-		playerLap := player lapsCompleted.
+		playerLap := gameboard lapsCompletedOf: player.
 		playerPositionArray := OrderedCollection
 			                       with: player
 			                       with: playerLap @ playerPosition.
@@ -137,12 +157,10 @@ SpaceshipGame >> verifyGameIsNotOver [
 { #category : #'game logic' }
 SpaceshipGame >> winner [
 
-	| lastSquarePosition spaceshipWinner |
-	lastSquarePosition := gameboard size.
-
-	spaceshipWinner := players
-		                   detect: [ :player |
-		                   player lapsCompleted >= numberOfLaps ]
-		                   ifNone: [ Error signal: 'There is no winner yet' ].
-	^spaceshipWinner name
+	| raceWinner |
+	raceWinner := players
+		              detect: [ :player |
+		              (gameboard lapsCompletedOf: player) >= numberOfLaps ]
+		              ifNone: [ Error signal: 'There is no winner yet' ].
+	^ raceWinner name
 ]
