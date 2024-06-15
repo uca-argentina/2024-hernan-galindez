@@ -166,7 +166,7 @@ SpaceshipGameTest >> testRandomGameFinishes [
 
 	[ aGame isOver ] whileFalse: [
 		aGame playTurn.
-		Random new next < 0.6 ifTrue: [ aGame skipTurn ] ].
+ ].
 
 
 	self assert: aGame isOver

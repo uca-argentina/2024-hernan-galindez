@@ -45,7 +45,6 @@ Gameboard >> implementEffectOn: aSpaceship [
 
 	| currentPosition |
 	currentPosition := self find: aSpaceship.
-	"(board at: currentPosition) land: aSpaceship."
 	(board at: currentPosition) applyEffectTo: aSpaceship in: self
 ]
 
