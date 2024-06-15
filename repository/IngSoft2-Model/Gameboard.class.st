@@ -45,59 +45,23 @@ Gameboard >> implementEffectOn: aSpaceship [
 
 	| currentPosition |
 	currentPosition := self find: aSpaceship.
-	(board at: currentPosition) land: aSpaceship
+	"(board at: currentPosition) land: aSpaceship."
+	(board at: currentPosition) applyEffectTo: aSpaceship in: self
 ]
 
 { #category : #initialization }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection [
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator [
 
-	| normalCount blackHoleCount hyperGravityCount moonWalkCount hyperJumpCount atomicBombCount squaresList wormholePair wormhole anotherWormhole firstWormholePosition secondWormholePositions |
 	spaceships := spaceshipsCollection.
-	lapCounter := Dictionary newFromKeys: spaceships  andValues:  (OrderedCollection new: spaceships size withAll: 0). 
-	
-	
+	lapCounter := Dictionary
+		              newFromKeys: spaceships
+		              andValues:
+		              (OrderedCollection new: spaceships size withAll: 0).
+
+
 	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
 
-	normalCount := (aNumberOfSquares * 0.40) rounded.
-	blackHoleCount := (aNumberOfSquares * 0.20) rounded.
-	hyperGravityCount := (aNumberOfSquares * 0.20) rounded.
-	moonWalkCount := (aNumberOfSquares * 0.10) rounded.
-	hyperJumpCount := (aNumberOfSquares * 0.08) rounded.
-	atomicBombCount := (aNumberOfSquares * 0.02) rounded.
-
-
-	squaresList := OrderedCollection new.
-	normalCount timesRepeat: [ squaresList add: NormalSquare create ].
-	blackHoleCount timesRepeat: [ squaresList add: (BlackHole in: self) ].
-	hyperGravityCount timesRepeat: [
-		squaresList add: (HyperGravity withExpectedNumber: 4) ].
-	moonWalkCount timesRepeat: [
-		squaresList add: (MoonWalk withSquaresToMove: 3 in: self) ].
-	hyperJumpCount timesRepeat: [
-		squaresList add: (HyperJump in: self withParsecs: parsecsPerSquare) ].
-	atomicBombCount timesRepeat: [
-		squaresList add: (AtomicBomb in: self) ].
-
-	squaresList := squaresList asSortedCollection: [ :a :b |
-		               Random new next < 0.5 ].
-
-
-	wormholePair := Wormhole newPair.
-	wormhole := wormholePair first.
-	anotherWormhole := wormholePair second.
-	firstWormholePosition := aNumberOfSquares atRandom.
-	secondWormholePositions := (firstWormholePosition
-	                           + aNumberOfSquares atRandom
-	                           % aNumberOfSquares) + 1.
-
-
-
-	board := squaresList asArray.
-
-	board
-		at: firstWormholePosition put: wormhole;
-		at: secondWormholePositions put: anotherWormhole.
-
+	board := squareGenerator generateSquares: aNumberOfSquares.
 	self setPlayersAtFirstPosition: spaceships
 ]
 
@@ -149,6 +113,12 @@ Gameboard >> moveToStart: aSpaceship [
 	currentPosition := self find: aSpaceship.
 	(board at: 1) keep: aSpaceship.
 	(board at: currentPosition) leaves: aSpaceship
+]
+
+{ #category : #initialization }
+Gameboard >> parsecsPerSquare [
+
+	^ parsecsPerSquare
 ]
 
 { #category : #setting }

@@ -11,8 +11,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
-
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator [
 
 	^ self new
 		  initializeWithPlayers: somePlayers
@@ -20,6 +19,7 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withDice: aDiceCollection
 		  withLaps: anAmountOfLaps
 		  withParsecs: aNumberOfParsecs
+		  withSquareGenerator: sqaureGenerator
 ]
 
 { #category : #initialization }
@@ -38,6 +38,25 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             using: dice.
 	numberOfLaps := anAmountOfLaps
 
+]
+
+{ #category : #initialization }
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
+
+	dice := Dice with: aDiceCollection .
+
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2 ].
+
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs
+		             using: dice
+		             generator: squareGenerator.
+	numberOfLaps := anAmountOfLaps
 ]
 
 { #category : #'game logic' }
@@ -134,9 +153,7 @@ SpaceshipGame >> verifyGameIsNotOver [
 { #category : #'game logic' }
 SpaceshipGame >> winner [
 
-	| lastSquarePosition raceWinner |
-	lastSquarePosition := gameboard size.
-
+	| raceWinner |
 	raceWinner := players
 		              detect: [ :player |
 		              (gameboard lapsCompletedOf: player) >= numberOfLaps ]
