@@ -22,14 +22,15 @@ SpaceshipGameTest >> testErrorWhenAskedForAWinnerAndThereIsNone [
 	aSpaceshipArray := OrderedCollection with: aSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 4 )) }.
 	specificGenerator := SpecificGenerator with:
-		                        { (NormalSquare create -> 1) }.
+		                     { (NormalSquare create -> 1) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipArray
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	self
@@ -53,7 +54,8 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+					rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -81,7 +83,8 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 		         withDice: aDiceCollection
 		         withLaps: 3
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 
@@ -106,7 +109,8 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 		         withDice: aDiceCollection
 		         withLaps: 3
 		         withParsecs: 100
-		         squareGenerator: probabilityGenerator.
+		         squareGenerator: probabilityGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 
@@ -131,7 +135,8 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOnePlayer [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -148,7 +153,7 @@ SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
 	aSpaceship := 'Helado de menta granizada'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection with:
-		                   (LoadedDie sequence: #( 3 )).
+		                   (LoadedDie sequence: #( 2 2 2 3 )).
 	specificGenerator := SpecificGenerator with:
 		                     { (NormalSquare create -> 1) }.
 	aGame := SpaceshipGame
@@ -157,8 +162,10 @@ SpaceshipGameTest >> testSpaceshipMovedToStartWhenFuelIsEmpty [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
+	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -180,7 +187,8 @@ SpaceshipGameTest >> testWhenAGameIsCreatedCheckThatItIsNotOver [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 	self deny: aGame isOver
 ]
 
@@ -199,7 +207,8 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -223,7 +232,8 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 
@@ -245,7 +255,8 @@ SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstS
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1
@@ -269,7 +280,8 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 
@@ -301,7 +313,8 @@ SpaceshipGameTest >> testWhenGameFinishesGivesTheRankingOfTheSpaceships [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 150
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -333,7 +346,8 @@ SpaceshipGameTest >> testWhenPlayerCompletesLapAndLandsOnBlackHoleInInitialSquar
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -361,7 +375,8 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 150
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -389,7 +404,8 @@ SpaceshipGameTest >> testWhenPlayerIsInInitialSquaresOfTheSecondLapAndAnotherPla
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -421,7 +437,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnAtomicBombThenAllPlayersStartFromIniti
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -446,7 +463,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBack
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Zalon'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 5 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 1 3 3 4 )) }.
 	specificGenerator := SpecificGenerator with:
 		                     { (BlackHole create -> 8) }.
 	aGame := SpaceshipGame
@@ -455,8 +472,10 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBack
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
+	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -478,7 +497,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -501,7 +521,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsANumberLowerThanE
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -524,7 +545,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnHyperGravityAndThrowsHigherNumberThanN
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -552,7 +573,8 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonWalkThenAllOtherSpaceshipsMoveThre
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -574,16 +596,17 @@ SpaceshipGameTest >> testWhenPlayerLandsOnMoonwalkThenOtherPlayersMoveBackwardsA
 		                        with: aSpaceship
 		                        with: aSpaceship2.
 
-	aDiceCollection := { (LoadedDie sequence: #( 3 3 6 3 6 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 3 3 5 3 6 )) }.
 	specificGenerator := SpecificGenerator with:
-		                     { ((MoonWalk withSquaresToMove: 3) -> 7) }.
+		                     { ((MoonWalk withSquaresToMove: 5) -> 7) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 15
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -613,7 +636,8 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndOnFirstLapThenGameIsNotOver [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 
@@ -635,7 +659,8 @@ SpaceshipGameTest >> testWhenPlayerReachesTheEndThenPlayerWins [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -653,18 +678,21 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
 
-	aDiceCollection := { (LoadedDie sequence: #( 9 4 9 6 3 )) }.
+	aDiceCollection := { (LoadedDie sequence: #( 9 4 9 1 2 6 3 10)) }.
 	specificGenerator := SpecificGenerator with:
 		                     { (NormalSquare create -> 1) }.
 
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 15
+		         withGameboardLength: 20
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
+	aGame playTurn.
+	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -672,7 +700,7 @@ SpaceshipGameTest >> testWhenPlayerRunsOutOfFuelThenGoesToStartAndLosesTwoTurns 
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 1.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 14
+	self assert: (aGame positionOf: anotherSpaceship) equals: 15
 ]
 
 { #category : #tests }
@@ -693,7 +721,8 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenItStaysInTheSamePosition [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -720,7 +749,8 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame skipTurn.
@@ -748,7 +778,8 @@ SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 
@@ -759,10 +790,7 @@ SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
 	self assert: (aGame lapsCompletedOf: aSpaceship2) equals: 1
 ]
 
-
-
 { #category : #tests }
-
 SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
@@ -781,7 +809,8 @@ SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [
 		         withDice: aDiceCollection
 		         withLaps: 1
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 	aGame playTurn.
@@ -807,7 +836,8 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnFirstWormholeThenMoveItToSecondWorm
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
@@ -835,12 +865,66 @@ SpaceshipGameTest >> testWhenSpaceshipLandsOnSecondWormholeThenMoveItToFirstWorm
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 4
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenSpaceshipThrowsMaxThrowThenItsFuelCapacityItsDecrementedByOne [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	aSpaceshipCollection := OrderedCollection with: aSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 6 5 5 1 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 20
+		         withDice: aDiceCollection
+		         withLaps: 2
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
+
+	aGame playTurn.
+	aGame skipTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 1
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenSpaceshipThrowsMaxThrowThenItsFuelCapacityItsIncrementedByOne [
+
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	aSpaceshipCollection := OrderedCollection with: aSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 6 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 20
+		         withDice: aDiceCollection
+		         withLaps: 2
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1).
+
+	aGame playTurn.
+	aGame skipTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 19
 ]
 
 { #category : #tests }
@@ -860,7 +944,8 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 		         withDice: aDiceCollection
 		         withLaps: 2
 		         withParsecs: 100
-		         squareGenerator: specificGenerator.
+		         squareGenerator: specificGenerator
+		         rewards: (DecrementFuelCapacity by: 1).
 
 	aGame playTurn.
 

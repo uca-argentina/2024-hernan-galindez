@@ -5,7 +5,8 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'numberOfLaps'
+		'numberOfLaps',
+		'rewards'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -20,6 +21,19 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withLaps: anAmountOfLaps
 		  withParsecs: aNumberOfParsecs
 		  withSquareGenerator: sqaureGenerator
+]
+
+{ #category : #'instance creation' }
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards [
+
+	^ self new
+		  initializeWithPlayers: somePlayers
+		  withGameboardLength: aLength
+		  withDice: aDiceCollection
+		  withLaps: anAmountOfLaps
+		  withParsecs: aNumberOfParsecs
+		  withSquareGenerator: sqaureGenerator
+		  withRewards: rewards
 ]
 
 { #category : #initialization }
@@ -38,7 +52,30 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             withParsecs: aNumberOfParsecs
 		             using: dice
 		             generator: squareGenerator.
-	numberOfLaps := anAmountOfLaps
+	numberOfLaps := anAmountOfLaps.
+	
+
+]
+
+{ #category : #initialization }
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection [
+
+	dice := Dice with: aDiceCollection.
+
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2 ].
+
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs
+		             using: dice
+		             generator: squareGenerator.
+	numberOfLaps := anAmountOfLaps.
+
+	rewards := rewardsCollection.
 ]
 
 { #category : #'game logic' }
@@ -57,28 +94,6 @@ SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
 
 
 	^ gameboard lapsCompletedOf: aSpaceship
-]
-
-{ #category : #accessing }
-SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
-
-	| aSpaceship |
-	aSpaceship := players detect: [ :player |
-		              player name = aSpaceshipName ].
-
-
-	^ aSpaceship lapsCompleted
-]
-
-{ #category : #accessing }
-SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
-
-	| aSpaceship |
-	aSpaceship := players detect: [ :player |
-		              player name = aSpaceshipName ].
-
-
-	^ aSpaceship lapsCompleted
 ]
 
 { #category : #'game logic' }
@@ -103,10 +118,11 @@ SpaceshipGame >> playTurn [
 
 	| aNumber spaceshipToPlay |
 	self verifyGameIsNotOver.
-	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
+	aNumber := dice throw.
+	aNumber = dice maxThrow ifTrue: [ rewards applyTo: spaceshipToPlay ].
 	spaceshipToPlay playWith: aNumber in: gameboard.
-	gameboard implementEffectOn: spaceshipToPlay.
+	gameboard implementEffectOn: spaceshipToPlay
 ]
 
 { #category : #'game logic' }

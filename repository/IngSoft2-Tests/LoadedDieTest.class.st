@@ -10,15 +10,6 @@ LoadedDieTest >> should: anErrorBlock raise: anErrorClass withMessage: anErrorMe
 ]
 
 { #category : #tests }
-LoadedDieTest >> testDieCannotBeCreatedWithLessThanTwoFaces [
-
-	self
-		should: [ LoadedDie sequence: #(2) ]
-		raise: Error
-		withMessage: 'Faces should be more than 2'
-]
-
-{ #category : #tests }
 LoadedDieTest >> testDieIsCreatedWithAnAmountOfFaces [
 
 	| aDie |

@@ -23,6 +23,13 @@ Spaceship >> canPlay [
 	^ lostTurns = 0
 ]
 
+{ #category : #accessing }
+Spaceship >> changeFuelCapacityBy: anAmount [
+
+	maxCapacity := maxCapacity + anAmount.
+	currentFuel := maxCapacity max: currentFuel
+]
+
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 
