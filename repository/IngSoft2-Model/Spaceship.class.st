@@ -32,6 +32,14 @@ Spaceship >> allyWith: aSpaceship [
 	ally := aSpaceship
 ]
 
+{ #category : #setting }
+Spaceship >> applyPenaltyIn: gameboard [
+
+	gameboard moveToStart: self.
+	currentFuel := maxCapacity.
+	lostTurns := 2
+]
+
 { #category : #testing }
 Spaceship >> canPlay [
 
@@ -49,12 +57,6 @@ Spaceship >> changeFuelCapacityBy: anAmount [
 Spaceship >> changeTotalThrowBy: aNumber [
 
 	diceAdjustment := diceAdjustment + aNumber
-]
-
-{ #category : #setting }
-Spaceship >> goBackToStartIn: gameboard [
-
-	gameboard moveToStart: self
 ]
 
 { #category : #initialization }
@@ -100,10 +102,7 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 		ifTrue: [
 			currentFuel := currentFuel - squaresToMove abs.
 			aGameboard move: self with: squaresToMove ]
-		ifFalse: [
-			self goBackToStartIn: aGameboard.
-			currentFuel := maxCapacity.
-			lostTurns := 2 ]
+		ifFalse: [ self applyPenaltyIn: aGameboard ]
 ]
 
 { #category : #accessing }
@@ -158,5 +157,5 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 	currentFuel := currentFuel + allyFuel.
 
 	currentFuel <= squaresToMove abs ifTrue: [
-		ally goBackToStartIn: gameboard ]
+		ally applyPenaltyIn: gameboard ]
 ]

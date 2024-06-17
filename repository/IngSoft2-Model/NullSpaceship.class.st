@@ -4,8 +4,8 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #accessing }
-NullSpaceship >> goBackToStartIn: gameboard [
+{ #category : #setting }
+NullSpaceship >> applyPenaltyIn: gameboard [
 
 	^ self
 ]
