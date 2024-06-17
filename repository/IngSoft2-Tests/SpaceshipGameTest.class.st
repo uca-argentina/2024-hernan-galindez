@@ -308,6 +308,69 @@ SpaceshipGameTest >> testWhenAccelerationCardIsUsedThenAllSpaceshipsTotalThrowAr
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenAllyCardIsUsedAndBothSpaceshipsDoesNotHaveEnoughFuelThenBothOfThemGoToTheStart [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 5 5 5 5 5 6 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 13
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: Ally new.
+
+	aGame playCard: 'Ally' from: aSpaceship to: { anotherSpaceship }.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 1.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 1
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenAllyCardIsUsedAndOnePlayerDoesNotHaveFuelRequiredToMoveThenItUsesTheAllyFuel [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 5 2 5 9 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 13
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: Ally new.
+
+	aGame playCard: 'Ally' from: aSpaceship to: { anotherSpaceship }.
+	aGame playTurn.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 11
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [
 
 	| aGame aSpaceship aDiceCollection aSpaceshipCollection specificGenerator |
