@@ -117,7 +117,7 @@ SpaceshipGame >> nextPlayer [
 ]
 
 { #category : #'game controls' }
-SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsName [
+SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames [
 
 	| spaceshipToPlay otherSpaceships spaceship |
 	self verifyGameIsNotOver.
@@ -125,11 +125,13 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsName 
 	spaceshipToPlay := players detect: [ :player | player canPlay ].
 	spaceship := players detect: [ :player | player name = spaceshipName ].
 
-	spaceshipToPlay = spaceship ifFalse: [ Error signal: 'You cannot play this card' ].
-	
-	otherSpaceships := players detect: [ :player |
-		                   player name = otherSpaceshipsName ].
-	
+	spaceshipToPlay = spaceship ifFalse: [
+		Error signal: 'You cannot play this card' ].
+
+	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
+		                   players detect: [ :player |
+			                   player name = playerName ] ].
+
 	spaceshipToPlay use: cardName to: otherSpaceships
 ]
 

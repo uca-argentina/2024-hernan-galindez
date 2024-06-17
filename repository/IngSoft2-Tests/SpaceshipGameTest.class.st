@@ -275,6 +275,39 @@ SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenAccelerationCardIsUsedThenAllSpaceshipsTotalThrowAreIncrementedByOne [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: (Acceleration with: 1).
+
+	aGame
+		playCard: 'Acceleration'
+		from: aSpaceship
+		to: aSpaceshipCollection.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 11.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 9
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenCreatingTheGameCheckThatTheSpaceshipsAreInTheFirstSquare [
 
 	| aGame aSpaceship aDiceCollection aSpaceshipCollection specificGenerator |
@@ -816,9 +849,9 @@ SpaceshipGameTest >> testWhenPlayerUsesOverloadCardThenTheOtherSpaceshipReducesI
 		         rewards: (IncrementFuelCapacity by: 1)
 		         cards: (Overload with: 2).
 
-	aGame playCard: 'Overload' from: aSpaceship to: anotherSpaceship.
+	aGame playCard: 'Overload' from: aSpaceship to: {anotherSpaceship}.
 	aGame playTurn.
-	aGame playTurn. 
+	aGame playTurn.
 
 
 	self assert: (aGame positionOf: anotherSpaceship) equals: 6.
