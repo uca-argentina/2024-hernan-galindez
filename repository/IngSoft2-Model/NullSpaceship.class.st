@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #accessing }
+NullSpaceship >> goBackToStartIn: gameboard [
+
+	^ self
+]
+
+{ #category : #accessing }
 NullSpaceship >> takeFuel: anAmountOfFuel [
 
 	^ 0
