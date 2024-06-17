@@ -6,7 +6,9 @@ Class {
 		'maxCapacity',
 		'currentFuel',
 		'needsToThrow',
-		'lostTurns'
+		'lostTurns',
+		'diceAdjustment',
+		'deck'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -15,6 +17,12 @@ Class {
 Spaceship class >> withName: aName withFuel: fuelCapacity [
 
 	^ self new initializeWithName: aName withFuel: fuelCapacity
+]
+
+{ #category : #initialization }
+Spaceship class >> withName: aName withFuel: fuelCapacity withCards: deckOfCards [
+
+	^ self new initializeWithName: aName withFuel: fuelCapacity withCards: deckOfCards
 ]
 
 { #category : #testing }
@@ -27,7 +35,13 @@ Spaceship >> canPlay [
 Spaceship >> changeFuelCapacityBy: anAmount [
 
 	maxCapacity := maxCapacity + anAmount.
-	currentFuel := maxCapacity max: currentFuel
+	currentFuel := maxCapacity min: currentFuel
+]
+
+{ #category : #setting }
+Spaceship >> changeTotalThrowBy: aNumber [
+
+	diceAdjustment := diceAdjustment + aNumber
 ]
 
 { #category : #initialization }
@@ -37,7 +51,20 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	currentFuel := fuelCapacity.
 	maxCapacity := fuelCapacity.
 	needsToThrow := 0.
-	lostTurns := 0
+	lostTurns := 0.
+	diceAdjustment := 0
+]
+
+{ #category : #initialization }
+Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfCards [
+
+	name := aName.
+	currentFuel := fuelCapacity.
+	maxCapacity := fuelCapacity.
+	deck := deckOfCards.
+	needsToThrow := 0.
+	lostTurns := 0.
+	diceAdjustment := 0
 ]
 
 { #category : #'game logic' }
@@ -49,10 +76,13 @@ Spaceship >> lostATurn [
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	currentFuel > anAmountOfSquares abs
+	| squaresToMove |
+	squaresToMove := anAmountOfSquares + diceAdjustment.
+
+	currentFuel > squaresToMove abs
 		ifTrue: [
-			currentFuel := currentFuel - anAmountOfSquares abs.
-			aGameboard move: self with: anAmountOfSquares ]
+			currentFuel := currentFuel - squaresToMove abs.
+			aGameboard move: self with: squaresToMove ]
 		ifFalse: [
 			aGameboard moveToStart: self.
 			currentFuel := maxCapacity.
@@ -72,7 +102,7 @@ Spaceship >> needsToThrow: expectedNumber [
 
 { #category : #accessing }
 Spaceship >> playWith: anAmountOfSquares in: aGameboard [
-
+	
 	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
 	needsToThrow := 0.
 	self move: anAmountOfSquares in: aGameboard
@@ -82,4 +112,10 @@ Spaceship >> playWith: anAmountOfSquares in: aGameboard [
 Spaceship >> refuel [
 
 	currentFuel := maxCapacity
+]
+
+{ #category : #setting }
+Spaceship >> use: cardName to: otherSpaceships [
+
+	deck applyTo: otherSpaceships
 ]

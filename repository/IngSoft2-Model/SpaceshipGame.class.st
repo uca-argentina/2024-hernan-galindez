@@ -24,6 +24,20 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withRewards: rewards
 ]
 
+{ #category : #'instance creation' }
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards cards: deckOfCards [
+
+	^ self new
+		  initializeWithPlayers: somePlayers
+		  withGameboardLength: aLength
+		  withDice: aDiceCollection
+		  withLaps: anAmountOfLaps
+		  withParsecs: aNumberOfParsecs
+		  withSquareGenerator: sqaureGenerator
+		  withRewards: rewards
+		  withCards: deckOfCards
+]
+
 { #category : #initialization }
 SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection [
 
@@ -43,6 +57,28 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := rewardsCollection.
+]
+
+{ #category : #initialization }
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection withCards: deckOfCards [
+
+	dice := Dice with: aDiceCollection.
+
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2
+			           withCards: deckOfCards ].
+
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs
+		             using: dice
+		             generator: squareGenerator.
+	numberOfLaps := anAmountOfLaps.
+
+	rewards := rewardsCollection
 ]
 
 { #category : #'game logic' }
@@ -78,6 +114,23 @@ SpaceshipGame >> nextPlayer [
 		players addLast: currentPlayer ].
 
 	^ currentPlayer
+]
+
+{ #category : #'game controls' }
+SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsName [
+
+	| spaceshipToPlay otherSpaceships spaceship |
+	self verifyGameIsNotOver.
+
+	spaceshipToPlay := players detect: [ :player | player canPlay ].
+	spaceship := players detect: [ :player | player name = spaceshipName ].
+
+	spaceshipToPlay = spaceship ifFalse: [ Error signal: 'You cannot play this card' ].
+	
+	otherSpaceships := players detect: [ :player |
+		                   player name = otherSpaceshipsName ].
+	
+	spaceshipToPlay use: cardName to: otherSpaceships
 ]
 
 { #category : #'game controls' }

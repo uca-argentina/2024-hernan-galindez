@@ -68,6 +68,36 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: (Overload with: 2).
+
+
+	self
+		should: [
+		aGame playCard: 'Overload' from: anotherSpaceship to: aSpaceship ]
+		raise: Error
+		withMessage: 'You cannot play this card'
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |
@@ -762,6 +792,37 @@ SpaceshipGameTest >> testWhenPlayerSkipsTurnThenRefuels [
 
 
 	self assert: (aGame positionOf: aSpaceship) equals: 4
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerUsesOverloadCardThenTheOtherSpaceshipReducesItsTotalThrowByTwo [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: (Overload with: 2).
+
+	aGame playCard: 'Overload' from: aSpaceship to: anotherSpaceship.
+	aGame playTurn.
+	aGame playTurn. 
+
+
+	self assert: (aGame positionOf: anotherSpaceship) equals: 6.
+	self assert: (aGame positionOf: aSpaceship) equals: 10
 ]
 
 { #category : #tests }
