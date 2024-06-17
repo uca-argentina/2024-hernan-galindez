@@ -12,15 +12,3 @@ Card >> applyFrom: aSpaceship to: otherSpaceships [
 
 	self subclassResponsibility.
 ]
-
-{ #category : #operations }
-Card >> applyTo: otherSpaceships [
-
-	self subclassResponsibility
-]
-
-{ #category : #operations }
-Card >> name [
-
-	^ name.
-]

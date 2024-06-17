@@ -24,16 +24,6 @@ Overload >> applyFrom: aSpaceship to: otherSpaceships [
 ]
 
 { #category : #operations }
-Overload >> applyTo: otherSpaceships [
-
-	otherSpaceships size = 1 ifFalse: [
-		Error signal: 'This card can only be applied to one spaceship' ].
-
-	otherSpaceships do: [ :spaceship |
-		spaceship changeTotalThrowBy: penalty negated ]
-]
-
-{ #category : #operations }
 Overload >> initializeWith: aNumber [
 
 	penalty := aNumber.

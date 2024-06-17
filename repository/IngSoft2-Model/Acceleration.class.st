@@ -20,13 +20,6 @@ Acceleration >> applyFrom: aSpaceship to: otherSpaceships [
 		spaceship changeTotalThrowBy: accelerate ]
 ]
 
-{ #category : #operations }
-Acceleration >> applyTo: otherSpaceships [
-
-	otherSpaceships do: [ :spaceship |
-		spaceship changeTotalThrowBy: accelerate ]
-]
-
 { #category : #initialization }
 Acceleration >> initializeWith: aNumber [
 
