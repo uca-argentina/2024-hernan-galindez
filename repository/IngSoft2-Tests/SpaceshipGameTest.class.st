@@ -252,6 +252,42 @@ SpaceshipGameTest >> testWhenAPlayerReachesTheEndTheGameFinishes [
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenAPlayerUsesCancellationCardAndNoOtherCardsWhereUsedThenError [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 2 3 10 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	overloadCard := Overload new.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         overloadCard.
+				         Cancellation new }.
+	aGame playTurn.
+
+	self
+		should: [
+			aGame
+				playCard: (Cancellation with: overloadCard)
+				from: anotherSpaceship
+				to: { anotherSpaceship } ]
+		raise: Error
+		withMessage: 'This card cant be cancelled'
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenASixIsThrownOnFirstTurnNextPositionIsSeven [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |

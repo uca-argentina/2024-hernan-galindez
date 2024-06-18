@@ -37,6 +37,11 @@ Deck >> removeCard: card [
 ]
 
 { #category : #initialization }
+Deck >> removeEffect: cardToBeRemoved [
+	cardsUsed remove: cardToBeRemoved ifAbsent: [Error signal: 'This card cant be cancelled'].
+]
+
+{ #category : #initialization }
 Deck >> usedCard: card [
 
 	cardsUsed add: card

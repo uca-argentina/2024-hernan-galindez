@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #operations }
+Acceleration class >> create [
+
+	^ self new initialize
+]
+
+{ #category : #operations }
 Acceleration >> applyFrom: aSpaceship to: otherSpaceships [
 
 	affectedSpaceships := otherSpaceships.
@@ -16,8 +22,15 @@ Acceleration >> applyFrom: aSpaceship to: otherSpaceships [
 ]
 
 { #category : #initialization }
+Acceleration >> initialize [
+	affectedSpaceships := OrderedCollection new.
+]
+
+{ #category : #initialization }
 Acceleration >> removeEffects [
 
-	affectedSpaceships do: [ :spaceship | spaceship changeTotalThrowBy: 1 negated ] .
+	affectedSpaceships do: [ :spaceship | 
+		spaceship removeEffect:  self.
+		spaceship changeTotalThrowBy: 1 negated. ] .
 	
 ]

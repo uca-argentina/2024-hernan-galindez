@@ -7,6 +7,12 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
+{ #category : #operations }
+Card class >> create [
+
+	^ self new initialize
+]
+
 { #category : #comparing }
 Card >> = anotherCard [
 

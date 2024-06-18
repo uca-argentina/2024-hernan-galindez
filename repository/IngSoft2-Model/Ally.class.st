@@ -26,6 +26,12 @@ Ally >> applyFrom: aSpaceship to: otherSpaceships [
 	secondAlly := otherSpaceship
 ]
 
+{ #category : #initialization }
+Ally >> initialize [
+	firstAlly := NullSpaceship new.
+	secondAlly := NullSpaceship new.
+]
+
 { #category : #operations }
 Ally >> removeEffects [
 

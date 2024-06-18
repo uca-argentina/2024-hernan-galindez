@@ -89,7 +89,7 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfC
 	lostTurns := 0.
 	ally := NullSpaceship new.
 	diceAdjustment := 0.
-	deck := Deck with: deckOfCards.
+	deck := Deck with: deckOfCards deepCopy.
 ]
 
 { #category : #'game logic' }
@@ -137,6 +137,11 @@ Spaceship >> playWith: anAmountOfSquares in: aGameboard [
 Spaceship >> refuel [
 
 	currentFuel := maxCapacity
+]
+
+{ #category : #setting }
+Spaceship >> removeEffect: cardToBeRemoved [
+	deck removeEffect: cardToBeRemoved
 ]
 
 { #category : #accessing }

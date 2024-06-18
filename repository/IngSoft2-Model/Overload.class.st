@@ -16,12 +16,20 @@ Overload >> applyFrom: aSpaceship to: otherSpaceships [
 
 	affectedSpaceship := otherSpaceships first.
 	affectedSpaceship changeTotalThrowBy: 2 negated.
+	affectedSpaceship applyCard: self
 	
 	
 ]
 
 { #category : #removing }
+Overload >> initialize [
+
+	affectedSpaceship := NullSpaceship new
+]
+
+{ #category : #removing }
 Overload >> removeEffects [
 
-	affectedSpaceship changeTotalThrowBy: 2.
+	"affectedSpaceship removeEffect: self."
+	affectedSpaceship changeTotalThrowBy: 2
 ]

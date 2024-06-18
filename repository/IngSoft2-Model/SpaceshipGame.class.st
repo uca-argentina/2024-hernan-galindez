@@ -6,7 +6,8 @@ Class {
 		'gameboard',
 		'dice',
 		'numberOfLaps',
-		'rewards'
+		'rewards',
+		'activeCards'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -68,7 +69,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2
-			           withCards: deckOfCards ].
+			           withCards: deckOfCards copy ].
 
 	gameboard := Gameboard
 		             numberOfSquares: aLength
@@ -127,6 +128,8 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames
 
 	spaceshipToPlay = spaceship ifFalse: [
 		Error signal: 'You cannot play this card' ].
+	
+	"activeCards add: cardName."
 
 	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
 		                   players detect: [ :player |
