@@ -18,7 +18,13 @@ Acceleration >> applyFrom: aSpaceship to: otherSpaceships [
 
 	affectedSpaceships := otherSpaceships.
 	affectedSpaceships do: [ :spaceship |
-		spaceship changeTotalThrowBy: 1 ]
+		spaceship applyCard: self ]
+]
+
+{ #category : #'as yet unclassified' }
+Acceleration >> diceAdjustment [
+
+	^ 1
 ]
 
 { #category : #initialization }
@@ -28,9 +34,5 @@ Acceleration >> initialize [
 
 { #category : #initialization }
 Acceleration >> removeEffects [
-
-	affectedSpaceships do: [ :spaceship | 
-		spaceship removeEffect:  self.
-		spaceship changeTotalThrowBy: 1 negated. ] .
-	
+	^ self
 ]

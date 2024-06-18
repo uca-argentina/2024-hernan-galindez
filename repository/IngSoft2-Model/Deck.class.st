@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'cardsInHand',
-		'cardsUsed'
+		'appliedCards'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -20,11 +20,16 @@ Deck >> applyFrom: aSpaceship to: otherSpaceships [
 	cardsInHand applyFrom: aSpaceship to: otherSpaceships
 ]
 
+{ #category : #'as yet unclassified' }
+Deck >> diceAdjustment [
+	^ (appliedCards collect: [ :card | card diceAdjustment ]) sumNumbers
+]
+
 { #category : #initialization }
 Deck >> initializeWith: cards [
 
 	cardsInHand := cards asOrderedCollection.
-	cardsUsed := OrderedCollection new
+	appliedCards := OrderedCollection new
 ]
 
 { #category : #removing }
@@ -37,12 +42,12 @@ Deck >> removeCard: card [
 ]
 
 { #category : #initialization }
-Deck >> removeEffect: cardToBeRemoved [
-	cardsUsed remove: cardToBeRemoved ifAbsent: [Error signal: 'This card cant be cancelled'].
+Deck >> removeCardEffect: cardToBeRemoved [
+	appliedCards remove: cardToBeRemoved ifAbsent: [Error signal: 'This card cant be cancelled'].
 ]
 
 { #category : #initialization }
 Deck >> usedCard: card [
 
-	cardsUsed add: card
+	appliedCards add: card
 ]

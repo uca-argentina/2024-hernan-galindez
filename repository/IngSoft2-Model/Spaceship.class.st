@@ -8,8 +8,7 @@ Class {
 		'needsToThrow',
 		'lostTurns',
 		'deck',
-		'ally',
-		'diceAdjustment'
+		'ally'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -73,7 +72,6 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	maxCapacity := fuelCapacity.
 	needsToThrow := 0.
 	lostTurns := 0.
-	diceAdjustment := 0.
 	ally := NullSpaceship new.
 	deck := Deck with: #().
 ]
@@ -88,7 +86,6 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfC
 	needsToThrow := 0.
 	lostTurns := 0.
 	ally := NullSpaceship new.
-	diceAdjustment := 0.
 	deck := Deck with: deckOfCards deepCopy.
 ]
 
@@ -101,8 +98,8 @@ Spaceship >> lostATurn [
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	| squaresToMove  |
-"	diceAdjustment := deck diceAdjustment."
+	| squaresToMove diceAdjustment |
+	diceAdjustment := deck diceAdjustment.
 	squaresToMove := anAmountOfSquares + diceAdjustment.
 
 	self useAllyFuelIfNecessary: squaresToMove in: aGameboard.
@@ -141,7 +138,7 @@ Spaceship >> refuel [
 
 { #category : #setting }
 Spaceship >> removeEffect: cardToBeRemoved [
-	deck removeEffect: cardToBeRemoved
+	deck removeCardEffect: cardToBeRemoved
 ]
 
 { #category : #accessing }
