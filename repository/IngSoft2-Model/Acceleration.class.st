@@ -2,27 +2,22 @@ Class {
 	#name : #Acceleration,
 	#superclass : #Card,
 	#instVars : [
-		'accelerate'
+		'affectedSpaceships'
 	],
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #'instance creation' }
-Acceleration class >> with: aNumber [
-
-	^ self new initializeWith: aNumber
-]
-
 { #category : #operations }
 Acceleration >> applyFrom: aSpaceship to: otherSpaceships [
 
-	otherSpaceships do: [ :spaceship |
-		spaceship changeTotalThrowBy: accelerate ]
+	affectedSpaceships := otherSpaceships.
+	affectedSpaceships do: [ :spaceship |
+		spaceship changeTotalThrowBy: 1 ]
 ]
 
 { #category : #initialization }
-Acceleration >> initializeWith: aNumber [
+Acceleration >> removeEffects [
 
-	accelerate := aNumber.
-	name := 'Overload'
+	affectedSpaceships do: [ :spaceship | spaceship changeTotalThrowBy: 1 negated ] .
+	
 ]

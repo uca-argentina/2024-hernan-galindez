@@ -7,8 +7,20 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
+{ #category : #comparing }
+Card >> = anotherCard [
+
+	^(anotherCard isKindOf: self class)
+]
+
 { #category : #operations }
 Card >> applyFrom: aSpaceship to: otherSpaceships [
 
 	self subclassResponsibility.
+]
+
+{ #category : #'as yet unclassified' }
+Card >> diceAdjustment [
+
+	^ 0
 ]

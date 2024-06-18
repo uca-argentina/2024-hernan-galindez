@@ -7,9 +7,9 @@ Class {
 		'currentFuel',
 		'needsToThrow',
 		'lostTurns',
-		'diceAdjustment',
 		'deck',
-		'ally'
+		'ally',
+		'diceAdjustment'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -30,6 +30,12 @@ Spaceship class >> withName: aName withFuel: fuelCapacity withCards: deckOfCards
 Spaceship >> allyWith: aSpaceship [
 
 	ally := aSpaceship
+]
+
+{ #category : #'as yet unclassified' }
+Spaceship >> applyCard: card [
+
+	deck usedCard: card.
 ]
 
 { #category : #setting }
@@ -53,10 +59,10 @@ Spaceship >> changeFuelCapacityBy: anAmount [
 	currentFuel := maxCapacity min: currentFuel
 ]
 
-{ #category : #setting }
+{ #category : #'as yet unclassified' }
 Spaceship >> changeTotalThrowBy: aNumber [
 
-	diceAdjustment := diceAdjustment + aNumber
+	diceAdjustment := diceAdjustment + aNumber.
 ]
 
 { #category : #initialization }
@@ -68,7 +74,8 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	needsToThrow := 0.
 	lostTurns := 0.
 	diceAdjustment := 0.
-	ally := NullSpaceship new
+	ally := NullSpaceship new.
+	deck := Deck with: #().
 ]
 
 { #category : #initialization }
@@ -80,8 +87,9 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfC
 	deck := deckOfCards.
 	needsToThrow := 0.
 	lostTurns := 0.
-	diceAdjustment := 0.
 	ally := NullSpaceship new.
+	diceAdjustment := 0.
+	deck := Deck with: deckOfCards.
 ]
 
 { #category : #'game logic' }
@@ -93,7 +101,8 @@ Spaceship >> lostATurn [
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	| squaresToMove |
+	| squaresToMove  |
+"	diceAdjustment := deck diceAdjustment."
 	squaresToMove := anAmountOfSquares + diceAdjustment.
 
 	self useAllyFuelIfNecessary: squaresToMove in: aGameboard.
@@ -143,7 +152,7 @@ Spaceship >> takeFuel: anAmountOfFuel [
 { #category : #setting }
 Spaceship >> use: cardName to: otherSpaceships [
 
-	deck applyFrom: self to: otherSpaceships
+	(deck removeCard: cardName) applyFrom: self to: otherSpaceships
 ]
 
 { #category : #accessing }
@@ -152,7 +161,7 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 	| allyFuel |
 	currentFuel <= squaresToMove abs ifFalse: [ ^ self ].
 
-	allyFuel := ally takeFuel: squaresToMove - currentFuel.
+	allyFuel := ally takeFuel: squaresToMove - currentFuel + 1.
 
 	currentFuel := currentFuel + allyFuel.
 

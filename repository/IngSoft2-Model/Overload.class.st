@@ -2,16 +2,10 @@ Class {
 	#name : #Overload,
 	#superclass : #Card,
 	#instVars : [
-		'penalty'
+		'affectedSpaceship'
 	],
 	#category : #'IngSoft2-Model'
 }
-
-{ #category : #'instance creation' }
-Overload class >> with: aNumber [
-
-	^ self new initializeWith: aNumber
-]
 
 { #category : #operations }
 Overload >> applyFrom: aSpaceship to: otherSpaceships [
@@ -19,13 +13,14 @@ Overload >> applyFrom: aSpaceship to: otherSpaceships [
 	otherSpaceships size = 1 ifFalse: [
 		Error signal: 'This card can only be applied to one spaceship' ].
 
-	otherSpaceships do: [ :spaceship |
-		spaceship changeTotalThrowBy: penalty negated ]
+
+	affectedSpaceship := otherSpaceships first.
+	affectedSpaceship changeTotalThrowBy: 2 negated.
+	"affectedSpaceship applyCard: self"
 ]
 
-{ #category : #operations }
-Overload >> initializeWith: aNumber [
+{ #category : #removing }
+Overload >> removeEffects [
 
-	penalty := aNumber.
-	name := 'Overload'
+	affectedSpaceship changeTotalThrowBy: 2.
 ]
