@@ -16,7 +16,8 @@ Overload >> applyFrom: aSpaceship to: otherSpaceships [
 
 	affectedSpaceship := otherSpaceships first.
 	affectedSpaceship changeTotalThrowBy: 2 negated.
-	"affectedSpaceship applyCard: self"
+	
+	
 ]
 
 { #category : #removing }
