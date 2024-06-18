@@ -157,6 +157,12 @@ Spaceship >> use: cardName to: otherSpaceships [
 	(deck removeCard: cardName) applyFrom: self to: otherSpaceships
 ]
 
+{ #category : #setting }
+Spaceship >> use: cardName to: otherSpaceships lastSquareLandedOn: lastSquareLandedOn [ 
+
+	(deck removeCard: cardName) applyFrom: self to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn
+]
+
 { #category : #accessing }
 Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 

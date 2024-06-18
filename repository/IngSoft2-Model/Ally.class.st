@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #operations }
-Ally >> applyFrom: aSpaceship to: otherSpaceships [
+Ally >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
 	| otherSpaceship |
 	otherSpaceships size = 1 ifFalse: [

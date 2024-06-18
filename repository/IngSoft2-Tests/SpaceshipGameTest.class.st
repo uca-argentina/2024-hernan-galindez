@@ -792,6 +792,41 @@ SpaceshipGameTest >> testWhenPlayerLandsOnAtomicBombThenAllPlayersStartFromIniti
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRepeatCardIsUsedThenBlackHoleEffectIsAppliedToTheChoosenPlayer [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator repeatCard |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 6 15 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (BlackHole create -> 10) }.
+	repeatCard := Repeat new.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 15
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         repeatCard.
+				         Cancellation new }.
+
+
+
+	aGame playTurn.
+	aGame playCard: repeatCard from: anotherSpaceship to: { aSpaceship }.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 2.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 7.
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRunsOutOfFuelWhenGoingBackwardsThenGoesToFirstSquareAndLosesTwoTurns [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |

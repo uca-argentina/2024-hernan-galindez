@@ -43,9 +43,12 @@ Gameboard >> find: aTarget [
 { #category : #accessing }
 Gameboard >> implementEffectOn: aSpaceship [
 
-	| currentPosition |
+	| currentPosition currentSquare |
 	currentPosition := self find: aSpaceship.
-	(board at: currentPosition) applyEffectTo: aSpaceship in: self
+	currentSquare := board at: currentPosition.
+	currentSquare applyEffectTo: aSpaceship in: self.
+
+	^ currentSquare
 ]
 
 { #category : #initialization }

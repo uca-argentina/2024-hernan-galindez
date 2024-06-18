@@ -7,7 +7,8 @@ Class {
 		'dice',
 		'numberOfLaps',
 		'rewards',
-		'activeCards'
+		'activeCards',
+		'lastSquareLandedOn'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -58,6 +59,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := rewardsCollection.
+	lastSquareLandedOn := NormalSquare create
 ]
 
 { #category : #initialization }
@@ -79,7 +81,8 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             generator: squareGenerator.
 	numberOfLaps := anAmountOfLaps.
 
-	rewards := rewardsCollection
+	rewards := rewardsCollection.
+	lastSquareLandedOn := NormalSquare create
 ]
 
 { #category : #'game logic' }
@@ -134,7 +137,7 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames
 		                   players detect: [ :player |
 			                   player name = playerName ] ].
 
-	spaceshipToPlay use: cardName to: otherSpaceships
+	spaceshipToPlay use: cardName to: otherSpaceships lastSquareLandedOn: [ :otherSpaceship | lastSquareLandedOn applyEffectTo: otherSpaceship  in: gameboard ] 
 ]
 
 { #category : #'game controls' }
@@ -146,7 +149,8 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	aNumber = dice maxThrow ifTrue: [ rewards applyTo: spaceshipToPlay ].
 	spaceshipToPlay playWith: aNumber in: gameboard.
-	gameboard implementEffectOn: spaceshipToPlay
+	lastSquareLandedOn :=  gameboard implementEffectOn: spaceshipToPlay.
+	
 ]
 
 { #category : #'game logic' }

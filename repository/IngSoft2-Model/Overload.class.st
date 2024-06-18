@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #operations }
-Overload >> applyFrom: aSpaceship to: otherSpaceships [
+Overload >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
 	otherSpaceships size = 1 ifFalse: [
 		Error signal: 'This card can only be applied to one spaceship' ].
