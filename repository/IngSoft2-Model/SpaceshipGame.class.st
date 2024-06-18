@@ -127,9 +127,8 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames
 	spaceship := players detect: [ :player | player name = spaceshipName ].
 
 	spaceshipToPlay = spaceship ifFalse: [
-		Error signal: 'You cannot play this card' ].
-	
-	"activeCards add: cardName."
+		cardName verifyCanBePlayedAtAnyMoment ].
+
 
 	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
 		                   players detect: [ :player |

@@ -1,6 +1,6 @@
 Class {
 	#name : #Ally,
-	#superclass : #Card,
+	#superclass : #Permanent,
 	#instVars : [
 		'firstAlly',
 		'secondAlly'

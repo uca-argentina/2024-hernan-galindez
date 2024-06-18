@@ -1,6 +1,6 @@
 Class {
 	#name : #Acceleration,
-	#superclass : #Card,
+	#superclass : #Permanent,
 	#instVars : [
 		'affectedSpaceships'
 	],

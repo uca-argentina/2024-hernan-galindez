@@ -1,6 +1,6 @@
 Class {
 	#name : #Cancellation,
-	#superclass : #Card,
+	#superclass : #Instantaneous,
 	#instVars : [
 		'cardToBeCancelled'
 	],

@@ -15,6 +15,49 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testCancellationCardCanBeUsedAtAnyMomentOfTheGame [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	overloadCard := Overload new.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         overloadCard.
+				         Cancellation new }.
+
+
+	aGame
+		playCard: overloadCard
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame
+		playCard: (Cancellation with: overloadCard)
+		from: anotherSpaceship
+		to: { anotherSpaceship }.
+
+	aGame playTurn.
+	aGame playTurn.
+	
+	self assert: (aGame positionOf: aSpaceship) equals: 10.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 8.
+	
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testErrorWhenAPlayerUsesCancellationCardAndNoOtherCardsWhereUsed [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
@@ -106,7 +149,7 @@ SpaceshipGameTest >> testErrorWhenGameIsOverAndItIsAttemptedToContinuePlaying [
 { #category : #tests }
 SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
@@ -115,6 +158,7 @@ SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn
 	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
 	specificGenerator := SpecificGenerator with:
 		                     { (NormalSquare create -> 1) }.
+	overloadCard := Overload new.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
 		         withGameboardLength: 11
@@ -123,12 +167,12 @@ SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
 		         rewards: (IncrementFuelCapacity by: 1)
-		         cards: (Overload new).
+		         cards: overloadCard.
 
 
 	self
 		should: [
-		aGame playCard: 'Overload' from: anotherSpaceship to: aSpaceship ]
+		aGame playCard: overloadCard from: anotherSpaceship to: aSpaceship ]
 		raise: Error
 		withMessage: 'You cannot play this card'
 ]

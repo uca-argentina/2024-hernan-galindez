@@ -1,6 +1,6 @@
 Class {
 	#name : #Overload,
-	#superclass : #Card,
+	#superclass : #Permanent,
 	#instVars : [
 		'affectedSpaceship'
 	],
