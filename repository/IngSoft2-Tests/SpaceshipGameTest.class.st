@@ -653,17 +653,18 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		                        with: aSpaceship
 		                        with: aSpaceship2.
 	aDiceCollection := { (LoadedDie sequence: #( 9 9 )) }.
-	specificGenerator := SpecificGenerator with:
-		                     { (HyperJump create -> 10) }.
+	specificGenerator := SpecificGenerator with: { ((HyperJump with: {
+				                      (Parsecs of: 4).
+				                      (LightYears of: 33) }) -> 10) }.
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 10
+		         withGameboardLength: 15
 		         withDice: aDiceCollection
 		         withLaps: 2
-		         withParsecs: 100
+		         withParsecs: 150
 		         squareGenerator: specificGenerator
-		         rewards: (DecrementFuelCapacity by: 1).
-
+		         rewards: (DecrementFuelCapacity by: 1)
+		         cards: {  }.
 
 
 
@@ -671,7 +672,7 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 10.
-	self assert: (aGame positionOf: aSpaceship2) equals: 1
+	self assert: (aGame positionOf: aSpaceship2) equals: 11.
 ]
 
 { #category : #tests }

@@ -5,8 +5,9 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
-		'parsecsPerSquare',
-		'lapCounter'
+		'lapCounter',
+		'measurement',
+		'measurmentPerSquare'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -60,8 +61,8 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 		              andValues:
 		              (OrderedCollection new: spaceships size withAll: 0).
 
-
-	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
+	measurement := aNumberOfParsecs.
+	measurmentPerSquare := Parsecs of: aNumberOfParsecs // aNumberOfSquares.
 
 	board := squareGenerator generateSquares: aNumberOfSquares.
 	self setPlayersAtFirstPosition: spaceships
@@ -71,6 +72,12 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 Gameboard >> lapsCompletedOf: aSpaceship [
 
 	^ lapCounter at: aSpaceship
+]
+
+{ #category : #initialization }
+Gameboard >> measurementPerSquare [
+
+	^ measurmentPerSquare 
 ]
 
 { #category : #accessing }
@@ -115,12 +122,6 @@ Gameboard >> moveToStart: aSpaceship [
 	currentPosition := self find: aSpaceship.
 	(board at: 1) keep: aSpaceship.
 	(board at: currentPosition) leaves: aSpaceship
-]
-
-{ #category : #initialization }
-Gameboard >> parsecsPerSquare [
-
-	^ parsecsPerSquare
 ]
 
 { #category : #setting }
