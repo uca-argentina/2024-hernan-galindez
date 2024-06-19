@@ -14,6 +14,12 @@ Deck class >> with: cards [
 	^self new initializeWith: cards
 ]
 
+{ #category : #initialization }
+Deck >> addCard: aCard [
+
+	cardsInHand add: aCard
+]
+
 { #category : #operations }
 Deck >> applyFrom: aSpaceship to: otherSpaceships [
 
@@ -28,8 +34,7 @@ Deck >> diceAdjustment [
 { #category : #initialization }
 Deck >> initializeWith: cards [
 
-	cardsInHand := (cards collect: [ :block | block value ])
-		               asOrderedCollection.
+	cardsInHand := cards asOrderedCollection.
 	appliedCards := OrderedCollection new
 ]
 

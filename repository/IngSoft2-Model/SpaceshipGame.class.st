@@ -85,7 +85,6 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 
 	rewards := rewardsCollection.
 	lastSquareLandedOn := NormalSquare create.
-	redoCard := Redo create.
 ]
 
 { #category : #'game logic' }

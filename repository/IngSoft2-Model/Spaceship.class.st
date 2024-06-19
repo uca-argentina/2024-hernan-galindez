@@ -64,6 +64,12 @@ Spaceship >> changeTotalThrowBy: aNumber [
 	diceAdjustment := diceAdjustment + aNumber.
 ]
 
+{ #category : #setting }
+Spaceship >> giveCard: aCard [
+
+	deck addCard: aCard
+]
+
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 

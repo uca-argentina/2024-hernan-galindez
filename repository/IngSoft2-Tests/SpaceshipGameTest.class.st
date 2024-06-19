@@ -15,53 +15,6 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 ]
 
 { #category : #tests }
-SpaceshipGameTest >> testBanana [
-
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard redoCard |
-	aSpaceship := 'Pancho'.
-	anotherSpaceship := 'Seijas'.
-	aSpaceshipCollection := OrderedCollection
-		                        with: aSpaceship
-		                        with: anotherSpaceship.
-	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
-	specificGenerator := SpecificGenerator with:
-		                     { (NormalSquare create -> 1) }.
-	overloadCard := [ Overload new ].
-	redoCard := [ Redo new ].
-	aGame := SpaceshipGame
-		         withPlayers: aSpaceshipCollection
-		         withGameboardLength: 11
-		         withDice: aDiceCollection
-		         withLaps: 1
-		         withParsecs: 100
-		         squareGenerator: specificGenerator
-		         rewards: (IncrementFuelCapacity by: 1)
-		         cards: {
-				         overloadCard.
-				         redoCard.
-				         redoCard }.
-
-	aGame
-		playCard: Overload new
-		from: aSpaceship
-		to: { anotherSpaceship }.
-	aGame
-		playCard: Redo instance
-		from: aSpaceship
-		to: { anotherSpaceship }.
-	(Redo instance) lastUsedCard: 1. 
-	aGame
-		playCard: Redo instance
-		from: aSpaceship
-		to: { anotherSpaceship }.
-	aGame playTurn.
-	aGame playTurn.
-
-	self assert: (aGame positionOf: aSpaceship) equals: 10.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 2.
-]
-
-{ #category : #tests }
 SpaceshipGameTest >> testCancellationCardCanBeUsedAtAnyMomentOfTheGame [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
@@ -252,13 +205,20 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 { #category : #tests }
 SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator rewardsManager |
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator rewardsManager cardCollection cardSquare |
 	aSpaceship := 'zepito'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection
 		                   with: (LoadedDie sequence: #( 20 ))
 		                   with: (LoadedDie sequence: #( 15 )).
-	normalSquare := [ NormalSquare create ] -> 1.
+	cardCollection := {
+		                  Cancellation create.
+		                  Ally create.
+		                  Repeat create.
+		                  Acceleration create.
+		                  Overload create }.
+	normalSquare := [ NormalSquare create ] -> 0.8.
+	cardSquare := [ CardSquare with: cardCollection ] -> 0.2.
 	probabilityGenerator := ProbabilityGenerator distributions:
 		                        { normalSquare }.
 	rewardsManager := RewardsManager with: {
@@ -921,6 +881,45 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 4
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenPlayerLandsOnCardSquareThenHeCanUseOverloadCard [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard redoCard cardCollection |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 2 3 10 )) }.
+	cardCollection := { Overload new }.
+	specificGenerator := SpecificGenerator with:
+		                     { ((CardSquare with: cardCollection) -> 10) }.
+	overloadCard := [ Overload new ].
+	redoCard := [ Redo new ].
+
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 20
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {  }.
+
+	aGame playTurn.
+	aGame playTurn.
+	aGame
+		playCard: Overload new
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 12.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 9
 ]
 
 { #category : #tests }
