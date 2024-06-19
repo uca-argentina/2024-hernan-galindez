@@ -21,14 +21,17 @@ Unit >> // anotherUnit [
 Unit >> convertTo: aUnit [
 
 	| ratioToUnit |
-	ratioToUnit := self find: {self class . aUnit class}.
+	self class = aUnit class ifTrue: [ ^ value ].
+	ratioToUnit := self find: {
+			               self class.
+			               aUnit class }.
 	^ value * ratioToUnit
 ]
 
 { #category : #'as yet unclassified' }
 Unit >> find: aConversionRate [
 
-	^(unitsRatio at: aConversionRate) 
+	^(unitsRatio at: aConversionRate ifAbsent: [ 1 / unitsRatio at: { aConversionRate second . aConversionRate first } ])
 ]
 
 { #category : #'as yet unclassified' }
@@ -37,14 +40,5 @@ Unit >> initialize [
 	unitsRatio := Dictionary new.
 	unitsRatio add: {
 			Parsecs.
-			LightYears } -> 3.
-	unitsRatio add: {
-			LightYears.
-			Parsecs } -> (1 / 3).
-	unitsRatio add: {
-			Parsecs.
-			Parsecs } -> 1.
-	unitsRatio add: {
-			LightYears.
-			LightYears } -> 1
+			LightYears } -> 3
 ]
