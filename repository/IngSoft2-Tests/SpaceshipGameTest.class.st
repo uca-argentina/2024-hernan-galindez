@@ -15,6 +15,53 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testBanana [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard redoCard |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	overloadCard := [ Overload new ].
+	redoCard := [ Redo new ].
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         overloadCard.
+				         redoCard.
+				         redoCard }.
+
+	aGame
+		playCard: Overload new
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame
+		playCard: Redo instance
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	(Redo instance) lastUsedCard: 1. 
+	aGame
+		playCard: Redo instance
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 10.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 2.
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testCancellationCardCanBeUsedAtAnyMomentOfTheGame [
 
 	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |

@@ -8,7 +8,8 @@ Class {
 		'numberOfLaps',
 		'rewards',
 		'activeCards',
-		'lastSquareLandedOn'
+		'lastSquareLandedOn',
+		'redoCard'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -67,11 +68,12 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 
 	dice := Dice with: aDiceCollection.
 
+	redoCard := Redo recreate.
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2
-			           withCards: deckOfCards copy ].
+			           withCards: deckOfCards ].
 
 	gameboard := Gameboard
 		             numberOfSquares: aLength
@@ -82,7 +84,8 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := rewardsCollection.
-	lastSquareLandedOn := NormalSquare create
+	lastSquareLandedOn := NormalSquare create.
+	redoCard := Redo create.
 ]
 
 { #category : #'game logic' }
@@ -132,12 +135,13 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames
 	spaceshipToPlay = spaceship ifFalse: [
 		cardName verifyCanBePlayedAtAnyMoment ].
 
-
 	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
 		                   players detect: [ :player |
 			                   player name = playerName ] ].
-
-	spaceshipToPlay use: cardName to: otherSpaceships lastSquareLandedOn: [ :otherSpaceship | lastSquareLandedOn applyEffectTo: otherSpaceship  in: gameboard ] 
+	
+	spaceshipToPlay use: cardName to: otherSpaceships blockToApplyLastEffect: [ :otherSpaceship | lastSquareLandedOn applyEffectTo: otherSpaceship  in: gameboard ].
+	
+	redoCard lastUsedCard: cardName.
 ]
 
 { #category : #'game controls' }

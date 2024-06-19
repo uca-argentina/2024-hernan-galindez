@@ -28,7 +28,8 @@ Deck >> diceAdjustment [
 { #category : #initialization }
 Deck >> initializeWith: cards [
 
-	cardsInHand := cards asOrderedCollection.
+	cardsInHand := (cards collect: [ :block | block value ])
+		               asOrderedCollection.
 	appliedCards := OrderedCollection new
 ]
 

@@ -86,7 +86,7 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfC
 	needsToThrow := 0.
 	lostTurns := 0.
 	ally := NullSpaceship new.
-	deck := Deck with: deckOfCards deepCopy.
+	deck := Deck with: deckOfCards .
 ]
 
 { #category : #'game logic' }
@@ -158,9 +158,9 @@ Spaceship >> use: cardName to: otherSpaceships [
 ]
 
 { #category : #setting }
-Spaceship >> use: cardName to: otherSpaceships lastSquareLandedOn: lastSquareLandedOn [ 
+Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode [ 
 
-	(deck removeCard: cardName) applyFrom: self to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn
+	(deck removeCard: cardName) applyFrom: self to: otherSpaceships blockToApplyLastEffect: aBlockOfCode
 ]
 
 { #category : #accessing }
