@@ -8,6 +8,7 @@ Class {
 Repeat >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: blockToApplyLastEffect [
 
 	| affectedSpaceship |
+	aSpaceship useCard: self.
 	affectedSpaceship := otherSpaceships first.
 	blockToApplyLastEffect value: affectedSpaceship.
 ]

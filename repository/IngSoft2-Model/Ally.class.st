@@ -16,7 +16,7 @@ Ally >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSq
 		Error signal: 'This card can only be applied to one spaceship' ].
 
 	otherSpaceship := otherSpaceships first.
-
+	aSpaceship useCard: self.
 	aSpaceship allyWith: otherSpaceship.
 	aSpaceship applyCard: self.
 	otherSpaceship allyWith: aSpaceship.

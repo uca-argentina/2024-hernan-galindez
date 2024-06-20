@@ -15,9 +15,10 @@ Acceleration class >> create [
 
 { #category : #operations }
 Acceleration >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+
+	aSpaceship useCard: self.
 	affectedSpaceships := otherSpaceships.
-	affectedSpaceships do: [ :spaceship |
-		spaceship applyCard: self ]
+	affectedSpaceships do: [ :spaceship | spaceship applyCard: self ]
 ]
 
 { #category : #'as yet unclassified' }

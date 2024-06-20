@@ -13,11 +13,9 @@ Overload >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: la
 	otherSpaceships size = 1 ifFalse: [
 		Error signal: 'This card can only be applied to one spaceship' ].
 
-
+	aSpaceship useCard: self.
 	affectedSpaceship := otherSpaceships first.
 	affectedSpaceship applyCard: self
-	
-	
 ]
 
 { #category : #'as yet unclassified' }

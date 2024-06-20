@@ -198,6 +198,6 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 
 { #category : #'as yet unclassified' }
 Spaceship >> useCard: aCard [
-	deck remove: aCard
+	deck removeCard: aCard
 	
 ]

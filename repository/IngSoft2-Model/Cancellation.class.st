@@ -16,7 +16,7 @@ Cancellation class >> with: card [
 { #category : #operations }
 Cancellation >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
-	
+	aSpaceship useCard: self.
 	otherSpaceships first removeEffect: cardToBeCancelled.
 	cardToBeCancelled removeEffects.
 ]
