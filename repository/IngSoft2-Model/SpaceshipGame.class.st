@@ -9,7 +9,9 @@ Class {
 		'rewards',
 		'activeCards',
 		'lastSquareLandedOn',
-		'redoCard'
+		'redoCard',
+		'lastUsedCard',
+		'possibleCards'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -64,16 +66,17 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection withCards: deckOfCards [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection withCards: cardCollection [
 
 	dice := Dice with: aDiceCollection.
 
 	redoCard := Redo recreate.
+	possibleCards := cardCollection.
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2
-			           withCards: deckOfCards ].
+			           withCards: cardCollection ].
 
 	gameboard := Gameboard
 		             numberOfSquares: aLength
@@ -84,7 +87,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := rewardsCollection.
-	lastSquareLandedOn := NormalSquare create.
+	lastSquareLandedOn := NormalSquare create
 ]
 
 { #category : #'game logic' }
@@ -123,7 +126,7 @@ SpaceshipGame >> nextPlayer [
 ]
 
 { #category : #'game controls' }
-SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames [
+SpaceshipGame >> playCard: card from: spaceshipName to: otherSpaceshipsNames [
 
 	| spaceshipToPlay otherSpaceships spaceship |
 	self verifyGameIsNotOver.
@@ -131,16 +134,27 @@ SpaceshipGame >> playCard: cardName from: spaceshipName to: otherSpaceshipsNames
 	spaceshipToPlay := players detect: [ :player | player canPlay ].
 	spaceship := players detect: [ :player | player name = spaceshipName ].
 
-	spaceshipToPlay = spaceship ifFalse: [
-		cardName verifyCanBePlayedAtAnyMoment ].
-
 	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
 		                   players detect: [ :player |
 			                   player name = playerName ] ].
-	
-	spaceshipToPlay use: cardName to: otherSpaceships blockToApplyLastEffect: [ :otherSpaceship | lastSquareLandedOn applyEffectTo: otherSpaceship  in: gameboard ].
-	
-	redoCard lastUsedCard: cardName.
+
+	card lastUsedCard:lastUsedCard.
+	card verifyCanBePlayed: spaceshipToPlay = spaceship.
+
+	spaceshipToPlay
+		use: card
+		to: otherSpaceships
+		blockToApplyLastEffect: [ :otherSpaceship |
+			lastSquareLandedOn applyEffectTo: otherSpaceship in: gameboard ].
+
+"	card
+		applyFrom: spaceship
+		to: otherSpaceships
+		blockToApplyLastEffect: [ :otherSpaceship |
+			lastSquareLandedOn applyEffectTo: otherSpaceship in: gameboard ]."
+
+	card canBeReDone ifFalse: [ ^ self ].
+	lastUsedCard := card
 ]
 
 { #category : #'game controls' }

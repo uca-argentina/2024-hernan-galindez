@@ -39,17 +39,24 @@ Deck >> initializeWith: cards [
 ]
 
 { #category : #removing }
-Deck >> removeCard: card [
+Deck >> removeCard: cardToBeRemoved [
+	"[ Error signal: 'This spaceship does not have this card' ]"
 
+"	| index x |
+	index := cardsInHand
+		         detectIndex: [ :card | card = cardToBeRemoved ]
+		         ifNone: [ 1 ].
+	x := cardsInHand at: index.
+"
 	^ cardsInHand
-		  remove: card
+		  remove: cardToBeRemoved
 		  ifAbsent: [
 		  Error signal: 'This spaceship does not have this card' ]
 ]
 
 { #category : #initialization }
 Deck >> removeCardEffect: cardToBeRemoved [
-	appliedCards remove: cardToBeRemoved ifAbsent: [Error signal: 'This card cant be cancelled'].
+	appliedCards remove: cardToBeRemoved ifAbsent: [Error signal: 'This card was not used on this spaceship'] 
 ]
 
 { #category : #initialization }

@@ -90,7 +90,7 @@ SpaceshipGameTest >> testErrorWhenAPlayerUsesCancellationCardAndNoOtherCardsWher
 				from: anotherSpaceship
 				to: { anotherSpaceship } ]
 		raise: Error
-		withMessage: 'This card cant be cancelled'
+		withMessage: 'This card was not used on this spaceship'
 ]
 
 { #category : #tests }
@@ -172,7 +172,7 @@ SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn
 
 	self
 		should: [
-		aGame playCard: overloadCard from: anotherSpaceship to: aSpaceship ]
+		aGame playCard: overloadCard from: anotherSpaceship to: {aSpaceship} ]
 		raise: Error
 		withMessage: 'You cannot play this card'
 ]
@@ -1400,4 +1400,53 @@ SpaceshipGameTest >> testWhenTwoDieAreThrownMovePlayerToTheSumOfDice [
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 10
+]
+
+{ #category : #tests }
+SpaceshipGameTest >> testWhenTwoOverloadCardAndCancellationCardAreUsedThenARedoCardIsUsedToRemoveTheSameEffectAsTheCancellation [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	overloadCard := Overload new.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         overloadCard.
+				         Redo new.
+				         Cancellation new.
+				         Overload new }.
+
+
+	aGame
+		playCard: overloadCard
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame
+		playCard: overloadCard
+		from: aSpaceship
+		to: { anotherSpaceship }.
+	aGame
+		playCard: (Cancellation with: overloadCard)
+		from: anotherSpaceship
+		to: { anotherSpaceship }.
+
+	aGame playCard: Redo new from: aSpaceship to: { anotherSpaceship }.
+	aGame playTurn.
+	aGame playTurn.
+
+	self assert: (aGame positionOf: aSpaceship) equals: 10.
+	self assert: (aGame positionOf: anotherSpaceship) equals: 8
 ]

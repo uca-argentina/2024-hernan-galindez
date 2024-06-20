@@ -164,9 +164,22 @@ Spaceship >> use: cardName to: otherSpaceships [
 ]
 
 { #category : #setting }
-Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode [ 
+Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode [
 
-	(deck removeCard: cardName) applyFrom: self to: otherSpaceships blockToApplyLastEffect: aBlockOfCode
+	(deck removeCard: cardName)
+		applyFrom: self
+		to: otherSpaceships
+		blockToApplyLastEffect: aBlockOfCode
+]
+
+{ #category : #setting }
+Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode lastUsedCard: lastUsedCard [
+
+	(deck removeCard: cardName)
+		applyFrom: self
+		to: otherSpaceships
+		blockToApplyLastEffect: aBlockOfCode
+		lastUsedCard: lastUsedCard
 ]
 
 { #category : #accessing }
@@ -181,4 +194,10 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 
 	currentFuel <= squaresToMove abs ifTrue: [
 		ally applyPenaltyIn: gameboard ]
+]
+
+{ #category : #'as yet unclassified' }
+Spaceship >> useCard: aCard [
+	deck remove: aCard
+	
 ]

@@ -30,3 +30,20 @@ Card >> diceAdjustment [
 
 	^ 0
 ]
+
+{ #category : #'as yet unclassified' }
+Card >> lastUsedCard: aCard [
+
+	^ self
+]
+
+{ #category : #removing }
+Card >> removeEffects [
+	self subclassResponsibility 
+]
+
+{ #category : #'as yet unclassified' }
+Card >> verifyCanBePlayed: isShipTurn [
+
+	self subclassResponsibility
+]

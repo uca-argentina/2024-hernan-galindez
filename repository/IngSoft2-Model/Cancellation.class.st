@@ -1,6 +1,6 @@
 Class {
 	#name : #Cancellation,
-	#superclass : #Instantaneous,
+	#superclass : #Instant,
 	#instVars : [
 		'cardToBeCancelled'
 	],
@@ -16,7 +16,8 @@ Cancellation class >> with: card [
 { #category : #operations }
 Cancellation >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
-	otherSpaceships first removeEffect: cardToBeCancelled.	
+	
+	otherSpaceships first removeEffect: cardToBeCancelled.
 	cardToBeCancelled removeEffects.
 ]
 

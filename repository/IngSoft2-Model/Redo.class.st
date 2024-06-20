@@ -11,13 +11,12 @@ Class {
 }
 
 { #category : #operations }
-Redo class >> instance [
-
-	^ instance ifNil: [ instance := self basicNew ]
+Redo class >> create [
+	^ self new initializeWith
 ]
 
 { #category : #operations }
-Redo class >> new [
+Redo class >> instance [
 
 	^ instance ifNil: [ instance := self basicNew ]
 ]
@@ -37,8 +36,13 @@ Redo >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSq
 		blockToApplyLastEffect: lastSquareLandedOn
 ]
 
+{ #category : #testing }
+Redo >> canBeReDone [
+	^false
+]
+
 { #category : #initialization }
-Redo >> initialize [
+Redo >> initializeWith [
 	lastUsedCard := NullCard new.
 ]
 
@@ -47,6 +51,12 @@ Redo >> lastUsedCard: aCard [
 
 	aCard class = self class ifTrue: [ ^ self ].
 	lastUsedCard := aCard
+]
+
+{ #category : #'as yet unclassified' }
+Redo >> verifyCanBePlayed: isShipTurn [
+
+	lastUsedCard verifyCanBePlayed: isShipTurn 
 ]
 
 { #category : #operations }
