@@ -8,7 +8,8 @@ Class {
 		'lapCounter',
 		'measurement',
 		'measurmentPerSquare',
-		'lastSquareLandedOn'
+		'lastSquareLandedOn',
+		'cards'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -25,6 +26,20 @@ Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipColle
 		  withParsecs: aNumberOfParsecs
 		  withDice: aDiceCollection
 		  withGenerator: squareGenerator
+]
+
+{ #category : #accessing }
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator cards: cardCollection [
+
+	self verifyGreaterThanZero: aNumberOfSquares.
+
+	^ self new
+		  initializeWithNumberOfSquares: aNumberOfSquares
+		  withSpaceships: aSpaceshipCollection
+		  withParsecs: aNumberOfParsecs
+		  withDice: aDiceCollection
+		  withGenerator: squareGenerator
+		  withCards: cardCollection
 ]
 
 { #category : #accessing }
@@ -71,6 +86,24 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	measurmentPerSquare := Parsecs of:
 		                       aNumberOfParsecs // aNumberOfSquares.
 
+	board := squareGenerator generateSquares: aNumberOfSquares.
+	lastSquareLandedOn := NormalSquare create.
+	self setPlayersAtFirstPosition: spaceships
+]
+
+{ #category : #initialization }
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator withCards: cardCollection [
+
+	spaceships := spaceshipsCollection.
+	lapCounter := Dictionary
+		              newFromKeys: spaceships
+		              andValues:
+		              (OrderedCollection new: spaceships size withAll: 0).
+
+	measurement := aNumberOfParsecs.
+	measurmentPerSquare := Parsecs of:
+		                       aNumberOfParsecs // aNumberOfSquares.
+	cards := cardCollection.
 	board := squareGenerator generateSquares: aNumberOfSquares.
 	lastSquareLandedOn := NormalSquare create.
 	self setPlayersAtFirstPosition: spaceships
@@ -130,6 +163,11 @@ Gameboard >> moveToStart: aSpaceship [
 	currentPosition := self find: aSpaceship.
 	(board at: 1) keep: aSpaceship.
 	(board at: currentPosition) leaves: aSpaceship
+]
+
+{ #category : #accessing }
+Gameboard >> possibleCards [
+	^ cards
 ]
 
 { #category : #setting }

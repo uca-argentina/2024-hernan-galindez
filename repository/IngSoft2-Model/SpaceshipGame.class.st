@@ -69,7 +69,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 
 	dice := Dice with: aDiceCollection.
 
-	
+
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
@@ -86,7 +86,8 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             spaceships: players
 		             withParsecs: aNumberOfParsecs
 		             using: dice
-		             generator: squareGenerator.
+		             generator: squareGenerator
+		             cards: possibleCards.
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := rewardsCollection.

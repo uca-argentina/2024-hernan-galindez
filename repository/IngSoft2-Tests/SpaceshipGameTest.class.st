@@ -934,16 +934,15 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleThenMovesBackFourSquares [
 { #category : #tests }
 SpaceshipGameTest >> testWhenPlayerLandsOnCardSquareThenHeCanUseOverloadCard [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator cardCollection |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 9 7 2 3 10 )) }.
-	cardCollection := { Overload }.
 	specificGenerator := SpecificGenerator with:
-		                     { ((CardSquare with: cardCollection) -> 10) }.
+		                     { (CardSquare create -> 10) }.
 
 	aGame := SpaceshipGame
 		         withPlayers: aSpaceshipCollection
@@ -953,8 +952,12 @@ SpaceshipGameTest >> testWhenPlayerLandsOnCardSquareThenHeCanUseOverloadCard [
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
 		         rewards: (IncrementFuelCapacity by: 1)
-		         cards: { Redo }.
+		         cards: { Overload }.
 
+	aGame
+		playCard: Overload new
+		from: aSpaceship
+		to: { anotherSpaceship }.
 	aGame playTurn.
 	aGame playTurn.
 	aGame
@@ -965,7 +968,7 @@ SpaceshipGameTest >> testWhenPlayerLandsOnCardSquareThenHeCanUseOverloadCard [
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 12.
-	self assert: (aGame positionOf: anotherSpaceship) equals: 9
+	self assert: (aGame positionOf: anotherSpaceship) equals: 5
 ]
 
 { #category : #tests }

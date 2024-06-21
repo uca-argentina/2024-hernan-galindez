@@ -17,7 +17,7 @@ CardSquare class >> with: aCardCollection [
 { #category : #'add/remove' }
 CardSquare >> applyEffectTo: aSpaceship in: aGameboard [
 
-	aSpaceship giveCard: cards atRandom .
+	aSpaceship giveCard: (aGameboard possibleCards) atRandom
 ]
 
 { #category : #'add/remove' }
