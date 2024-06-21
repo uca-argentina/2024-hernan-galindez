@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
 	^ self new
 		  initializeWithPlayers: somePlayers
@@ -24,8 +24,6 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withDice: aDiceCollection
 		  withLaps: anAmountOfLaps
 		  withParsecs: aNumberOfParsecs
-		  withSquareGenerator: sqaureGenerator
-		  withRewards: rewards
 ]
 
 { #category : #'instance creation' }
@@ -43,25 +41,59 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
+	| squareGenerator cardCollection |
 	dice := Dice with: aDiceCollection.
 
+	squareGenerator := ProbabilityGenerator distributions: {
+			                   ([ NormalSquare create ] -> 0.3).
+			                   ([
+			                    HyperGravity withExpectedNumber:
+				                    dice maxThrow atRandom ] -> 0.2).
+			                   ([ AtomicBomb create ] -> 0.02).
+			                   ([ BlackHole create ] -> 0.2).
+			                   ([
+			                    MoonWalk withSquaresToMove:
+				                    dice maxThrow atRandom ] -> 0.1).
+			                   ([ HyperJump with: { (Parsecs of: 100) } ]
+			                    -> 0.08).
+			                   ([ CardSquare create ] -> 0.1) }.
+
+	rewards := RewardsManager with: {
+			           ((DecrementFuelCapacity by: 1) -> 0.2).
+			           ((IncrementFuelCapacity by: 1) -> 0.8) }.
+
+	cardCollection := {
+		                  Cancellation.
+		                  Repeat.
+		                  Acceleration.
+		                  Ally.
+		                  Overload.
+		                  Redo }.
+
+	redoCardInstance := Redo recreate.
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
 
+
+
+	possibleCards := (cardCollection collect: [ :cardClass |
+		                  cardClass createWith: players ])
+		                 asOrderedCollection.
+	players do: [ :player | player giveCards: possibleCards ].
+	Redo deleteInstance.
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
 		             withParsecs: aNumberOfParsecs
 		             using: dice
-		             generator: squareGenerator.
-	numberOfLaps := anAmountOfLaps.
+		             generator: squareGenerator
+		             cards: possibleCards.
 
-	rewards := rewardsCollection.
-	lastSquareLandedOn := NormalSquare create
+	numberOfLaps := anAmountOfLaps
 ]
 
 { #category : #initialization }
