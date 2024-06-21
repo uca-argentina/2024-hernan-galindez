@@ -8,12 +8,21 @@ Class {
 }
 
 { #category : #operations }
-Overload >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+Overload class >> createWith: playersCollection [
+	^ self new initializeWith: playersCollection
+]
 
-	otherSpaceships size = 1 ifFalse: [
-		Error signal: 'This card can only be applied to one spaceship' ].
+{ #category : #operations }
+Overload >> applyFrom: aSpaceship to: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
 
-	aSpaceship useCard: self.
+	| otherSpaceships |
+	"otherSpaceshipsNames size = 1 ifFalse: [
+		Error signal: 'This card can only be applied to one spaceship' ]."
+
+	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
+		                   players detect: [ :player |
+			                   player name = playerName ] ].
+
 	affectedSpaceship := otherSpaceships first.
 	affectedSpaceship applyCard: self
 ]
@@ -28,6 +37,12 @@ Overload >> diceAdjustment [
 Overload >> initialize [
 
 	affectedSpaceship := NullSpaceship new
+]
+
+{ #category : #initialization }
+Overload >> initializeWith: playersCollection [
+
+	players := playersCollection
 ]
 
 { #category : #removing }

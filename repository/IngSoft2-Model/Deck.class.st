@@ -34,29 +34,37 @@ Deck >> diceAdjustment [
 { #category : #initialization }
 Deck >> initializeWith: cards [
 
-	cardsInHand := cards asOrderedCollection.
+	cardsInHand := cards copy.
 	appliedCards := OrderedCollection new
 ]
 
 { #category : #removing }
 Deck >> removeCard: cardToBeRemoved [
-	"[ Error signal: 'This spaceship does not have this card' ]"
 
-"	| index x |
-	index := cardsInHand
-		         detectIndex: [ :card | card = cardToBeRemoved ]
-		         ifNone: [ 1 ].
-	x := cardsInHand at: index.
-"
-	^ cardsInHand
-		  remove: cardToBeRemoved
-		  ifAbsent: [
-		  Error signal: 'This spaceship does not have this card' ]
+	| cardIndex card |
+	cardIndex := cardsInHand
+		             indexOf: cardToBeRemoved
+		             ifAbsent: [
+		             Error signal: 'This spaceship does not have this card' ].
+	card := cardsInHand at: cardIndex.
+	cardsInHand remove: cardToBeRemoved.
+
+	^ card
 ]
 
 { #category : #initialization }
 Deck >> removeCardEffect: cardToBeRemoved [
-	appliedCards remove: cardToBeRemoved ifAbsent: [Error signal: 'This card was not used on this spaceship'] 
+
+	| cardIndex card |
+	cardIndex := appliedCards
+		             indexOf: cardToBeRemoved
+		             ifAbsent: [
+		             Error signal:
+			             'This card was not used on this spaceship' ].
+	card := appliedCards at: cardIndex.
+	appliedCards remove: cardToBeRemoved.
+
+	^ card
 ]
 
 { #category : #initialization }

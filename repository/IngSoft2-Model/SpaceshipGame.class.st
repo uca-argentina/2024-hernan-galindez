@@ -9,9 +9,8 @@ Class {
 		'rewards',
 		'activeCards',
 		'lastSquareLandedOn',
-		'redoCard',
-		'lastUsedCard',
-		'possibleCards'
+		'possibleCards',
+		'redoCardInstance'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -70,14 +69,18 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 
 	dice := Dice with: aDiceCollection.
 
-	redoCard := Redo recreate.
-	possibleCards := cardCollection.
+	
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
-			           withFuel: dice maxThrow * 2
-			           withCards: cardCollection ].
+			           withFuel: dice maxThrow * 2 ].
+	redoCardInstance := Redo recreate.
+	possibleCards := (cardCollection collect: [ :cardClass |
+		                  cardClass createWith: players ])
+		                 asOrderedCollection.
 
+	players do: [ :player | player giveCards: possibleCards ].
+	Redo deleteInstance.
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
@@ -128,33 +131,25 @@ SpaceshipGame >> nextPlayer [
 { #category : #'game controls' }
 SpaceshipGame >> playCard: card from: spaceshipName to: otherSpaceshipsNames [
 
-	| spaceshipToPlay otherSpaceships spaceship |
+	| spaceshipToPlay spaceship cardToBeUsed |
 	self verifyGameIsNotOver.
 
 	spaceshipToPlay := players detect: [ :player | player canPlay ].
 	spaceship := players detect: [ :player | player name = spaceshipName ].
 
-	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
-		                   players detect: [ :player |
-			                   player name = playerName ] ].
+	cardToBeUsed := spaceship useCard: card.
+	"	cardToBeUsed lastUsedCard: lastUsedCard."
+	cardToBeUsed verifyCanBePlayed: spaceshipToPlay = spaceship.
 
-	card lastUsedCard:lastUsedCard.
-	card verifyCanBePlayed: spaceshipToPlay = spaceship.
-
-	"spaceshipToPlay
-		use: card
-		to: otherSpaceships
-		blockToApplyLastEffect: [ :otherSpaceship |
-			lastSquareLandedOn applyEffectTo: otherSpaceship in: gameboard ]."
-
-	card
+	cardToBeUsed
 		applyFrom: spaceship
-		to: otherSpaceships
+		to: otherSpaceshipsNames
 		blockToApplyLastEffect: [ :otherSpaceship |
-			lastSquareLandedOn applyEffectTo: otherSpaceship in: gameboard ].
+		gameboard applyLastEffectTo: otherSpaceship ].
 
-	card canBeReDone ifFalse: [ ^ self ].
-	lastUsedCard := card
+	"card canBeReDone ifFalse: [ ^ self ]."
+	"lastUsedCard := cardToBeUsed"
+	redoCardInstance lastUsedCard: cardToBeUsed
 ]
 
 { #category : #'game controls' }
@@ -166,7 +161,7 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	aNumber = dice maxThrow ifTrue: [ rewards applyTo: spaceshipToPlay ].
 	spaceshipToPlay playWith: aNumber in: gameboard.
-	lastSquareLandedOn :=  gameboard implementEffectOn: spaceshipToPlay.
+	gameboard implementEffectOn: spaceshipToPlay.
 	
 ]
 

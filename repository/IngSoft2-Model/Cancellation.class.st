@@ -1,9 +1,6 @@
 Class {
 	#name : #Cancellation,
 	#superclass : #Instant,
-	#instVars : [
-		'cardToBeCancelled'
-	],
 	#category : #'IngSoft2-Model'
 }
 
@@ -14,17 +11,14 @@ Cancellation class >> with: card [
 ]
 
 { #category : #operations }
-Cancellation >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+Cancellation >> applyFrom: aSpaceship to: cardToBeCancelled blockToApplyLastEffect: lastSquareLandedOn [
 
-	aSpaceship useCard: self.
-	otherSpaceships first removeEffect: cardToBeCancelled.
-	cardToBeCancelled removeEffects.
+	(aSpaceship removeEffect: cardToBeCancelled ) removeEffects
 ]
 
 { #category : #initialization }
-Cancellation >> initializeWith: card [
+Cancellation >> initializeWith: playersCollection [
 
-	cardToBeCancelled := card.
-	
-	
+"	cardToBeCancelled := NullCard new."
+	players := playersCollection
 ]

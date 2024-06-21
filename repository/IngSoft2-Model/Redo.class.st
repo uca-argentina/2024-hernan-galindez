@@ -16,6 +16,17 @@ Redo class >> create [
 ]
 
 { #category : #operations }
+Redo class >> createWith: playersCollection [
+
+	^ instance ifNil: [ instance := self new initialize ]
+]
+
+{ #category : #'as yet unclassified' }
+Redo class >> deleteInstance [
+	instance := nil
+]
+
+{ #category : #operations }
 Redo class >> instance [
 
 	^ instance ifNil: [ instance := self basicNew ]
@@ -23,14 +34,14 @@ Redo class >> instance [
 
 { #category : #operations }
 Redo class >> recreate [
-	instance :=  nil.
-	^ self new initialize
+	instance :=  self new initialize.
+	^ instance
 ]
 
 { #category : #operations }
 Redo >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
-	lastUsedCard
+	lastUsedCard 
 		applyFrom: aSpaceship
 		to: otherSpaceships
 		blockToApplyLastEffect: lastSquareLandedOn
@@ -42,6 +53,11 @@ Redo >> canBeReDone [
 ]
 
 { #category : #initialization }
+Redo >> initialize [
+	lastUsedCard := NullCard new.
+]
+
+{ #category : #initialization }
 Redo >> initializeWith [
 	lastUsedCard := NullCard new.
 ]
@@ -49,7 +65,7 @@ Redo >> initializeWith [
 { #category : #operations }
 Redo >> lastUsedCard: aCard [
 
-	aCard class = self class ifTrue: [ ^ self ].
+	aCard = self ifTrue: [ ^ self ].
 	lastUsedCard := aCard
 ]
 

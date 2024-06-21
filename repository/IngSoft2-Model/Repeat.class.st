@@ -5,10 +5,11 @@ Class {
 }
 
 { #category : #accessing }
-Repeat >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: blockToApplyLastEffect [
+Repeat >> applyFrom: aSpaceship to: otherSpaceshipsNames blockToApplyLastEffect: blockToApplyLastEffect [
 
-	| affectedSpaceship |
-	aSpaceship useCard: self.
-	affectedSpaceship := otherSpaceships first.
-	blockToApplyLastEffect value: affectedSpaceship.
+	| affectedSpaceship target |
+	target := otherSpaceshipsNames collect: [ :playerName |
+		          players detect: [ :player | player name = playerName ] ].
+	affectedSpaceship := target first.
+	blockToApplyLastEffect value: affectedSpaceship
 ]

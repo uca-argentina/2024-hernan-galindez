@@ -7,7 +7,8 @@ Class {
 		'spaceships',
 		'lapCounter',
 		'measurement',
-		'measurmentPerSquare'
+		'measurmentPerSquare',
+		'lastSquareLandedOn'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -34,6 +35,12 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 ]
 
 { #category : #accessing }
+Gameboard >> applyLastEffectTo: aSpaceship [
+
+	lastSquareLandedOn applyEffectTo: aSpaceship in: self
+]
+
+{ #category : #accessing }
 Gameboard >> find: aTarget [
 
 	^ board
@@ -48,8 +55,7 @@ Gameboard >> implementEffectOn: aSpaceship [
 	currentPosition := self find: aSpaceship.
 	currentSquare := board at: currentPosition.
 	currentSquare applyEffectTo: aSpaceship in: self.
-
-	^ currentSquare
+	lastSquareLandedOn := currentSquare
 ]
 
 { #category : #initialization }
@@ -62,9 +68,11 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 		              (OrderedCollection new: spaceships size withAll: 0).
 
 	measurement := aNumberOfParsecs.
-	measurmentPerSquare := Parsecs of: aNumberOfParsecs // aNumberOfSquares.
+	measurmentPerSquare := Parsecs of:
+		                       aNumberOfParsecs // aNumberOfSquares.
 
 	board := squareGenerator generateSquares: aNumberOfSquares.
+	lastSquareLandedOn := NormalSquare create.
 	self setPlayersAtFirstPosition: spaceships
 ]
 

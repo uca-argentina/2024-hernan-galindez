@@ -21,7 +21,7 @@ CardSquare >> applyEffectTo: aSpaceship in: aGameboard [
 ]
 
 { #category : #'add/remove' }
-CardSquare >> initializeWith: aCardCollection [
+CardSquare >> initializeWith: aCardClassCollection [
 
-	cards := aCardCollection
+	cards := aCardClassCollection collect: [ :cardClass | cardClass new ]
 ]

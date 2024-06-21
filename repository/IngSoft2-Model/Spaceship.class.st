@@ -70,6 +70,12 @@ Spaceship >> giveCard: aCard [
 	deck addCard: aCard
 ]
 
+{ #category : #'as yet unclassified' }
+Spaceship >> giveCards: cards [
+
+	cards do: [ :card | self giveCard: card ]
+]
+
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 
@@ -79,7 +85,7 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	needsToThrow := 0.
 	lostTurns := 0.
 	ally := NullSpaceship new.
-	deck := Deck with: #().
+	deck := Deck with: #() asOrderedCollection.
 ]
 
 { #category : #initialization }
@@ -144,7 +150,7 @@ Spaceship >> refuel [
 
 { #category : #setting }
 Spaceship >> removeEffect: cardToBeRemoved [
-	deck removeCardEffect: cardToBeRemoved
+	^ (deck removeCardEffect: cardToBeRemoved ) 
 ]
 
 { #category : #accessing }
@@ -198,6 +204,6 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 
 { #category : #'as yet unclassified' }
 Spaceship >> useCard: aCard [
-	deck removeCard: aCard
+	^ deck removeCard: aCard
 	
 ]

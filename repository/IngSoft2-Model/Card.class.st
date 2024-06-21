@@ -2,7 +2,8 @@ Class {
 	#name : #Card,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'players'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -11,6 +12,12 @@ Class {
 Card class >> create [
 
 	^ self new initialize
+]
+
+{ #category : #operations }
+Card class >> createWith: players [
+
+	^ self new initializeWith: players
 ]
 
 { #category : #comparing }
@@ -29,6 +36,11 @@ Card >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSq
 Card >> diceAdjustment [
 
 	^ 0
+]
+
+{ #category : #initialization }
+Card >> initializeWith: playersCollection [
+	players := playersCollection
 ]
 
 { #category : #'as yet unclassified' }
