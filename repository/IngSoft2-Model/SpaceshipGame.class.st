@@ -59,7 +59,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 			                   ([ CardSquare create ] -> 0.1) }.
 
 	rewards := RewardsManager with: {
-			           ((DecrementFuelCapacity by: 1) -> 0.2).
+			           ((DecrementCurrentFuel by: 1) -> 0.2).
 			           ((IncrementFuelCapacity by: 1) -> 0.8) }.
 
 	cardCollection := {

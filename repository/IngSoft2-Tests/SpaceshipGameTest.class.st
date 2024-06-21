@@ -750,7 +750,7 @@ SpaceshipGameTest >> testWhenFirstPlayerLandsOnHyperJumpThenItStaysInTheSamePosi
 		         withLaps: 2
 		         withParsecs: 150
 		         squareGenerator: specificGenerator
-		         rewards: (DecrementFuelCapacity by: 1)
+		         rewards: (DecrementCurrentFuel by: 1)
 		         cards: {
 				         Overload.
 				         Ally.
@@ -1510,7 +1510,7 @@ SpaceshipGameTest >> testWhenSpaceshipThrowsMaxThrowThenItsCurrentFuelItsDecreme
 		         withLaps: 2
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
-		         rewards: (DecrementFuelCapacity by: 1)
+		         rewards: (DecrementCurrentFuel by: 1)
 		         cards: {
 				         Overload.
 				         Ally.

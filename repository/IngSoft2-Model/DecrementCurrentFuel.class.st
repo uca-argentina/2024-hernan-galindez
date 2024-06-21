@@ -1,5 +1,5 @@
 Class {
-	#name : #DecrementFuelCapacity,
+	#name : #DecrementCurrentFuel,
 	#superclass : #Rewards,
 	#instVars : [
 		'decrement'
@@ -8,21 +8,21 @@ Class {
 }
 
 { #category : #'instance creation' }
-DecrementFuelCapacity class >> by: anAmount [
+DecrementCurrentFuel class >> by: anAmount [
 	
 	^ self new initializeWith: anAmount
 	
 ]
 
 { #category : #operations }
-DecrementFuelCapacity >> applyTo: aSpaceship [
+DecrementCurrentFuel >> applyTo: aSpaceship [
 
 	aSpaceship changeCurrentFuelBy: decrement . 	
 
 ]
 
 { #category : #operations }
-DecrementFuelCapacity >> initializeWith: anAmount [
+DecrementCurrentFuel >> initializeWith: anAmount [
 
 	decrement := anAmount.
 ]
