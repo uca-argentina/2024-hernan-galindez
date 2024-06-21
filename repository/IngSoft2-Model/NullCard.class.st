@@ -4,8 +4,8 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #operations }
-NullCard >> applyFrom: aSpaceship target: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+{ #category : #'as yet unclassified' }
+NullCard >> verifyCanBePlayed: isShipTurn [
 
-	Error signal: 'This card has not been used'
+	Error signal: 'There is no card to redo' 
 ]

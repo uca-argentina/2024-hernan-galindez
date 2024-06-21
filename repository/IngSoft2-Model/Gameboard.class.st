@@ -15,20 +15,6 @@ Class {
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator [
-
-	self verifyGreaterThanZero: aNumberOfSquares.
-
-
-	^ self new
-		  initializeWithNumberOfSquares: aNumberOfSquares
-		  withSpaceships: aSpaceshipCollection
-		  withParsecs: aNumberOfParsecs
-		  withDice: aDiceCollection
-		  withGenerator: squareGenerator
-]
-
-{ #category : #accessing }
 Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator cards: cardCollection [
 
 	self verifyGreaterThanZero: aNumberOfSquares.

@@ -31,11 +31,6 @@ Card >> initializeWith: playersCollection [
 	players := playersCollection
 ]
 
-{ #category : #removing }
-Card >> removeEffects [
-	self subclassResponsibility 
-]
-
 { #category : #'as yet unclassified' }
 Card >> verifyCanBePlayed: isShipTurn [
 

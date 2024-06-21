@@ -4,6 +4,11 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
+{ #category : #removing }
+Permanent >> removeEffects [
+	self subclassResponsibility 
+]
+
 { #category : #'as yet unclassified' }
 Permanent >> verifyCanBePlayed: isShipTurn [
 
