@@ -179,6 +179,41 @@ SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn
 ]
 
 { #category : #tests }
+SpaceshipGameTest >> testErrorWhenRedoCardIsUsedAndNoOtherCardsWereUsed [
+
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
+	aSpaceship := 'Pancho'.
+	anotherSpaceship := 'Seijas'.
+	aSpaceshipCollection := OrderedCollection
+		                        with: aSpaceship
+		                        with: anotherSpaceship.
+	aDiceCollection := { (LoadedDie sequence: #( 9 7 3 )) }.
+	specificGenerator := SpecificGenerator with:
+		                     { (NormalSquare create -> 1) }.
+	aGame := SpaceshipGame
+		         withPlayers: aSpaceshipCollection
+		         withGameboardLength: 11
+		         withDice: aDiceCollection
+		         withLaps: 1
+		         withParsecs: 100
+		         squareGenerator: specificGenerator
+		         rewards: (IncrementFuelCapacity by: 1)
+		         cards: {
+				         Overload.
+				         Cancellation. Redo}.
+
+
+	self
+		should: [
+			aGame
+				playCard: Redo new
+				from: aSpaceship
+				target: anotherSpaceship ]
+		raise: Error
+		withMessage: 'There is no card to redo'
+]
+
+{ #category : #tests }
 SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 
 	| aSpaceship aDiceCollection aGame aSpaceshipCollection specificGenerator |

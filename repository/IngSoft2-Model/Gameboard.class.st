@@ -60,24 +60,6 @@ Gameboard >> find: aTarget [
 ]
 
 { #category : #initialization }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator [
-
-	spaceships := spaceshipsCollection.
-	lapCounter := Dictionary
-		              newFromKeys: spaceships
-		              andValues:
-		              (OrderedCollection new: spaceships size withAll: 0).
-
-	measurement := aNumberOfParsecs.
-	measurmentPerSquare := Parsecs of:
-		                       aNumberOfParsecs // aNumberOfSquares.
-
-	board := squareGenerator generateSquares: aNumberOfSquares.
-	lastSquareLandedOn := NormalSquare create.
-	self setPlayersAtFirstPosition: spaceships
-]
-
-{ #category : #initialization }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator withCards: cardCollection [
 
 	spaceships := spaceshipsCollection.
