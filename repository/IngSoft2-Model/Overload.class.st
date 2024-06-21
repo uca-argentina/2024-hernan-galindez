@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #operations }
-Overload class >> createWith: playersCollection [
-	^ self new initializeWith: playersCollection
-]
-
-{ #category : #operations }
 Overload >> applyFrom: aSpaceship target: otherSpaceshipsName blockToApplyLastEffect: lastSquareLandedOn [
 
 	affectedSpaceship := players

@@ -8,12 +8,6 @@ Class {
 }
 
 { #category : #operations }
-Acceleration class >> create [
-
-	^ self new initialize
-]
-
-{ #category : #operations }
 Acceleration >> applyFrom: aSpaceship target: otherSpaceshipsNames blockToApplyLastEffect: blockOfCode [
 
 	players do: [ :spaceship |

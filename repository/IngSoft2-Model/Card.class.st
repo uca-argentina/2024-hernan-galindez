@@ -9,12 +9,6 @@ Class {
 }
 
 { #category : #operations }
-Card class >> create [
-
-	^ self new initialize
-]
-
-{ #category : #operations }
 Card class >> createWith: players [
 
 	^ self new initializeWith: players

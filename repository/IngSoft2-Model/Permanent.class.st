@@ -4,11 +4,6 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #testing }
-Permanent >> canBeReDone [
-	^ true
-]
-
 { #category : #'as yet unclassified' }
 Permanent >> verifyCanBePlayed: isShipTurn [
 

@@ -4,11 +4,6 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #testing }
-Instant >> canBeReDone [
-	^ true
-]
-
 { #category : #removing }
 Instant >> removeEffects [
 	Error signal: 'An Instantenous card cant be removed'
