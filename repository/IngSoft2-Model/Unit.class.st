@@ -28,13 +28,13 @@ Unit >> convertTo: aUnit [
 	^ value * ratioToUnit
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Unit >> find: aConversionRate [
 
 	^(unitsRatio at: aConversionRate ifAbsent: [ 1 / unitsRatio at: { aConversionRate second . aConversionRate first } ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 Unit >> initialize [
 
 	unitsRatio := Dictionary new.

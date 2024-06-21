@@ -7,8 +7,6 @@ Class {
 		'dice',
 		'numberOfLaps',
 		'rewards',
-		'activeCards',
-		'lastSquareLandedOn',
 		'possibleCards',
 		'redoCardInstance'
 	],
@@ -46,7 +44,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	| squareGenerator cardCollection |
 	dice := Dice with: aDiceCollection.
 
-	squareGenerator := ProbabilityGenerator distributions: {
+	squareGenerator := DefaultSquareGenerator distributions: {
 			                   ([ NormalSquare create ] -> 0.3).
 			                   ([
 			                    HyperGravity withExpectedNumber:
@@ -73,18 +71,19 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		                  Redo }.
 
 	redoCardInstance := Redo recreate.
+
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
 
-
-
 	possibleCards := (cardCollection collect: [ :cardClass |
 		                  cardClass createWith: players ])
 		                 asOrderedCollection.
-	players do: [ :player | player giveCards: possibleCards ].
+	players do: [ :player | player giveCard: possibleCards atRandom ; giveCard: possibleCards atRandom ].
+
 	Redo deleteInstance.
+
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
@@ -97,7 +96,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: rewardsCollection withCards: cardCollection [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: aReward withCards: cardCollection [
 
 	dice := Dice with: aDiceCollection.
 
@@ -111,7 +110,11 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		                  cardClass createWith: players ])
 		                 asOrderedCollection.
 
-	players do: [ :player | player giveCards: possibleCards ].
+	players do: [ :player |
+		player
+			giveCard: possibleCards first;
+			giveCard: possibleCards second ].
+
 	Redo deleteInstance.
 	gameboard := Gameboard
 		             numberOfSquares: aLength
@@ -119,11 +122,11 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		             withParsecs: aNumberOfParsecs
 		             using: dice
 		             generator: squareGenerator
-		             cards: possibleCards.
+		             cards:
+		             (possibleCards copyFrom: 3 to: possibleCards size).
 	numberOfLaps := anAmountOfLaps.
 
-	rewards := rewardsCollection.
-	lastSquareLandedOn := NormalSquare create
+	rewards := aReward
 ]
 
 { #category : #'game logic' }

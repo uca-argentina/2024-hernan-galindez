@@ -31,7 +31,7 @@ Card >> initializeWith: playersCollection [
 	players := playersCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Card >> verifyCanBePlayed: isShipTurn [
 
 	self subclassResponsibility

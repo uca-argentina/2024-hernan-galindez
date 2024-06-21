@@ -54,7 +54,7 @@ Redo >> lastUsedCard: aCard [
 	lastUsedCard := aCard
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Redo >> verifyCanBePlayed: isShipTurn [
 
 	lastUsedCard verifyCanBePlayed: isShipTurn 

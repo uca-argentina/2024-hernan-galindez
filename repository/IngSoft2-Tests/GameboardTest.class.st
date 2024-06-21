@@ -25,7 +25,7 @@ GameboardTest >> testBoardCannotBeCreatedWithLengthLessThanZero [
 				withParsecs: 100
 				using: (Dice with: { (Die of: 4) })
 				generator:
-				(SpecificGenerator with: { (NormalSquare create -> 1) }) 
+				(SpecificSquareGenerator with: { (NormalSquare create -> 1) }) 
 				cards: {Overload}]
 		raise: Error
 		withMessage: 'Length must be greater than zero'

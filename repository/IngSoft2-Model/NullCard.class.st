@@ -4,7 +4,7 @@ Class {
 	#category : #'IngSoft2-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 NullCard >> verifyCanBePlayed: isShipTurn [
 
 	Error signal: 'There is no card to redo' 

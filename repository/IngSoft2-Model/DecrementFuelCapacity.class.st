@@ -17,7 +17,7 @@ DecrementFuelCapacity class >> by: anAmount [
 { #category : #operations }
 DecrementFuelCapacity >> applyTo: aSpaceship [
 
-	aSpaceship changeFuelCapacityBy: decrement negated. 	
+	aSpaceship changeCurrentFuelBy: decrement . 	
 
 ]
 

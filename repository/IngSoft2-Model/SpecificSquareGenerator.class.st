@@ -1,17 +1,17 @@
 Class {
-	#name : #SpecificGenerator,
-	#superclass : #EffectsGenereator,
+	#name : #SpecificSquareGenerator,
+	#superclass : #SquareGenereator,
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-SpecificGenerator class >> with: squareClassAndPosition [
+SpecificSquareGenerator class >> with: squareClassAndPosition [
 
 	^ self new initializeWith: squareClassAndPosition
 ]
 
 { #category : #initialization }
-SpecificGenerator >> generateSquares: anAmountOfSquares [
+SpecificSquareGenerator >> generateSquares: anAmountOfSquares [
 
 	| board effect position |
 	board := OrderedCollection new.
@@ -24,7 +24,7 @@ SpecificGenerator >> generateSquares: anAmountOfSquares [
 ]
 
 { #category : #initialization }
-SpecificGenerator >> initializeWith: squareClassAndPosition [
+SpecificSquareGenerator >> initializeWith: squareClassAndPosition [
 
 	distribution := squareClassAndPosition
 ]

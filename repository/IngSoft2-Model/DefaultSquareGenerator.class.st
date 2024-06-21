@@ -1,17 +1,17 @@
 Class {
-	#name : #ProbabilityGenerator,
-	#superclass : #EffectsGenereator,
+	#name : #DefaultSquareGenerator,
+	#superclass : #SquareGenereator,
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'class initialization' }
-ProbabilityGenerator class >> distributions: effectDistributions [
+DefaultSquareGenerator class >> distributions: effectDistributions [
 
 	^ self new initilizeWithDistributions: effectDistributions 
 ]
 
 { #category : #initialization }
-ProbabilityGenerator >> generateSquares: anAmountOfSquares [
+DefaultSquareGenerator >> generateSquares: anAmountOfSquares [
 
 	| squareCollection board firstWormholePosition secondWormholePosition|
 	
@@ -42,13 +42,13 @@ ProbabilityGenerator >> generateSquares: anAmountOfSquares [
 ]
 
 { #category : #initialization }
-ProbabilityGenerator >> initilizeWithDistributions: effectDistributions [
+DefaultSquareGenerator >> initilizeWithDistributions: effectDistributions [
 
 	distribution := effectDistributions
 ]
 
 { #category : #initialization }
-ProbabilityGenerator >> squareCollection: anAmountOfSquares with: aBlockOfCode [
+DefaultSquareGenerator >> squareCollection: anAmountOfSquares with: aBlockOfCode [
 
 	| collection |
 	collection := OrderedCollection new.

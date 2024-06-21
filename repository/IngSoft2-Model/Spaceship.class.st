@@ -26,7 +26,7 @@ Spaceship >> allyWith: aSpaceship [
 	ally := aSpaceship
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #setting }
 Spaceship >> applyCard: card [
 
 	deck cardApplied: card.
@@ -46,6 +46,12 @@ Spaceship >> canPlay [
 	^ lostTurns = 0
 ]
 
+{ #category : #setting }
+Spaceship >> changeCurrentFuelBy: anAmount [
+
+	currentFuel := currentFuel - anAmount
+]
+
 { #category : #accessing }
 Spaceship >> changeFuelCapacityBy: anAmount [
 
@@ -53,7 +59,7 @@ Spaceship >> changeFuelCapacityBy: anAmount [
 	currentFuel := maxCapacity min: currentFuel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #setting }
 Spaceship >> changeTotalThrowBy: aNumber [
 
 	diceAdjustment := diceAdjustment + aNumber.
@@ -63,12 +69,6 @@ Spaceship >> changeTotalThrowBy: aNumber [
 Spaceship >> giveCard: aCard [
 
 	deck addCard: aCard copy
-]
-
-{ #category : #'as yet unclassified' }
-Spaceship >> giveCards: cards [
-
-	cards do: [ :card | self giveCard: card ]
 ]
 
 { #category : #initialization }
@@ -100,7 +100,7 @@ Spaceship >> move: anAmountOfSquares in: aGameboard [
 
 	currentFuel > squaresToMove abs
 		ifTrue: [
-			currentFuel := currentFuel - squaresToMove abs.
+			self changeCurrentFuelBy:  squaresToMove abs.
 			aGameboard move: self with: squaresToMove ]
 		ifFalse: [ self applyPenaltyIn: aGameboard ]
 ]
@@ -159,7 +159,7 @@ Spaceship >> useAllyFuelIfNecessary: squaresToMove in: gameboard [
 		ally applyPenaltyIn: gameboard ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 Spaceship >> useCard: aCard [
 	^ deck removeCard: aCard
 	
