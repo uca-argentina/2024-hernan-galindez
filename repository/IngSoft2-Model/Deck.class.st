@@ -45,7 +45,7 @@ Deck >> removeCard: cardToBeRemoved [
 	cardIndex := cardsInHand
 		             indexOf: cardToBeRemoved
 		             ifAbsent: [
-		             Error signal: 'This spaceship does not have this card' ].
+		             Error signal: 'This spaceship does not have ' , cardToBeRemoved class asString , ' card' ].
 	card := cardsInHand at: cardIndex.
 	cardsInHand remove: cardToBeRemoved.
 
@@ -56,14 +56,13 @@ Deck >> removeCard: cardToBeRemoved [
 Deck >> removeCardEffect: cardToBeRemoved [
 
 	| cardIndex card |
-	cardIndex := appliedCards
-		             indexOf: cardToBeRemoved
-		             ifAbsent: [
-		             Error signal:
-			             'This card was not used on this spaceship' ].
+	cardIndex := appliedCards indexOf: cardToBeRemoved ifAbsent: [
+		             Error signal: cardToBeRemoved class asString
+			             , ' card was not used on this spaceship' ].
 	card := appliedCards at: cardIndex.
+"	card removeEffects."
 	appliedCards remove: cardToBeRemoved.
-
+	
 	^ card
 ]
 

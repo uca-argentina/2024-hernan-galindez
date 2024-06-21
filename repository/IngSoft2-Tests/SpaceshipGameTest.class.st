@@ -17,7 +17,7 @@ SpaceshipGameTest >> should: anErrorBlock raise: exceptionClass withMessage: anE
 { #category : #tests }
 SpaceshipGameTest >> testCancellationCardCanBeUsedAtAnyMomentOfTheGame [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator overloadCard |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
@@ -42,11 +42,11 @@ SpaceshipGameTest >> testCancellationCardCanBeUsedAtAnyMomentOfTheGame [
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target:  anotherSpaceship .
 	aGame
 		playCard: Cancellation new
 		from: anotherSpaceship
-		to: Overload new .
+		target: Overload new.
 
 	aGame playTurn.
 	aGame playTurn.
@@ -86,9 +86,9 @@ SpaceshipGameTest >> testErrorWhenAPlayerUsesCancellationCardAndNoOtherCardsWher
 			aGame
 				playCard: Cancellation new
 				from: anotherSpaceship
-				to: { Overload new } ]
+				target: Overload new  ]
 		raise: Error
-		withMessage: 'This card was not used on this spaceship'
+		withMessage: 'Overload card was not used on this spaceship'
 ]
 
 { #category : #tests }
@@ -173,7 +173,7 @@ SpaceshipGameTest >> testErrorWhenPlayerWantsToPlayOverloadCardWhenItsNotHisTurn
 			aGame
 				playCard: Overload new
 				from: anotherSpaceship
-				to: { aSpaceship } ]
+				target: { aSpaceship } ]
 		raise: Error
 		withMessage: 'You can only play this card when its your turn'
 ]
@@ -387,7 +387,7 @@ SpaceshipGameTest >> testWhenAccelerationCardIsUsedThenAllSpaceshipsTotalThrowAr
 	aGame
 		playCard: Acceleration new
 		from: aSpaceship
-		to: aSpaceshipCollection.
+		target: aSpaceshipCollection.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -418,7 +418,7 @@ SpaceshipGameTest >> testWhenAllyCardIsUsedAndBothSpaceshipsDoesNotHaveEnoughFue
 		         rewards: (IncrementFuelCapacity by: 1)
 		         cards: { Ally }.
 
-	aGame playCard: allyCard from: aSpaceship to: { anotherSpaceship }.
+	aGame playCard: allyCard from: aSpaceship target:  anotherSpaceship .
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -452,9 +452,9 @@ SpaceshipGameTest >> testWhenAllyCardIsUsedAndBothSpaceshipsDoesNotHaveEnoughFue
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
 		         rewards: (IncrementFuelCapacity by: 1)
-		         cards: {Ally}.
+		         cards: { Ally }.
 
-	aGame playCard: allyCard from: aSpaceship to: { anotherSpaceship }.
+	aGame playCard: allyCard from: aSpaceship target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -475,7 +475,7 @@ SpaceshipGameTest >> testWhenAllyCardIsUsedAndBothSpaceshipsDoesNotHaveEnoughFue
 { #category : #tests }
 SpaceshipGameTest >> testWhenAllyCardIsUsedAndOnePlayerDoesNotHaveFuelRequiredToMoveThenItUsesTheAllyFuel [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator allyCard |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
@@ -494,7 +494,7 @@ SpaceshipGameTest >> testWhenAllyCardIsUsedAndOnePlayerDoesNotHaveFuelRequiredTo
 		         rewards: (IncrementFuelCapacity by: 1)
 		         cards: { Ally }.
 
-	aGame playCard: Ally new from: aSpaceship to: { anotherSpaceship }.
+	aGame playCard: Ally new from: aSpaceship target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -534,19 +534,19 @@ SpaceshipGameTest >> testWhenCancellationCardIsUsedAndRedoCardIsUsedThenRedoCard
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame playTurn.
 	aGame
 		playCard: Overload new
 		from: anotherSpaceship
-		to: { aSpaceship }.
+		target: aSpaceship.
 	aGame playTurn.
 
 	aGame
 		playCard: Cancellation new
 		from: anotherSpaceship
-		to: Overload new.
-	aGame playCard: Redo new from: aSpaceship to: Overload new.
+		target: Overload new.
+	aGame playCard: Redo new from: aSpaceship target: Overload new.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -557,7 +557,7 @@ SpaceshipGameTest >> testWhenCancellationCardIsUsedAndRedoCardIsUsedThenRedoCard
 { #category : #tests }
 SpaceshipGameTest >> testWhenCancellationCardIsUsedOnAllyCardThenFuelIsNotLongerShared [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator  |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
@@ -578,8 +578,8 @@ SpaceshipGameTest >> testWhenCancellationCardIsUsedOnAllyCardThenFuelIsNotLonger
 				         Ally.
 				         Cancellation }.
 
-	aGame playCard: Ally new from: aSpaceship to: { anotherSpaceship }.
-	aGame playCard: Cancellation new from: aSpaceship to:  Ally new .
+	aGame playCard: Ally new from: aSpaceship target: anotherSpaceship.
+	aGame playCard: Cancellation new from: aSpaceship target: Ally new.
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
@@ -617,14 +617,14 @@ SpaceshipGameTest >> testWhenCancellationCardIsUsedThenItRemovesTheOtherCardEffe
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 	aGame playTurn.
 	aGame
 		playCard: Cancellation new
 		from: anotherSpaceship
-		to: Overload new.
+		target: Overload new.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 12.
@@ -870,12 +870,10 @@ SpaceshipGameTest >> testWhenPlayerLandsOnBlackHoleAndRepeatCardIsUsedThenBlackH
 		         withParsecs: 100
 		         squareGenerator: specificGenerator
 		         rewards: (IncrementFuelCapacity by: 1)
-		         cards: {
-				         Repeat.
-				         }.
+		         cards: { Repeat }.
 
 	aGame playTurn.
-	aGame playCard: Repeat new from: anotherSpaceship to: { aSpaceship }.
+	aGame playCard: Repeat new from: anotherSpaceship target: aSpaceship.
 	aGame playTurn.
 
 	self assert: (aGame positionOf: aSpaceship) equals: 2.
@@ -957,13 +955,13 @@ SpaceshipGameTest >> testWhenPlayerLandsOnCardSquareThenHeCanUseOverloadCard [
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -1250,7 +1248,7 @@ SpaceshipGameTest >> testWhenPlayerUsesOverloadCardThenTheOtherSpaceshipReducesI
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -1480,17 +1478,17 @@ SpaceshipGameTest >> testWhenTwoOverloadCardAndCancellationCardAreUsedThenARedoC
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
+		target: anotherSpaceship.
 	aGame
 		playCard: Cancellation new
 		from: anotherSpaceship
-		to: Overload new.
+		target: Overload new.
 
-	aGame playCard: Redo new from: anotherSpaceship to: Overload new.
+	aGame playCard: Redo new from: anotherSpaceship target: Overload new.
 	aGame playTurn.
 	aGame playTurn.
 
@@ -1501,14 +1499,13 @@ SpaceshipGameTest >> testWhenTwoOverloadCardAndCancellationCardAreUsedThenARedoC
 { #category : #tests }
 SpaceshipGameTest >> testWhenTwoRedoCardAreUsedThenItRedoesTheSameCardTwice [
 
-	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator cardCollection |
+	| aSpaceship aDiceCollection aGame anotherSpaceship aSpaceshipCollection specificGenerator |
 	aSpaceship := 'Pancho'.
 	anotherSpaceship := 'Seijas'.
 	aSpaceshipCollection := OrderedCollection
 		                        with: aSpaceship
 		                        with: anotherSpaceship.
 	aDiceCollection := { (LoadedDie sequence: #( 5 5 6 7 10 )) }.
-	cardCollection := { Cancellation }.
 	specificGenerator := SpecificGenerator with:
 		                     { (NormalSquare create -> 10) }.
 
@@ -1522,7 +1519,6 @@ SpaceshipGameTest >> testWhenTwoRedoCardAreUsedThenItRedoesTheSameCardTwice [
 		         rewards: (IncrementFuelCapacity by: 1)
 		         cards: {
 				         Overload.
-				         Cancellation.
 				         Redo.
 				         Redo }.
 
@@ -1533,10 +1529,9 @@ SpaceshipGameTest >> testWhenTwoRedoCardAreUsedThenItRedoesTheSameCardTwice [
 	aGame
 		playCard: Overload new
 		from: aSpaceship
-		to: { anotherSpaceship }.
-	aGame playCard: Redo new from: aSpaceship to: { anotherSpaceship }.
-	aGame playCard: Redo new from: aSpaceship to: { anotherSpaceship }.
-
+		target: anotherSpaceship.
+	aGame playCard: Redo new from: aSpaceship target: anotherSpaceship.
+	aGame playCard: Redo new from: aSpaceship target: anotherSpaceship.
 	aGame playTurn.
 	aGame playTurn.
 

@@ -130,7 +130,7 @@ SpaceshipGame >> nextPlayer [
 ]
 
 { #category : #'game controls' }
-SpaceshipGame >> playCard: card from: spaceshipName to: otherSpaceshipsNames [
+SpaceshipGame >> playCard: card from: spaceshipName target: target [
 
 	| spaceshipToPlay spaceship cardToBeUsed |
 	self verifyGameIsNotOver.
@@ -144,7 +144,7 @@ SpaceshipGame >> playCard: card from: spaceshipName to: otherSpaceshipsNames [
 
 	cardToBeUsed
 		applyFrom: spaceship
-		to: otherSpaceshipsNames
+		target: target
 		blockToApplyLastEffect: [ :otherSpaceship |
 		gameboard applyLastEffectTo: otherSpaceship ].
 

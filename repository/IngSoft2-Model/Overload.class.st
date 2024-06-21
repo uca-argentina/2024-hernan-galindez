@@ -13,17 +13,15 @@ Overload class >> createWith: playersCollection [
 ]
 
 { #category : #operations }
-Overload >> applyFrom: aSpaceship to: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
+Overload >> applyFrom: aSpaceship target: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
 
-	| otherSpaceships |
-	"otherSpaceshipsNames size = 1 ifFalse: [
-		Error signal: 'This card can only be applied to one spaceship' ]."
+	affectedSpaceship := players
+		                     detect: [ :player |
+		                     player name = otherSpaceshipsNames ]
+		                     ifNone: [
+		                     Error signal:
+			                     'Overload card target must be a player name' ].
 
-	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
-		                   players detect: [ :player |
-			                   player name = playerName ] ].
-
-	affectedSpaceship := otherSpaceships first.
 	affectedSpaceship applyCard: self
 ]
 
@@ -39,14 +37,8 @@ Overload >> initialize [
 	affectedSpaceship := NullSpaceship new
 ]
 
-{ #category : #initialization }
-Overload >> initializeWith: playersCollection [
-
-	players := playersCollection
-]
-
 { #category : #removing }
 Overload >> removeEffects [
 
-	
+	"affectedSpaceship removeEffect: self"
 ]

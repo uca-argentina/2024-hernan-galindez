@@ -27,7 +27,7 @@ Card >> = anotherCard [
 ]
 
 { #category : #operations }
-Card >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+Card >> applyFrom: aSpaceship target: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
 	self subclassResponsibility.
 ]
@@ -41,12 +41,6 @@ Card >> diceAdjustment [
 { #category : #initialization }
 Card >> initializeWith: playersCollection [
 	players := playersCollection
-]
-
-{ #category : #'as yet unclassified' }
-Card >> lastUsedCard: aCard [
-
-	^ self
 ]
 
 { #category : #removing }

@@ -14,7 +14,7 @@ Acceleration class >> create [
 ]
 
 { #category : #operations }
-Acceleration >> applyFrom: aSpaceship to: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
+Acceleration >> applyFrom: aSpaceship target: otherSpaceshipsNames blockToApplyLastEffect: blockOfCode [
 
 	players do: [ :spaceship | spaceship applyCard: self ]
 ]
@@ -31,6 +31,14 @@ Acceleration >> initialize [
 ]
 
 { #category : #initialization }
+Acceleration >> initializeWith: playersCollection [
+
+	players := playersCollection.
+	affectedSpaceships := OrderedCollection new
+]
+
+{ #category : #initialization }
 Acceleration >> removeEffects [
-	^ self
+
+	players do: [ :player | player removeEffect: self ]
 ]

@@ -9,20 +9,20 @@ Class {
 }
 
 { #category : #operations }
-Ally >> applyFrom: aSpaceship to: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
+Ally >> applyFrom: aSpaceship target: targetName blockToApplyLastEffect: lastSquareLandedOn [
 
-	| otherSpaceship otherSpaceships |
-	otherSpaceshipsNames size = 1 ifFalse: [
-		Error signal: 'This card can only be applied to one spaceship' ].
+	| otherSpaceship |
+	otherSpaceship := players
+		                  detect: [ :player |
+		                  player name = targetName ]
+		                  ifNone: [
+		                  Error signal: 'Ally card target must be a player name' ].
 
-	otherSpaceships := otherSpaceshipsNames collect: [ :playerName |
-		                   players detect: [ :player |
-			                   player name = playerName ] ].
-	otherSpaceship := otherSpaceships first.
-	aSpaceship allyWith: otherSpaceship.
-	aSpaceship applyCard: self.
-	otherSpaceship allyWith: aSpaceship.
 	otherSpaceship applyCard: self.
+	aSpaceship applyCard: self.
+
+	aSpaceship allyWith: otherSpaceship.
+	otherSpaceship allyWith: aSpaceship.
 
 	firstAlly := aSpaceship.
 	secondAlly := otherSpaceship

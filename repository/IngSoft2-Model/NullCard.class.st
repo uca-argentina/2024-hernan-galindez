@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #operations }
-NullCard >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+NullCard >> applyFrom: aSpaceship target: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
 
-	^ self
+	Error signal: 'This card has not been used'
 ]

@@ -19,10 +19,3 @@ Instant >> verifyCanBePlayed: isShipTurn [
 
 	^ true
 ]
-
-{ #category : #'as yet unclassified' }
-Instant >> verifyCanBePlayedAtAnyMoment [
-
-	^ self
-	
-]

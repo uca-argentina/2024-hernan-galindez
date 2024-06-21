@@ -11,14 +11,7 @@ Cancellation class >> with: card [
 ]
 
 { #category : #operations }
-Cancellation >> applyFrom: aSpaceship to: cardToBeCancelled blockToApplyLastEffect: lastSquareLandedOn [
+Cancellation >> applyFrom: aSpaceship target: cardToBeCancelled blockToApplyLastEffect: blockOfCode [
 
-	(aSpaceship removeEffect: cardToBeCancelled ) removeEffects
-]
-
-{ #category : #initialization }
-Cancellation >> initializeWith: playersCollection [
-
-"	cardToBeCancelled := NullCard new."
-	players := playersCollection
+	(aSpaceship removeEffect: cardToBeCancelled) removeEffects
 ]

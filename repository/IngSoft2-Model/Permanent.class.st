@@ -14,9 +14,3 @@ Permanent >> verifyCanBePlayed: isShipTurn [
 
 	isShipTurn ifFalse: [ Error signal: 'You can only play this card when its your turn' ]
 ]
-
-{ #category : #'as yet unclassified' }
-Permanent >> verifyCanBePlayedAtAnyMoment [
-	Error signal: 'You cannot play this card' 
-	
-]

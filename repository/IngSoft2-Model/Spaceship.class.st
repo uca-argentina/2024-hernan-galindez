@@ -174,7 +174,7 @@ Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfC
 
 	(deck removeCard: cardName)
 		applyFrom: self
-		to: otherSpaceships
+		target: otherSpaceships
 		blockToApplyLastEffect: aBlockOfCode
 ]
 

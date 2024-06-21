@@ -39,12 +39,12 @@ Redo class >> recreate [
 ]
 
 { #category : #operations }
-Redo >> applyFrom: aSpaceship to: otherSpaceships blockToApplyLastEffect: lastSquareLandedOn [
+Redo >> applyFrom: aSpaceship target: target blockToApplyLastEffect: blockOfCode [
 
 	lastUsedCard 
 		applyFrom: aSpaceship
-		to: otherSpaceships
-		blockToApplyLastEffect: lastSquareLandedOn
+		target: target
+		blockToApplyLastEffect: blockOfCode
 ]
 
 { #category : #testing }
@@ -73,9 +73,4 @@ Redo >> lastUsedCard: aCard [
 Redo >> verifyCanBePlayed: isShipTurn [
 
 	lastUsedCard verifyCanBePlayed: isShipTurn 
-]
-
-{ #category : #operations }
-Redo >> verifyCanBePlayedAtAnyMoment [
-	lastUsedCard verifyCanBePlayedAtAnyMoment
 ]
