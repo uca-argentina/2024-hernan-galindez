@@ -15,6 +15,12 @@ Square class >> create [
 ]
 
 { #category : #'add/remove' }
+Square >> applyEffectTo: aSpaceship [ 
+
+	self subclassResponsibility 
+]
+
+{ #category : #'add/remove' }
 Square >> applyEffectTo: aSpaceship in: aGameboard [
 
 	self subclassResponsibility 
