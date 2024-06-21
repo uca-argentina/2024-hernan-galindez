@@ -20,12 +20,6 @@ Deck >> addCard: aCard [
 	cardsInHand add: aCard
 ]
 
-{ #category : #operations }
-Deck >> applyFrom: aSpaceship to: otherSpaceships [
-
-	cardsInHand applyFrom: aSpaceship to: otherSpaceships
-]
-
 { #category : #initialization }
 Deck >> cardApplied: card [
 
