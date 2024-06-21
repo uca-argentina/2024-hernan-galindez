@@ -9,7 +9,7 @@ Permanent >> removeEffects [
 	self subclassResponsibility 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Permanent >> verifyCanBePlayed: isShipTurn [
 
 	isShipTurn ifFalse: [ Error signal: 'You can only play this card when its your turn' ]
