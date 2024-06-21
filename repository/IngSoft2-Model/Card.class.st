@@ -32,12 +32,6 @@ Card >> applyFrom: aSpaceship target: otherSpaceships blockToApplyLastEffect: la
 	self subclassResponsibility.
 ]
 
-{ #category : #'as yet unclassified' }
-Card >> diceAdjustment [
-
-	^ 0
-]
-
 { #category : #initialization }
 Card >> initializeWith: playersCollection [
 	players := playersCollection

@@ -50,6 +50,16 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 ]
 
 { #category : #accessing }
+Gameboard >> applyEffectTo: aSpaceship [
+
+	| currentPosition currentSquare |
+	currentPosition := self find: aSpaceship.
+	currentSquare := board at: currentPosition.
+	currentSquare applyEffectTo: aSpaceship in: self.
+	lastSquareLandedOn := currentSquare
+]
+
+{ #category : #accessing }
 Gameboard >> applyLastEffectTo: aSpaceship [
 
 	lastSquareLandedOn applyEffectTo: aSpaceship in: self
@@ -61,16 +71,6 @@ Gameboard >> find: aTarget [
 	^ board
 		  detectIndex: [ :square | square includes: aTarget ]
 		  ifNone: [ Error signal: 'spaceship not found' ]
-]
-
-{ #category : #accessing }
-Gameboard >> implementEffectOn: aSpaceship [
-
-	| currentPosition currentSquare |
-	currentPosition := self find: aSpaceship.
-	currentSquare := board at: currentPosition.
-	currentSquare applyEffectTo: aSpaceship in: self.
-	lastSquareLandedOn := currentSquare
 ]
 
 { #category : #initialization }

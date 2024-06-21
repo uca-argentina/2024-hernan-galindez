@@ -13,22 +13,17 @@ Overload class >> createWith: playersCollection [
 ]
 
 { #category : #operations }
-Overload >> applyFrom: aSpaceship target: otherSpaceshipsNames blockToApplyLastEffect: lastSquareLandedOn [
+Overload >> applyFrom: aSpaceship target: otherSpaceshipsName blockToApplyLastEffect: lastSquareLandedOn [
 
 	affectedSpaceship := players
 		                     detect: [ :player |
-		                     player name = otherSpaceshipsNames ]
+		                     player name = otherSpaceshipsName ]
 		                     ifNone: [
 		                     Error signal:
 			                     'Overload card target must be a player name' ].
 
-	affectedSpaceship applyCard: self
-]
-
-{ #category : #'as yet unclassified' }
-Overload >> diceAdjustment [
-
-	^ 2 negated
+	affectedSpaceship applyCard: self.
+	affectedSpaceship changeTotalThrowBy: 2 negated
 ]
 
 { #category : #removing }
@@ -39,6 +34,7 @@ Overload >> initialize [
 
 { #category : #removing }
 Overload >> removeEffects [
-
 	"affectedSpaceship removeEffect: self"
+
+	affectedSpaceship changeTotalThrowBy: 2
 ]

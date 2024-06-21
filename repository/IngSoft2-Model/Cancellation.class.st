@@ -13,5 +13,5 @@ Cancellation class >> with: card [
 { #category : #operations }
 Cancellation >> applyFrom: aSpaceship target: cardToBeCancelled blockToApplyLastEffect: blockOfCode [
 
-	(aSpaceship removeEffect: cardToBeCancelled) removeEffects
+	(aSpaceship removeEffect: cardToBeCancelled) 
 ]

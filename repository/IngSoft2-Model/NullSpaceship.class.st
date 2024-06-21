@@ -10,12 +10,6 @@ NullSpaceship >> applyPenaltyIn: gameboard [
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
-NullSpaceship >> changeTotalThrowBy: aNumber [
-
-	^ self
-]
-
 { #category : #setting }
 NullSpaceship >> removeEffect: cardToBeRemoved [
 	Error signal: 'This card has not been used on this spaceship'

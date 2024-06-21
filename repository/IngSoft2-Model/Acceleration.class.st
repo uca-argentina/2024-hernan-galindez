@@ -16,13 +16,9 @@ Acceleration class >> create [
 { #category : #operations }
 Acceleration >> applyFrom: aSpaceship target: otherSpaceshipsNames blockToApplyLastEffect: blockOfCode [
 
-	players do: [ :spaceship | spaceship applyCard: self ]
-]
-
-{ #category : #'as yet unclassified' }
-Acceleration >> diceAdjustment [
-
-	^ 1
+	players do: [ :spaceship |
+		spaceship applyCard: self.
+		spaceship changeTotalThrowBy: 1 ]
 ]
 
 { #category : #initialization }
@@ -40,5 +36,5 @@ Acceleration >> initializeWith: playersCollection [
 { #category : #initialization }
 Acceleration >> removeEffects [
 
-	players do: [ :player | player removeEffect: self ]
+	players do: [ :player | player changeTotalThrowBy: 1 negated ]
 ]

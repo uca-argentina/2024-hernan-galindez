@@ -8,7 +8,8 @@ Class {
 		'needsToThrow',
 		'lostTurns',
 		'deck',
-		'ally'
+		'ally',
+		'diceAdjustment'
 	],
 	#category : #'IngSoft2-Model'
 }
@@ -17,12 +18,6 @@ Class {
 Spaceship class >> withName: aName withFuel: fuelCapacity [
 
 	^ self new initializeWithName: aName withFuel: fuelCapacity
-]
-
-{ #category : #initialization }
-Spaceship class >> withName: aName withFuel: fuelCapacity withCards: deckOfCards [
-
-	^ self new initializeWithName: aName withFuel: fuelCapacity withCards: deckOfCards
 ]
 
 { #category : #accessing }
@@ -34,7 +29,7 @@ Spaceship >> allyWith: aSpaceship [
 { #category : #'as yet unclassified' }
 Spaceship >> applyCard: card [
 
-	deck usedCard: card.
+	deck cardApplied: card.
 ]
 
 { #category : #setting }
@@ -67,7 +62,7 @@ Spaceship >> changeTotalThrowBy: aNumber [
 { #category : #setting }
 Spaceship >> giveCard: aCard [
 
-	deck addCard: aCard
+	deck addCard: aCard copy
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,21 +79,9 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	maxCapacity := fuelCapacity.
 	needsToThrow := 0.
 	lostTurns := 0.
+	diceAdjustment := 0.
 	ally := NullSpaceship new.
-	deck := Deck with: #() asOrderedCollection.
-]
-
-{ #category : #initialization }
-Spaceship >> initializeWithName: aName withFuel: fuelCapacity withCards: deckOfCards [
-
-	name := aName.
-	currentFuel := fuelCapacity.
-	maxCapacity := fuelCapacity.
-	deck := deckOfCards.
-	needsToThrow := 0.
-	lostTurns := 0.
-	ally := NullSpaceship new.
-	deck := Deck with: deckOfCards .
+	deck := Deck with: #(  ) asOrderedCollection
 ]
 
 { #category : #'game logic' }
@@ -110,8 +93,7 @@ Spaceship >> lostATurn [
 { #category : #accessing }
 Spaceship >> move: anAmountOfSquares in: aGameboard [
 
-	| squaresToMove diceAdjustment |
-	diceAdjustment := deck diceAdjustment.
+	| squaresToMove |
 	squaresToMove := anAmountOfSquares + diceAdjustment.
 
 	self useAllyFuelIfNecessary: squaresToMove in: aGameboard.
@@ -161,31 +143,6 @@ Spaceship >> takeFuel: anAmountOfFuel [
 	currentFuel := currentFuel - anAmountOfFuel.
 
 	^ anAmountOfFuel
-]
-
-{ #category : #setting }
-Spaceship >> use: cardName to: otherSpaceships [
-
-	(deck removeCard: cardName) applyFrom: self to: otherSpaceships
-]
-
-{ #category : #setting }
-Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode [
-
-	(deck removeCard: cardName)
-		applyFrom: self
-		target: otherSpaceships
-		blockToApplyLastEffect: aBlockOfCode
-]
-
-{ #category : #setting }
-Spaceship >> use: cardName to: otherSpaceships blockToApplyLastEffect: aBlockOfCode lastUsedCard: lastUsedCard [
-
-	(deck removeCard: cardName)
-		applyFrom: self
-		to: otherSpaceships
-		blockToApplyLastEffect: aBlockOfCode
-		lastUsedCard: lastUsedCard
 ]
 
 { #category : #accessing }

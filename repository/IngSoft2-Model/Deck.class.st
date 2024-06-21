@@ -26,9 +26,10 @@ Deck >> applyFrom: aSpaceship to: otherSpaceships [
 	cardsInHand applyFrom: aSpaceship to: otherSpaceships
 ]
 
-{ #category : #'as yet unclassified' }
-Deck >> diceAdjustment [
-	^ (appliedCards collect: [ :card | card diceAdjustment ]) sumNumbers
+{ #category : #initialization }
+Deck >> cardApplied: card [
+
+	appliedCards add: card
 ]
 
 { #category : #initialization }
@@ -60,14 +61,8 @@ Deck >> removeCardEffect: cardToBeRemoved [
 		             Error signal: cardToBeRemoved class asString
 			             , ' card was not used on this spaceship' ].
 	card := appliedCards at: cardIndex.
-"	card removeEffects."
+	card removeEffects.
 	appliedCards remove: cardToBeRemoved.
-	
+
 	^ card
-]
-
-{ #category : #initialization }
-Deck >> usedCard: card [
-
-	appliedCards add: card
 ]

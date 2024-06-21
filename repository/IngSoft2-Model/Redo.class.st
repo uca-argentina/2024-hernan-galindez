@@ -11,11 +11,6 @@ Class {
 }
 
 { #category : #operations }
-Redo class >> create [
-	^ self new initializeWith
-]
-
-{ #category : #operations }
 Redo class >> createWith: playersCollection [
 
 	^ instance ifNil: [ instance := self new initialize ]
@@ -24,12 +19,6 @@ Redo class >> createWith: playersCollection [
 { #category : #'as yet unclassified' }
 Redo class >> deleteInstance [
 	instance := nil
-]
-
-{ #category : #operations }
-Redo class >> instance [
-
-	^ instance ifNil: [ instance := self basicNew ]
 ]
 
 { #category : #operations }
@@ -47,18 +36,14 @@ Redo >> applyFrom: aSpaceship target: target blockToApplyLastEffect: blockOfCode
 		blockToApplyLastEffect: blockOfCode
 ]
 
-{ #category : #testing }
-Redo >> canBeReDone [
-	^false
+{ #category : #initialization }
+Redo >> copy [
+
+	^ self
 ]
 
 { #category : #initialization }
 Redo >> initialize [
-	lastUsedCard := NullCard new.
-]
-
-{ #category : #initialization }
-Redo >> initializeWith [
 	lastUsedCard := NullCard new.
 ]
 

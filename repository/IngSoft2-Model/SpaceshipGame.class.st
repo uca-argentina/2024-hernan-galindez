@@ -194,7 +194,7 @@ SpaceshipGame >> playTurn [
 	aNumber := dice throw.
 	aNumber = dice maxThrow ifTrue: [ rewards applyTo: spaceshipToPlay ].
 	spaceshipToPlay playWith: aNumber in: gameboard.
-	gameboard implementEffectOn: spaceshipToPlay.
+	gameboard applyEffectTo: spaceshipToPlay.
 	
 ]
 
