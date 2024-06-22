@@ -37,4 +37,5 @@ HyperJump >> initializeWith: aNumberArray [
 
 	occupiedBy := OrderedCollection new.
 	listOfValues := aNumberArray asOrderedCollection
+
 ]

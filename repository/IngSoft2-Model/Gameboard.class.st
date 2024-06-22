@@ -5,6 +5,7 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
+
 		'lapCounter',
 		'measurement',
 		'measurmentPerSquare',
@@ -15,7 +16,9 @@ Class {
 }
 
 { #category : #accessing }
+
 Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator cards: cardCollection [
+
 
 	self verifyGreaterThanZero: aNumberOfSquares.
 
@@ -25,6 +28,7 @@ Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipColle
 		  withParsecs: aNumberOfParsecs
 		  withDice: aDiceCollection
 		  withGenerator: squareGenerator
+
 		  withCards: cardCollection
 ]
 
@@ -62,6 +66,7 @@ Gameboard >> find: aTarget [
 { #category : #initialization }
 Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator withCards: cardCollection [
 
+
 	spaceships := spaceshipsCollection.
 	lapCounter := Dictionary
 		              newFromKeys: spaceships
@@ -76,6 +81,7 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 	lastSquareLandedOn := NormalSquare create.
 	self setPlayersAtFirstPosition: spaceships
 ]
+
 
 { #category : #accessing }
 Gameboard >> lapsCompletedOf: aSpaceship [
@@ -136,6 +142,7 @@ Gameboard >> moveToStart: aSpaceship [
 { #category : #accessing }
 Gameboard >> possibleCards [
 	^ cards
+
 ]
 
 { #category : #setting }

@@ -46,6 +46,7 @@ Spaceship >> canPlay [
 	^ lostTurns = 0
 ]
 
+
 { #category : #setting }
 Spaceship >> changeCurrentFuelBy: anAmount [
 
@@ -118,7 +119,7 @@ Spaceship >> needsToThrow: expectedNumber [
 
 { #category : #accessing }
 Spaceship >> playWith: anAmountOfSquares in: aGameboard [
-	
+
 	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
 	needsToThrow := 0.
 	self move: anAmountOfSquares in: aGameboard
