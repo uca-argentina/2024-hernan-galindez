@@ -7,7 +7,15 @@ Class {
 { #category : #'class initialization' }
 DefaultSquareGenerator class >> distributions: effectDistributions [
 
-	^ self new initilizeWithDistributions: effectDistributions 
+	self verifyProbabilities: effectDistributions.
+	^ self new initilizeWithDistributions: effectDistributions
+]
+
+{ #category : #'class initialization' }
+DefaultSquareGenerator class >> verifyProbabilities: effectDistributions [
+
+	(effectDistributions collect: [ :each | each value ]) sum = 1
+		ifFalse: [ Error signal: 'The sum of probabilities must equal 1' ]
 ]
 
 { #category : #initialization }

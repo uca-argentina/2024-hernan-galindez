@@ -45,18 +45,18 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	dice := Dice with: aDiceCollection.
 
 	squareGenerator := DefaultSquareGenerator distributions: {
-			                   ([ NormalSquare create ] -> 0.3).
+			                   ([ NormalSquare create ] -> (3 / 10)).
 			                   ([
 			                    HyperGravity withExpectedNumber:
-				                    dice maxThrow atRandom ] -> 0.2).
-			                   ([ AtomicBomb create ] -> 0.02).
-			                   ([ BlackHole create ] -> 0.2).
+				                    dice maxThrow atRandom ] -> (2 / 10)).
+			                   ([ AtomicBomb create ] -> (2 / 100)).
+			                   ([ BlackHole create ] -> (2 / 10)).
 			                   ([
 			                    MoonWalk withSquaresToMove:
-				                    dice maxThrow atRandom ] -> 0.1).
+				                    dice maxThrow atRandom ] -> (1 / 10)).
 			                   ([ HyperJump with: { (Parsecs of: 100) } ]
-			                    -> 0.08).
-			                   ([ CardSquare create ] -> 0.1) }.
+			                    -> (8 / 100)).
+			                   ([ CardSquare create ] -> (1 / 10)) }.
 
 	rewards := RewardsManager with: {
 			           ((DecrementCurrentFuel by: 1) -> 0.2).
@@ -80,7 +80,10 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	possibleCards := (cardCollection collect: [ :cardClass |
 		                  cardClass createWith: players ])
 		                 asOrderedCollection.
-	players do: [ :player | player giveCard: possibleCards atRandom ; giveCard: possibleCards atRandom ].
+	players do: [ :player |
+		player
+			giveCard: possibleCards atRandom;
+			giveCard: possibleCards atRandom ].
 
 	Redo deleteInstance.
 

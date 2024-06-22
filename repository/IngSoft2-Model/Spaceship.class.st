@@ -29,7 +29,7 @@ Spaceship >> allyWith: aSpaceship [
 { #category : #setting }
 Spaceship >> applyCard: card [
 
-	deck cardApplied: card.
+	deck appliedCard: card.
 ]
 
 { #category : #setting }

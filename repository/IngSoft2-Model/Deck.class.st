@@ -21,7 +21,7 @@ Deck >> addCard: aCard [
 ]
 
 { #category : #initialization }
-Deck >> cardApplied: card [
+Deck >> appliedCard: card [
 
 	appliedCards add: card
 ]
