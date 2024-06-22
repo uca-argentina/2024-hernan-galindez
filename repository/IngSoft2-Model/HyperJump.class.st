@@ -6,6 +6,7 @@ Class {
 	],
 	#category : #'IngSoft2-Model'
 }
+
 { #category : #'instance creation' }
 HyperJump class >> with: aUnitsArray [
 

@@ -71,7 +71,6 @@ Spaceship >> giveCard: aCard [
 	deck addCard: aCard copy
 ]
 
-
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 

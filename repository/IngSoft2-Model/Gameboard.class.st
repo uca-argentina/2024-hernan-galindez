@@ -5,7 +5,6 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
-
 		'lapCounter',
 		'measurement',
 		'measurmentPerSquare',
