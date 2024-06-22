@@ -255,7 +255,9 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 		         withLaps: 3
 		         withParsecs: 100.
 
-	aGame playTurn.
+	[ aGame isOver ] whileFalse: [
+		aGame playTurn.
+		aGame skipTurn ].
 
 	self assert: aGame winner equals: aSpaceship
 ]
