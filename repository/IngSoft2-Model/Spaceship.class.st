@@ -71,6 +71,7 @@ Spaceship >> giveCard: aCard [
 	deck addCard: aCard copy
 ]
 
+
 { #category : #initialization }
 Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 
@@ -82,6 +83,7 @@ Spaceship >> initializeWithName: aName withFuel: fuelCapacity [
 	diceAdjustment := 0.
 	ally := NullSpaceship new.
 	deck := Deck with: #(  ) asOrderedCollection
+
 ]
 
 { #category : #'game logic' }
@@ -118,7 +120,6 @@ Spaceship >> needsToThrow: expectedNumber [
 
 { #category : #accessing }
 Spaceship >> playWith: anAmountOfSquares in: aGameboard [
-	
 	anAmountOfSquares abs < needsToThrow ifTrue: [ ^ self ].
 	needsToThrow := 0.
 	self move: anAmountOfSquares in: aGameboard

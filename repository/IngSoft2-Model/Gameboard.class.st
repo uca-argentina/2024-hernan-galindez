@@ -5,6 +5,7 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
+
 		'lapCounter',
 		'measurement',
 		'measurmentPerSquare',
@@ -47,7 +48,6 @@ Gameboard >> applyEffectTo: aSpaceship [
 
 { #category : #accessing }
 Gameboard >> applyLastEffectTo: aSpaceship [
-
 	lastSquareLandedOn applyEffectTo: aSpaceship in: self
 ]
 
@@ -87,6 +87,7 @@ Gameboard >> lapsCompletedOf: aSpaceship [
 Gameboard >> measurementPerSquare [
 
 	^ measurmentPerSquare 
+
 ]
 
 { #category : #accessing }
@@ -136,6 +137,7 @@ Gameboard >> moveToStart: aSpaceship [
 { #category : #accessing }
 Gameboard >> possibleCards [
 	^ cards
+
 ]
 
 { #category : #setting }

@@ -27,6 +27,7 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 { #category : #'instance creation' }
 SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards cards: deckOfCards [
 
+
 	^ self new
 		  initializeWithPlayers: somePlayers
 		  withGameboardLength: aLength
@@ -36,10 +37,11 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withSquareGenerator: sqaureGenerator
 		  withRewards: rewards
 		  withCards: deckOfCards
+
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
 
 	| squareGenerator cardCollection |
 	dice := Dice with: aDiceCollection.
@@ -76,7 +78,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
-
+                 
 	possibleCards := (cardCollection collect: [ :cardClass |
 		                  cardClass createWith: players ])
 		                 asOrderedCollection.
@@ -86,6 +88,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 			giveCard: possibleCards atRandom ].
 
 	Redo deleteInstance.
+
 
 	gameboard := Gameboard
 		             numberOfSquares: aLength
@@ -130,6 +133,7 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 	numberOfLaps := anAmountOfLaps.
 
 	rewards := aReward
+
 ]
 
 { #category : #'game logic' }
@@ -177,7 +181,6 @@ SpaceshipGame >> playCard: card from: spaceshipName target: target [
 	spaceship := players detect: [ :player | player name = spaceshipName ].
 
 	cardToBeUsed := spaceship useCard: card.
-	"	cardToBeUsed lastUsedCard: lastUsedCard."
 	cardToBeUsed verifyCanBePlayed: spaceshipToPlay = spaceship.
 
 	cardToBeUsed
@@ -186,8 +189,7 @@ SpaceshipGame >> playCard: card from: spaceshipName target: target [
 		blockToApplyLastEffect: [ :otherSpaceship |
 		gameboard applyLastEffectTo: otherSpaceship ].
 
-	"card canBeReDone ifFalse: [ ^ self ]."
-	"lastUsedCard := cardToBeUsed"
+
 	redoCardInstance lastUsedCard: cardToBeUsed
 ]
 
@@ -202,6 +204,7 @@ SpaceshipGame >> playTurn [
 	spaceshipToPlay playWith: aNumber in: gameboard.
 	gameboard applyEffectTo: spaceshipToPlay.
 	
+
 ]
 
 { #category : #'game logic' }
