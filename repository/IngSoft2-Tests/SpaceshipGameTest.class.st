@@ -241,7 +241,7 @@ SpaceshipGameTest >> testGameEndsWhenSpaceshipCompletesRequiredLaps [
 { #category : #tests }
 SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 
-	| aSpaceship aDiceCollection aGame aSpaceshipCollection normalSquare probabilityGenerator |
+	| aSpaceship aDiceCollection aGame aSpaceshipCollection |
 	aSpaceship := 'zepito'.
 	aSpaceshipCollection := OrderedCollection with: aSpaceship.
 	aDiceCollection := OrderedCollection with:
@@ -253,8 +253,7 @@ SpaceshipGameTest >> testGameWinnerWithMoreThanOneLap [
 		         withGameboardLength: 10
 		         withDice: aDiceCollection
 		         withLaps: 3
-		         withParsecs: 100
-		         squareGenerator: probabilityGenerator.
+		         withParsecs: 100.
 
 	aGame playTurn.
 
@@ -1422,8 +1421,6 @@ SpaceshipGameTest >> testWhenPlayersCompleteALapThenShowNumbersOfLapsCompleted [
 
 	self assert: (aGame lapsCompletedOf: aSpaceship2) equals: 1
 ]
-
-
 
 { #category : #tests }
 SpaceshipGameTest >> testWhenSomePlayersMoveGivesThePositionOfTheSpaceships [

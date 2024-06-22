@@ -46,7 +46,6 @@ Spaceship >> canPlay [
 	^ lostTurns = 0
 ]
 
-
 { #category : #setting }
 Spaceship >> changeCurrentFuelBy: anAmount [
 

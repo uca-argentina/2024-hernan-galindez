@@ -41,7 +41,7 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
 	| squareGenerator cardCollection |
 	dice := Dice with: aDiceCollection.
@@ -74,7 +74,6 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 
 	redoCardInstance := Redo recreate.
 
-
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
@@ -89,7 +88,6 @@ SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength
 			giveCard: possibleCards atRandom ].
 
 	Redo deleteInstance.
-
 
 	gameboard := Gameboard
 		             numberOfSquares: aLength
