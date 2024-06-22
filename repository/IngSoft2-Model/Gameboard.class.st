@@ -5,17 +5,19 @@ Class {
 	#instVars : [
 		'board',
 		'spaceships',
-		'parsecsPerSquare',
-		'lapCounter'
+		'lapCounter',
+		'measurement',
+		'measurmentPerSquare',
+		'lastSquareLandedOn',
+		'cards'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #accessing }
-Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator [
+Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipCollection withParsecs: aNumberOfParsecs using: aDiceCollection generator: squareGenerator cards: cardCollection [
 
 	self verifyGreaterThanZero: aNumberOfSquares.
-
 
 	^ self new
 		  initializeWithNumberOfSquares: aNumberOfSquares
@@ -23,6 +25,7 @@ Gameboard class >> numberOfSquares: aNumberOfSquares spaceships: aSpaceshipColle
 		  withParsecs: aNumberOfParsecs
 		  withDice: aDiceCollection
 		  withGenerator: squareGenerator
+		  withCards: cardCollection
 ]
 
 { #category : #accessing }
@@ -33,6 +36,22 @@ Gameboard class >> verifyGreaterThanZero: aLength [
 ]
 
 { #category : #accessing }
+Gameboard >> applyEffectTo: aSpaceship [
+
+	| currentPosition currentSquare |
+	currentPosition := self find: aSpaceship.
+	currentSquare := board at: currentPosition.
+	currentSquare applyEffectTo: aSpaceship in: self.
+	lastSquareLandedOn := currentSquare
+]
+
+{ #category : #accessing }
+Gameboard >> applyLastEffectTo: aSpaceship [
+
+	lastSquareLandedOn applyEffectTo: aSpaceship in: self
+]
+
+{ #category : #accessing }
 Gameboard >> find: aTarget [
 
 	^ board
@@ -40,16 +59,9 @@ Gameboard >> find: aTarget [
 		  ifNone: [ Error signal: 'spaceship not found' ]
 ]
 
-{ #category : #accessing }
-Gameboard >> implementEffectOn: aSpaceship [
-
-	| currentPosition |
-	currentPosition := self find: aSpaceship.
-	(board at: currentPosition) applyEffectTo: aSpaceship in: self
-]
-
 { #category : #initialization }
-Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator [
+Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spaceshipsCollection withParsecs: aNumberOfParsecs withDice: aDiceCollection withGenerator: squareGenerator withCards: cardCollection [
+
 
 	spaceships := spaceshipsCollection.
 	lapCounter := Dictionary
@@ -57,10 +69,12 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 		              andValues:
 		              (OrderedCollection new: spaceships size withAll: 0).
 
-
-	parsecsPerSquare := aNumberOfParsecs // aNumberOfSquares.
-
+	measurement := aNumberOfParsecs.
+	measurmentPerSquare := Parsecs of:
+		                       aNumberOfParsecs // aNumberOfSquares.
+	cards := cardCollection.
 	board := squareGenerator generateSquares: aNumberOfSquares.
+	lastSquareLandedOn := NormalSquare create.
 	self setPlayersAtFirstPosition: spaceships
 ]
 
@@ -68,6 +82,12 @@ Gameboard >> initializeWithNumberOfSquares: aNumberOfSquares withSpaceships: spa
 Gameboard >> lapsCompletedOf: aSpaceship [
 
 	^ lapCounter at: aSpaceship
+]
+
+{ #category : #initialization }
+Gameboard >> measurementPerSquare [
+
+	^ measurmentPerSquare 
 ]
 
 { #category : #accessing }
@@ -114,10 +134,10 @@ Gameboard >> moveToStart: aSpaceship [
 	(board at: currentPosition) leaves: aSpaceship
 ]
 
-{ #category : #initialization }
-Gameboard >> parsecsPerSquare [
+{ #category : #accessing }
+Gameboard >> possibleCards [
+	^ cards
 
-	^ parsecsPerSquare
 ]
 
 { #category : #setting }

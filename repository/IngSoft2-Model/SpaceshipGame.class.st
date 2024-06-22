@@ -5,13 +5,28 @@ Class {
 		'players',
 		'gameboard',
 		'dice',
-		'numberOfLaps'
+		'numberOfLaps',
+		'rewards',
+		'possibleCards',
+		'redoCardInstance'
 	],
 	#category : #'IngSoft2-Model'
 }
 
 { #category : #'instance creation' }
-SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator [
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
+
+	^ self new
+		  initializeWithPlayers: somePlayers
+		  withGameboardLength: aLength
+		  withDice: aDiceCollection
+		  withLaps: anAmountOfLaps
+		  withParsecs: aNumberOfParsecs
+]
+
+{ #category : #'instance creation' }
+SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs squareGenerator: sqaureGenerator rewards: rewards cards: deckOfCards [
+
 
 	^ self new
 		  initializeWithPlayers: somePlayers
@@ -20,25 +35,103 @@ SpaceshipGame class >> withPlayers: somePlayers withGameboardLength: aLength wit
 		  withLaps: anAmountOfLaps
 		  withParsecs: aNumberOfParsecs
 		  withSquareGenerator: sqaureGenerator
+		  withRewards: rewards
+		  withCards: deckOfCards
+
 ]
 
 { #category : #initialization }
-SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator [
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs [
 
-	dice := Dice with: aDiceCollection .
+	| squareGenerator cardCollection |
+	dice := Dice with: aDiceCollection.
+
+	squareGenerator := DefaultSquareGenerator distributions: {
+			                   ([ NormalSquare create ] -> (3 / 10)).
+			                   ([
+			                    HyperGravity withExpectedNumber:
+				                    dice maxThrow atRandom ] -> (2 / 10)).
+			                   ([ AtomicBomb create ] -> (2 / 100)).
+			                   ([ BlackHole create ] -> (2 / 10)).
+			                   ([
+			                    MoonWalk withSquaresToMove:
+				                    dice maxThrow atRandom ] -> (1 / 10)).
+			                   ([ HyperJump with: { (Parsecs of: 100) } ]
+			                    -> (8 / 100)).
+			                   ([ CardSquare create ] -> (1 / 10)) }.
+
+	rewards := RewardsManager with: {
+			           ((DecrementCurrentFuel by: 1) -> 0.2).
+			           ((IncrementFuelCapacity by: 1) -> 0.8) }.
+
+	cardCollection := {
+		                  Cancellation.
+		                  Repeat.
+		                  Acceleration.
+		                  Ally.
+		                  Overload.
+		                  Redo }.
+
+	redoCardInstance := Redo recreate.
 
 	players := aCollectionOfPlayers collect: [ :playerName |
 		           Spaceship
 			           withName: playerName
 			           withFuel: dice maxThrow * 2 ].
 
+	possibleCards := (cardCollection collect: [ :cardClass |
+		                  cardClass createWith: players ])
+		                 asOrderedCollection.
+	players do: [ :player |
+		player
+			giveCard: possibleCards atRandom;
+			giveCard: possibleCards atRandom ].
+
+	Redo deleteInstance.
+
 	gameboard := Gameboard
 		             numberOfSquares: aLength
 		             spaceships: players
 		             withParsecs: aNumberOfParsecs
 		             using: dice
-		             generator: squareGenerator.
+		             generator: squareGenerator
+		             cards: possibleCards.
+
 	numberOfLaps := anAmountOfLaps
+]
+
+{ #category : #initialization }
+SpaceshipGame >> initializeWithPlayers: aCollectionOfPlayers withGameboardLength: aLength withDice: aDiceCollection withLaps: anAmountOfLaps withParsecs: aNumberOfParsecs withSquareGenerator: squareGenerator withRewards: aReward withCards: cardCollection [
+
+	dice := Dice with: aDiceCollection.
+
+
+	players := aCollectionOfPlayers collect: [ :playerName |
+		           Spaceship
+			           withName: playerName
+			           withFuel: dice maxThrow * 2 ].
+	redoCardInstance := Redo recreate.
+	possibleCards := (cardCollection collect: [ :cardClass |
+		                  cardClass createWith: players ])
+		                 asOrderedCollection.
+
+	players do: [ :player |
+		player
+			giveCard: possibleCards first;
+			giveCard: possibleCards second ].
+
+	Redo deleteInstance.
+	gameboard := Gameboard
+		             numberOfSquares: aLength
+		             spaceships: players
+		             withParsecs: aNumberOfParsecs
+		             using: dice
+		             generator: squareGenerator
+		             cards:
+		             (possibleCards copyFrom: 3 to: possibleCards size).
+	numberOfLaps := anAmountOfLaps.
+
+	rewards := aReward
 ]
 
 { #category : #'game logic' }
@@ -59,28 +152,6 @@ SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
 	^ gameboard lapsCompletedOf: aSpaceship
 ]
 
-{ #category : #accessing }
-SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
-
-	| aSpaceship |
-	aSpaceship := players detect: [ :player |
-		              player name = aSpaceshipName ].
-
-
-	^ aSpaceship lapsCompleted
-]
-
-{ #category : #accessing }
-SpaceshipGame >> lapsCompletedOf: aSpaceshipName [
-
-	| aSpaceship |
-	aSpaceship := players detect: [ :player |
-		              player name = aSpaceshipName ].
-
-
-	^ aSpaceship lapsCompleted
-]
-
 { #category : #'game logic' }
 SpaceshipGame >> nextPlayer [
 
@@ -99,14 +170,40 @@ SpaceshipGame >> nextPlayer [
 ]
 
 { #category : #'game controls' }
+SpaceshipGame >> playCard: card from: spaceshipName target: target [
+
+	| spaceshipToPlay spaceship cardToBeUsed |
+	self verifyGameIsNotOver.
+
+	spaceshipToPlay := players detect: [ :player | player canPlay ].
+	spaceship := players detect: [ :player | player name = spaceshipName ].
+
+	cardToBeUsed := spaceship useCard: card.
+	"	cardToBeUsed lastUsedCard: lastUsedCard."
+	cardToBeUsed verifyCanBePlayed: spaceshipToPlay = spaceship.
+
+	cardToBeUsed
+		applyFrom: spaceship
+		target: target
+		blockToApplyLastEffect: [ :otherSpaceship |
+		gameboard applyLastEffectTo: otherSpaceship ].
+
+	"card canBeReDone ifFalse: [ ^ self ]."
+	"lastUsedCard := cardToBeUsed"
+	redoCardInstance lastUsedCard: cardToBeUsed
+]
+
+{ #category : #'game controls' }
 SpaceshipGame >> playTurn [
 
 	| aNumber spaceshipToPlay |
 	self verifyGameIsNotOver.
-	aNumber := dice throw.
 	spaceshipToPlay := self nextPlayer.
+	aNumber := dice throw.
+	aNumber = dice maxThrow ifTrue: [ rewards applyTo: spaceshipToPlay ].
 	spaceshipToPlay playWith: aNumber in: gameboard.
-	gameboard implementEffectOn: spaceshipToPlay.
+	gameboard applyEffectTo: spaceshipToPlay.
+	
 ]
 
 { #category : #'game logic' }

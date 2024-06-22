@@ -1,5 +1,5 @@
 Class {
-	#name : #EffectsGenereator,
+	#name : #SquareGenereator,
 	#superclass : #Object,
 	#instVars : [
 		'distribution'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-EffectsGenereator >> generateSquares: anAmountOfSquares [
+SquareGenereator >> generateSquares: anAmountOfSquares [
 
 	self subclassResponsibility 
 
